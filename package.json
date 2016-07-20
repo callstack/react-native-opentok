@@ -1,0 +1,19 @@
+{
+  "name": "react-native-opentok",
+  "version": "0.0.0",
+  "description": "React Native OpenTok",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "react": "15.2.1",
+    "react-native": "^0.29.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}

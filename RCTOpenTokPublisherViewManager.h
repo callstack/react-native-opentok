@@ -1,13 +1,10 @@
-//
-//  RCTOpenTokPublisherViewManager.h
-//  Pods
-//
-//  Created by Michał Grabowski on 25/07/16.
-//
-//
+#import "RCTViewManager.h"
+#import "RCTOpenTokPublisherView.h"
 
-#import <Foundation/Foundation.h>
+@interface RCTOpenTokPublisherViewManager : RCTViewManager
 
-@interface RCTOpenTokPublisherViewManager : NSObject
+- (UIView *)view {
+    return [RCTOpenTokPublisherView new];
+}
 
 @end

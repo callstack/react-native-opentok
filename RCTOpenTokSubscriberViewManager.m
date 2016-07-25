@@ -1,13 +1,10 @@
-//
-//  RCTOpenTokSubscriberViewManager.m
-//  Pods
-//
-//  Created by Michał Grabowski on 25/07/16.
-//
-//
-
 #import "RCTOpenTokSubscriberViewManager.h"
+#import "RCTOpenTokSubscriberView.h"
 
 @implementation RCTOpenTokSubscriberViewManager
+
+- (UIView *)view {
+    return [RCTOpenTokSubscriberView new];
+}
 
 @end

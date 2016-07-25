@@ -1,13 +1,5 @@
-//
-//  RCTOpenTokSubscriberView.h
-//  Pods
-//
-//  Created by Michał Grabowski on 25/07/16.
-//
-//
+@import UIKit;
 
-#import <Foundation/Foundation.h>
-
-@interface RCTOpenTokSubscriberView : NSObject
+@interface RCTOpenTokSubscriberView : UIView
 
 @end

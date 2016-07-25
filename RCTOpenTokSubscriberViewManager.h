@@ -1,13 +1,5 @@
-//
-//  RCTOpenTokSubscriberViewManager.h
-//  Pods
-//
-//  Created by Michał Grabowski on 25/07/16.
-//
-//
+#import "RCTViewManager.h"
 
-#import <Foundation/Foundation.h>
-
-@interface RCTOpenTokSubscriberViewManager : NSObject
+@interface RCTOpenTokSubscriberViewManager : RCTViewManager
 
 @end

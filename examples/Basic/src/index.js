@@ -9,11 +9,10 @@ import {
   AppRegistry,
   View,
   StyleSheet,
-  Text,
 } from 'react-native';
-import OpenTok from 'react-native-opentok';
+import { PublisherView } from 'react-native-opentok';
 import { fetch } from './fetch';
-import { API_URL } from './variables';
+import { OPENTOK_API_KEY, API_URL } from './variables';
 
 class Basic extends Component {
   state = {
@@ -55,9 +54,16 @@ class Basic extends Component {
   }
 
   render() {
+    const { sessionId, publisherToken } = this.state;
     return (
       <View style={styles.container}>
-        <Text>Hello!</Text>
+        {!!publisherToken && (
+          <PublisherView
+            apiKey={OPENTOK_API_KEY}
+            sessionId={sessionId}
+            token={publisherToken}
+          />
+        )}
       </View>
     );
   }

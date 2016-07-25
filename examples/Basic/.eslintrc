@@ -1,0 +1,26 @@
+{
+   "parser": "babel-eslint",
+   "extends": "airbnb",
+   "env": {
+     "node": true,
+     "mocha": true,
+     "es6": true
+   },
+   "globals": {
+     "AmCharts": true,
+     "$Enum": true,
+   },
+   "rules": {
+     "global-require": 0,
+     "react/jsx-no-bind": 0,
+     "import/no-unresolved": 0,
+     "react/prefer-stateless-function": 0,
+     "no-constant-condition": 0,
+     "new-cap": 0,
+     "default-case": 0,
+     "no-use-before-define": 0,
+     "react/sort-comp": 0,
+     "quotes": [2, "single", {"allowTemplateLiterals": true}],
+     "strict": 0,
+   }
+ }

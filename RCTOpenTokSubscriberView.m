@@ -109,20 +109,25 @@
 
 # pragma mark - OTSubscriber delegate callbacks
 
-- (void)subscriber:(OTSubscriberKit *)subscriber streamCreated:(OTStream *)stream {
-    _onStreamCreated(@{});
-}
-
-- (void)subscriber:(OTSubscriberKit *)subscriber streamDestroyed:(OTStream *)stream
-{
-    _onStreamDestroyed(@{});
-    [self cleanupSubscriber];
-}
-
 - (void)subscriber:(OTSubscriberKit *)subscriber didFailWithError:(OTError*)error
 {
     _onUnknownError(RCTJSErrorFromNSError(error));
     [self cleanupSubscriber];
+}
+
+- (void)subscriberDidConnectToStream:(OTSubscriberKit *)subscriber
+{
+    _onStreamConnected(@{});
+}
+
+- (void)subscriberDidDisconnectFromStream:(OTSubscriberKit *)subscriber
+{
+  _onStreamDisonnected(@{});
+}
+
+- (void)subscriberDidReconnectToStream:(OTSubscriberKit *)subscriber
+{
+  _onStreamReconnected(@{});
 }
 
 /**

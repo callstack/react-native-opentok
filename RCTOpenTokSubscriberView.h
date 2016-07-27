@@ -17,8 +17,9 @@
 @property (nonatomic, copy) RCTDirectEventBlock onStartFailure;
 @property (nonatomic, copy) RCTDirectEventBlock onConnected;
 @property (nonatomic, copy) RCTDirectEventBlock onDisconnected;
-@property (nonatomic, copy) RCTDirectEventBlock onStreamCreated;
-@property (nonatomic, copy) RCTDirectEventBlock onStreamDestroyed;
+@property (nonatomic, copy) RCTDirectEventBlock onStreamConnected;
+@property (nonatomic, copy) RCTDirectEventBlock onStreamDisconnected;
+@property (nonatomic, copy) RCTDirectEventBlock onStreamReconnected;
 @property (nonatomic, copy) RCTDirectEventBlock onConnectionCreated;
 @property (nonatomic, copy) RCTDirectEventBlock onConnectionDestroyed;
 @property (nonatomic, copy) RCTDirectEventBlock onUnknownError;

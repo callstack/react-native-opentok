@@ -1,7 +1,7 @@
 @import UIKit;
 #import "RCTOpenTokPublisherView.h"
 #import "RCTEventDispatcher.h"
-@import OpenTok;
+#import <OpenTok/OpenTok.h>
 
 @interface RCTOpenTokPublisherView () <OTSessionDelegate>
 

@@ -17,7 +17,6 @@
 @end
 
 @implementation RCTOpenTokSubscriberView {
-    BOOL _isMounted;
     OTSession *_session;
     OTSubscriber *_subscriber;
 }
@@ -27,9 +26,7 @@
  */
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
-    if (!_isMounted) {
-        [self mount];
-    }
+    [self mount];
 }
 
 /**
@@ -40,15 +37,13 @@
  * Otherwise, `onSessionCreated` callback is called asynchronously
  */
 - (void)mount {
-    _isMounted = YES;
-
     _session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:_sessionId delegate:self];
 
     OTError *error = nil;
     [_session connectWithToken:_token error:&error];
 
     if (error) {
-        _onStartFailure(RCTJSErrorFromNSError(error));
+        _onSubscribeError(RCTJSErrorFromNSError(error));
     }
 }
 
@@ -57,15 +52,17 @@
  * session
  */
 - (void)doSubscribe:(OTStream*)stream {
-  _subscriber = [[OTSubscriber alloc] initWithStream:stream
-                                            delegate:self];
-  OTError *error = nil;
-  [_session subscribe:_subscriber error:&error];
-  if (error)
-  {
-      NSLog(@"Unable to subscribe (%@)",
-            error.localizedDescription);
-  }
+    _subscriber = [[OTSubscriber alloc] initWithStream:stream
+                                              delegate:self];
+    OTError *error = nil;
+
+    [_session subscribe:_subscriber error:&error];
+
+    if (error)
+    {
+      _onSubscribeError(RCTJSErrorFromNSError(error));
+      return;
+    }
 }
 
 - (void)cleanupSubscriber {
@@ -78,59 +75,58 @@
 /**
  * When session is created, we start subscribing straight away
  */
-- (void)sessionDidConnect:(OTSession*)session {
-    _onConnected(@{});
-}
+- (void)sessionDidConnect:(OTSession*)session {}
 
-- (void)sessionDidDisconnect:(OTSession*)session {
-    _onDisconnected(@{});
-}
+- (void)sessionDidDisconnect:(OTSession*)session {}
 
 - (void)session:(OTSession*)session streamCreated:(OTStream *)stream {
-    _onStreamConnected(@{});
     if (nil == _subscriber)
     {
         [self doSubscribe:stream];
     }
 }
 
-- (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {
-    _onStreamDisconnected(@{});
-}
+- (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {}
 
 - (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {
-    _onConnectionCreated(@{});
+    _onClientConnected(@{
+        @"connectionId": connection.connectionId,
+        @"creationTime": connection.creationTime,
+        @"data": connection.data,
+    });
 }
 
 - (void)session:(OTSession *)session connectionDestroyed:(OTConnection *)connection {
-    _onConnectionDestroyed(@{});
+    _onClientDisconnected(@{
+        @"connectionId": connection.connectionId,
+    });
 }
 
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {
-    _onUnknownError(RCTJSErrorFromNSError(error));
+    _onSubscribeError(RCTJSErrorFromNSError(error));
 }
 
 # pragma mark - OTSubscriber delegate callbacks
 
 - (void)subscriber:(OTSubscriberKit *)subscriber didFailWithError:(OTError*)error
 {
-    _onUnknownError(RCTJSErrorFromNSError(error));
+    _onSubscribeError(RCTJSErrorFromNSError(error));
     [self cleanupSubscriber];
 }
 
 - (void)subscriberDidConnectToStream:(OTSubscriberKit *)subscriber
 {
-    _onStreamConnected(@{});
+    _onSubscribeStart(@{});
 }
 
 - (void)subscriberDidDisconnectFromStream:(OTSubscriberKit *)subscriber
 {
-    _onStreamDisconnected(@{});
+    _onSubscribeStop(@{});
 }
 
 - (void)subscriberDidReconnectToStream:(OTSubscriberKit *)subscriber
 {
-  _onStreamReconnected(@{});
+  _onSubscribeStart(@{});
 }
 
 /**

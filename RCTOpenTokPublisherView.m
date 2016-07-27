@@ -43,7 +43,7 @@
     [_session connectWithToken:_token error:&error];
     
     if (error) {
-        _onStartFailure(RCTJSErrorFromNSError(error));
+        _onPublishError(RCTJSErrorFromNSError(error));
     }
 }
 
@@ -66,8 +66,6 @@
         return;
     }
     
-    _onPublishStart(@{});
-    
     [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:_publisher.view];
 }
@@ -83,49 +81,55 @@
  * When session is created, we start publishing straight away
  */
 - (void)sessionDidConnect:(OTSession*)session {
-    _onConnected(@{});
     [self startPublishing];
 }
 
-- (void)sessionDidDisconnect:(OTSession*)session {
-    _onDisconnected(@{});
-}
+- (void)sessionDidDisconnect:(OTSession*)session {}
 
-- (void)session:(OTSession*)session streamCreated:(OTStream *)stream {
-    _onStreamCreated(@{});
-}
+/**
+ * @todo multiple streams in a session are out of scope
+ * for our use-cases. To be implemented later.
+ */
+- (void)session:(OTSession*)session streamCreated:(OTStream *)stream {}
+- (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {}
 
-- (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {
-    _onStreamDestroyed(@{});
-}
-
+/**
+ * Called when another client connects to the session
+ */
 - (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {
-    _onConnectionCreated(@{});
+    _onClientConnected(@{
+        @"connectionId": connection.connectionId,
+        @"creationTime": connection.creationTime,
+        @"data": connection.data,
+    });
 }
 
+/**
+ * Called when client disconnects from the session
+ */
 - (void)session:(OTSession *)session connectionDestroyed:(OTConnection *)connection {
-    _onConnectionDestroyed(@{});
+    _onClientDisconnected(@{
+        @"connectionId": connection.connectionId,
+    });
 }
 
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {
-    _onUnknownError(RCTJSErrorFromNSError(error));
+    _onPublishError(RCTJSErrorFromNSError(error));
 }
 
 # pragma mark - OTPublisher delegate callbacks
 
 - (void)publisher:(OTPublisherKit *)publisher streamCreated:(OTStream *)stream {
-    _onStreamCreated(@{});
+    _onPublishStart(@{});
 }
 
-- (void)publisher:(OTPublisherKit*)publisher streamDestroyed:(OTStream *)stream
-{
-    _onStreamDestroyed(@{});
+- (void)publisher:(OTPublisherKit*)publisher streamDestroyed:(OTStream *)stream {
+    _onPublishStop(@{});
     [self cleanupPublisher];
 }
 
-- (void)publisher:(OTPublisherKit*)publisher didFailWithError:(OTError*)error
-{
-    _onUnknownError(RCTJSErrorFromNSError(error));
+- (void)publisher:(OTPublisherKit*)publisher didFailWithError:(OTError*)error {
+    _onPublishError(RCTJSErrorFromNSError(error));
     [self cleanupPublisher];
 }
 

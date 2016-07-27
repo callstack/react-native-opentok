@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { requireNativeComponent, View } from 'react-native';
+import { requireNativeComponent, ActivityIndicator, View } from 'react-native';
 import React from 'react';
 
 const noop = () => {};
@@ -14,6 +14,10 @@ const noop = () => {};
 class PublisherView extends React.Component {
   static propTypes = {
     ...View.propTypes,
+    /**
+     * Color of the Spinner (defaults to gray)
+     */
+    spinnerColor: React.PropTypes.string,
     /**
      * {String} token
      */
@@ -38,6 +42,10 @@ class PublisherView extends React.Component {
      * Called when session was disconnected
      */
     onDisconnected: React.PropTypes.func,
+    /**
+     * Called when publishing is about to start
+     */
+    onPublishStart: React.PropTypes.func,
     /**
      * Called when there was an error during publishing
      */
@@ -65,11 +73,38 @@ class PublisherView extends React.Component {
     onConnectionCreated: noop,
     onConnectionDestroyed: noop,
     onUnknownError: noop,
+    onPublishStart: noop,
     onPublishError: noop,
   };
 
+  state = {
+    renderSpinner: true,
+  };
+
+  onPublishStart = () => {
+    this.props.onPublishStart();
+    this.setState({
+      renderSpinner: false,
+    });
+  };
+
   render() {
-    return <RCTPublisherView {...this.props} />;
+    const { spinnerColor, ...passProps } = this.props;
+
+    return (
+      <View>
+        <RCTPublisherView
+          {...passProps}
+          onPublishStart={this.onPublishStart}
+        />
+        {this.state.renderSpinner && (
+          <ActivityIndicator
+            animating
+            color={spinnerColor}
+          />
+        )}
+      </View>
+    );
   }
 }
 

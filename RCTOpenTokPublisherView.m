@@ -66,6 +66,8 @@
         return;
     }
     
+    _onPublishStart(@{});
+    
     [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:_publisher.view];
 }

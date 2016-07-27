@@ -33,6 +33,7 @@ class PublisherView extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return <RCTPublisherView {...this.props} />;
   }
 }

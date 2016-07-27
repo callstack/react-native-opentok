@@ -13,6 +13,23 @@
     OTPublisher *_publisher;
 }
 
+/**
+ * Mounts component after all props were passed
+ */
+- (void)didMoveToWindow {
+    [super didMoveToSuperview];
+    if (!_isMounted) {
+        [self mount];
+    }
+}
+
+/**
+ * Creates a new session with a given apiKey, sessionID and token
+ *
+ * Calls `onStartFailure` in case an error happens during initial creation.
+ *
+ * Otherwise, `onSessionCreated` callback is called asynchronously
+ */
 - (void)mount {
     _isMounted = YES;
     
@@ -23,13 +40,6 @@
     
     if (error) {
         _onStartFailure(@{});
-    }
-}
-
-- (void)didMoveToWindow {
-    [super didMoveToSuperview];
-    if (!_isMounted) {
-        [self mount];
     }
 }
 
@@ -63,6 +73,9 @@
 
 # pragma mark - OTSession delegate callbacks
 
+/**
+ * When session is created, we start publishing straight away
+ */
 - (void)sessionDidConnect:(OTSession*)session {
     _onConnected(@{});
     [self startPublishing];
@@ -94,7 +107,9 @@
 
 # pragma mark - OTPublisher delegate callbacks
 
-- (void)publisher:(OTPublisherKit *)publisher streamCreated:(OTStream *)stream {}
+- (void)publisher:(OTPublisherKit *)publisher streamCreated:(OTStream *)stream {
+
+}
 
 - (void)publisher:(OTPublisherKit*)publisher streamDestroyed:(OTStream *)stream
 {
@@ -106,8 +121,12 @@
     [self cleanupPublisher];
 }
 
+/**
+ * Remove session when this component is unmounted
+ */
 - (void)dealloc {
     [self cleanupPublisher];
+    [_session disconnect:nil];
 }
 
 @end

@@ -8,14 +8,14 @@
 @property (nonatomic, strong) NSString *sessionId;
 @property (nonatomic, strong) NSString *token;
 
-@property (nonatomic, strong) RCTDirectEventBlock onStartFailure;
-@property (nonatomic, strong) RCTDirectEventBlock onConnected;
-@property (nonatomic, strong) RCTDirectEventBlock onDisconnected;
-@property (nonatomic, strong) RCTDirectEventBlock onStreamCreated;
-@property (nonatomic, strong) RCTDirectEventBlock onStreamDestroyed;
-@property (nonatomic, strong) RCTDirectEventBlock onConnectionCreated;
-@property (nonatomic, strong) RCTDirectEventBlock onConnectionDestroyed;
-@property (nonatomic, strong) RCTDirectEventBlock onUnknownError;
+@property (nonatomic, copy) RCTDirectEventBlock onStartFailure;
+@property (nonatomic, copy) RCTDirectEventBlock onConnected;
+@property (nonatomic, copy) RCTDirectEventBlock onDisconnected;
+@property (nonatomic, copy) RCTDirectEventBlock onStreamCreated;
+@property (nonatomic, copy) RCTDirectEventBlock onStreamDestroyed;
+@property (nonatomic, copy) RCTDirectEventBlock onConnectionCreated;
+@property (nonatomic, copy) RCTDirectEventBlock onConnectionDestroyed;
+@property (nonatomic, copy) RCTDirectEventBlock onUnknownError;
 
 
 @end

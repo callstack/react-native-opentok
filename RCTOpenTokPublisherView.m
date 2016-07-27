@@ -12,13 +12,6 @@
     OTSession *_session;
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    if (!_isMounted) {
-        [self mount];
-    }
-}
-
 - (void)mount {
     _isMounted = YES;
     
@@ -27,39 +20,60 @@
     OTError *error = nil;
     [_session connectWithToken:_token error:&error];
     
-    if (error) {
-        _onStartFailure([NSNull null]);
+    if (error && _onStartFailure) {
+        _onStartFailure(@{});
+    }
+}
+
+- (void)didMoveToWindow {
+    [super didMoveToSuperview];
+    if (!_isMounted) {
+        [self mount];
     }
 }
 
 # pragma mark - OTSession delegate callbacks
 
 - (void)sessionDidConnect:(OTSession*)session {
-    _onConnected([NSNull null]);
+    if (_onConnected) {
+        _onConnected(@{});
+    }
 }
 
 - (void)sessionDidDisconnect:(OTSession*)session {
-    _onDisconnected([NSNull null]);
+    if (_onDisconnected) {
+        _onDisconnected(@{});
+    }
 }
 
 - (void)session:(OTSession*)session streamCreated:(OTStream *)stream {
-    _onStreamCreated([NSNull null]);
+    if (_onStreamCreated) {
+        _onStreamCreated(@{});
+    }
 }
 
 - (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {
-    _onStreamDestroyed([NSNull null]);
+    if (_onStreamDestroyed) {
+        _onStreamDestroyed(@{});
+    }
 }
 
 - (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {
-    _onConnectionCreated([NSNull null]);
+    if (_onConnectionCreated) {
+        _onConnectionCreated(@{});
+    }
 }
 
 - (void)session:(OTSession *)session connectionDestroyed:(OTConnection *)connection {
-    _onConnectionDestroyed([NSNull null]);
+    if (_onConnectionDestroyed) {
+        _onConnectionDestroyed(@{});
+    }
 }
 
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {
-    _onUnknownError([NSNull null]);
+    if (_onUnknownError) {
+        _onUnknownError(@{});
+    }
 }
 
 @end

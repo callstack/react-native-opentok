@@ -12,7 +12,7 @@
 #import "RCTUtils.h"
 #import <OpenTok/OpenTok.h>
 
-@interface RCTOpenTokSubscriberView () <OTSessionDelegate>
+@interface RCTOpenTokSubscriberView () <OTSessionDelegate, OTSubscriberDelegate>
 
 @end
 
@@ -52,8 +52,7 @@
  * session
  */
 - (void)doSubscribe:(OTStream*)stream {
-    _subscriber = [[OTSubscriber alloc] initWithStream:stream
-                                              delegate:self];
+    _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
     OTError *error = nil;
 
     [_session subscribe:_subscriber error:&error];
@@ -63,6 +62,16 @@
       _onSubscribeError(RCTJSErrorFromNSError(error));
       return;
     }
+
+    [self attachSubscriberView];
+}
+
+/**
+ * Attaches subscriber preview
+ */
+- (void)attachSubscriberView {
+    [_subscriber.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+    [self addSubview:_subscriber.view];
 }
 
 - (void)cleanupSubscriber {
@@ -87,20 +96,6 @@
 }
 
 - (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {}
-
-- (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {
-    _onClientConnected(@{
-        @"connectionId": connection.connectionId,
-        @"creationTime": connection.creationTime,
-        @"data": connection.data,
-    });
-}
-
-- (void)session:(OTSession *)session connectionDestroyed:(OTConnection *)connection {
-    _onClientDisconnected(@{
-        @"connectionId": connection.connectionId,
-    });
-}
 
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {
     _onSubscribeError(RCTJSErrorFromNSError(error));

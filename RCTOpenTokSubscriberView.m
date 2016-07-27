@@ -53,11 +53,8 @@
 }
 
 /**
- * Creates an instance of `OTPublisher` and publishes stream to the current
+ * Creates an instance of `OTSubscriber` and subscribes to stream in current
  * session
- *
- * Calls `onPublishError` in case of an error, otherwise, a camera preview is inserted
- * inside the mounted view
  */
 - (void)doSubscribe {
   _subscriber = [[OTSubscriber alloc] initWithStream:stream
@@ -79,7 +76,7 @@
 # pragma mark - OTSession delegate callbacks
 
 /**
- * When session is created, we start publishing straight away
+ * When session is created, we start subscribing straight away
  */
 - (void)sessionDidConnect:(OTSession*)session {
     _onConnected(@{});

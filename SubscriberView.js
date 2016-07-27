@@ -49,32 +49,6 @@ class SubscriberView extends React.Component {
      */
     onSubscribeStop: React.PropTypes.func,
     /**
-     * This function is called when new client is connected to
-     * the current stream
-     *
-     * Receives payload:
-     * ```
-     * {
-     *   connectionId: string,
-     *   creationTime: string,
-     *   data: string,
-     * }
-     * ```
-     */
-    onClientConnected: React.PropTypes.func,
-    /**
-     * This function is called when client is disconnected from
-     * the current stream
-     *
-     * Receives payload:
-     * ```
-     * {
-     *   connectionId: string,
-     * }
-     * ```
-     */
-    onClientDisconnected: React.PropTypes.func,
-    /**
      * Custom style of the spinner that should overwrite default
      * styling
      */

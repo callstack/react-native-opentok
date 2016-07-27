@@ -20,7 +20,4 @@
 @property (nonatomic, copy) RCTDirectEventBlock onSubscribeStop;
 @property (nonatomic, copy) RCTDirectEventBlock onSubscribeStart;
 
-@property (nonatomic, copy) RCTDirectEventBlock onClientConnected;
-@property (nonatomic, copy) RCTDirectEventBlock onClientDisconnected;
-
 @end

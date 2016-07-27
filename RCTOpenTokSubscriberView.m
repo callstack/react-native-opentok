@@ -76,11 +76,11 @@
  * Cleans subscriber
  */
 - (void)cleanupSubscriber {
-  [_subscriber.view removeFromSuperview];
-  _subscriber = nil;
+    [_subscriber.view removeFromSuperview];
+    _subscriber = nil;
 }
 
-# pragma mark - OTSession delegate callbacks
+#pragma mark - OTSession delegate callbacks
 
 /**
  * Called when session is created
@@ -94,10 +94,12 @@
 
 /**
  * When stream is created we start subscribtion
+ *
+ * @todo we only support subscribing to a single stream, multiple streams
+ * are out of scope for our use-cases. Contributions welcome.
  */
-- (void)session:(OTSession*)session streamCreated:(OTStream *)stream {
-    if (nil == _subscriber)
-    {
+- (void)session:(OTSession*)session streamCreated:(OTStream*)stream {
+    if (_subscriber == nil) {
         [self doSubscribe:stream];
     }
 }
@@ -105,8 +107,7 @@
 /**
  * Called when stream is destroyed
  */
-- (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {}
-
+- (void)session:(OTSession*)session streamDestroyed:(OTStream*)stream {}
 
 /**
  * Called when session error occurs
@@ -115,27 +116,23 @@
     _onSubscribeError(RCTJSErrorFromNSError(error));
 }
 
-# pragma mark - OTSubscriber delegate callbacks
+#pragma mark - OTSubscriber delegate callbacks
 
-- (void)subscriber:(OTSubscriberKit *)subscriber didFailWithError:(OTError*)error
-{
+- (void)subscriber:(OTSubscriberKit*)subscriber didFailWithError:(OTError*)error {
     _onSubscribeError(RCTJSErrorFromNSError(error));
     [self cleanupSubscriber];
 }
 
-- (void)subscriberDidConnectToStream:(OTSubscriberKit *)subscriber
-{
+- (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber {
     _onSubscribeStart(@{});
 }
 
-- (void)subscriberDidDisconnectFromStream:(OTSubscriberKit *)subscriber
-{
+- (void)subscriberDidDisconnectFromStream:(OTSubscriberKit*)subscriber {
     _onSubscribeStop(@{});
 }
 
-- (void)subscriberDidReconnectToStream:(OTSubscriberKit *)subscriber
-{
-  _onSubscribeStart(@{});
+- (void)subscriberDidReconnectToStream:(OTSubscriberKit*)subscriber {
+    _onSubscribeStart(@{});
 }
 
 /**

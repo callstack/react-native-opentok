@@ -62,7 +62,7 @@ class Basic extends Component {
             apiKey={OPENTOK_API_KEY}
             sessionId={sessionId}
             token={publisherToken}
-            onConnected={() => console.log('Session connected')}
+            style={{ width: 300, height: 200 }}
           />
         )}
       </View>

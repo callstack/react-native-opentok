@@ -22,4 +22,6 @@ RCT_EXPORT_VIEW_PROPERTY(onConnectionCreated, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onConnectionDestroyed, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onUnknownError, RCTDirectEventBlock)
 
+RCT_EXPORT_VIEW_PROPERTY(onPublishError, RCTDirectEventBlock)
+
 @end

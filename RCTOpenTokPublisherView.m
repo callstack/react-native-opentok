@@ -10,6 +10,7 @@
 @implementation RCTOpenTokPublisherView {
     BOOL _isMounted;
     OTSession *_session;
+    OTPublisher *_publisher;
 }
 
 - (void)mount {
@@ -20,7 +21,7 @@
     OTError *error = nil;
     [_session connectWithToken:_token error:&error];
     
-    if (error && _onStartFailure) {
+    if (error) {
         _onStartFailure(@{});
     }
 }
@@ -32,48 +33,81 @@
     }
 }
 
+/**
+ * Creates an instance of `OTPublisher` and publishes stream to the current
+ * session
+ *
+ * Calls `onPublishError` in case of an error, otherwise, a camera preview is inserted
+ * inside the mounted view
+ */
+- (void)startPublishing {
+    _publisher = [[OTPublisher alloc] initWithDelegate:self];
+    
+    OTError *error = nil;
+    
+    [_session publish:_publisher error:&error];
+    
+    if (error) {
+        _onPublishError(@{});
+        return;
+    }
+    
+    [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+    [self addSubview:_publisher.view];
+}
+
+- (void)cleanupPublisher {
+    [_publisher.view removeFromSuperview];
+    _publisher = nil;
+}
+
 # pragma mark - OTSession delegate callbacks
 
 - (void)sessionDidConnect:(OTSession*)session {
-    if (_onConnected) {
-        _onConnected(@{});
-    }
+    _onConnected(@{});
+    [self startPublishing];
 }
 
 - (void)sessionDidDisconnect:(OTSession*)session {
-    if (_onDisconnected) {
-        _onDisconnected(@{});
-    }
+    _onDisconnected(@{});
 }
 
 - (void)session:(OTSession*)session streamCreated:(OTStream *)stream {
-    if (_onStreamCreated) {
-        _onStreamCreated(@{});
-    }
+    _onStreamCreated(@{});
 }
 
 - (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {
-    if (_onStreamDestroyed) {
-        _onStreamDestroyed(@{});
-    }
+    _onStreamDestroyed(@{});
 }
 
 - (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {
-    if (_onConnectionCreated) {
-        _onConnectionCreated(@{});
-    }
+    _onConnectionCreated(@{});
 }
 
 - (void)session:(OTSession *)session connectionDestroyed:(OTConnection *)connection {
-    if (_onConnectionDestroyed) {
-        _onConnectionDestroyed(@{});
-    }
+    _onConnectionDestroyed(@{});
 }
 
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {
-    if (_onUnknownError) {
-        _onUnknownError(@{});
-    }
+    _onUnknownError(@{});
+}
+
+# pragma mark - OTPublisher delegate callbacks
+
+- (void)publisher:(OTPublisherKit *)publisher streamCreated:(OTStream *)stream {}
+
+- (void)publisher:(OTPublisherKit*)publisher streamDestroyed:(OTStream *)stream
+{
+    [self cleanupPublisher];
+}
+
+- (void)publisher:(OTPublisherKit*)publisher didFailWithError:(OTError*) error
+{
+    [self cleanupPublisher];
+}
+
+- (void)dealloc {
+    [self cleanupPublisher];
 }
 
 @end

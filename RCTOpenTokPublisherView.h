@@ -17,5 +17,6 @@
 @property (nonatomic, copy) RCTDirectEventBlock onConnectionDestroyed;
 @property (nonatomic, copy) RCTDirectEventBlock onUnknownError;
 
+@property (nonatomic, copy) RCTDirectEventBlock onPublishError;
 
 @end

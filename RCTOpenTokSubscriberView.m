@@ -56,14 +56,14 @@
  * Creates an instance of `OTSubscriber` and subscribes to stream in current
  * session
  */
-- (void)doSubscribe {
+- (void)doSubscribe:(OTStream*)stream {
   _subscriber = [[OTSubscriber alloc] initWithStream:stream
                                             delegate:self];
   OTError *error = nil;
   [_session subscribe:_subscriber error:&error];
   if (error)
   {
-      NSLog(@"Unable to publish (%@)",
+      NSLog(@"Unable to subscribe (%@)",
             error.localizedDescription);
   }
 }
@@ -80,7 +80,6 @@
  */
 - (void)sessionDidConnect:(OTSession*)session {
     _onConnected(@{});
-    [self doSubscribe];
 }
 
 - (void)sessionDidDisconnect:(OTSession*)session {
@@ -88,11 +87,15 @@
 }
 
 - (void)session:(OTSession*)session streamCreated:(OTStream *)stream {
-    _onStreamCreated(@{});
+    _onStreamConnected(@{});
+    if (nil == _subscriber)
+    {
+        [self doSubscribe:stream];
+    }
 }
 
 - (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {
-    _onStreamDestroyed(@{});
+    _onStreamDisconnected(@{});
 }
 
 - (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {
@@ -122,7 +125,7 @@
 
 - (void)subscriberDidDisconnectFromStream:(OTSubscriberKit *)subscriber
 {
-  _onStreamDisonnected(@{});
+    _onStreamDisconnected(@{});
 }
 
 - (void)subscriberDidReconnectToStream:(OTSubscriberKit *)subscriber

@@ -109,14 +109,14 @@ class PublisherView extends React.Component {
           {...passProps}
           onPublishStart={this.onPublishStart}
         />
-      {this.state.renderSpinner && (
-        <View style={[styles.spinnerContainer, spinnerContainerStyle]}>
-          <ActivityIndicator
-            animating
-            color={spinnerColor}
-          />
-        </View>
-      )}
+        {this.state.renderSpinner && (
+          <View style={[styles.spinnerContainer, spinnerContainerStyle]}>
+            <ActivityIndicator
+              animating
+              color={spinnerColor}
+            />
+          </View>
+        )}
       </View>
     );
   }

@@ -26,5 +26,6 @@
 @property (nonatomic, copy) RCTDirectEventBlock onUnknownError;
 
 @property (nonatomic, copy) RCTDirectEventBlock onPublishError;
+@property (nonatomic, copy) RCTDirectEventBlock onPublishStart;
 
 @end

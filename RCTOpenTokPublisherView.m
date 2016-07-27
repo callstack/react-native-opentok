@@ -17,7 +17,6 @@
 @end
 
 @implementation RCTOpenTokPublisherView {
-    BOOL _isMounted;
     OTSession *_session;
     OTPublisher *_publisher;
 }
@@ -27,9 +26,7 @@
  */
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
-    if (!_isMounted) {
-        [self mount];
-    }
+    [self mount];
 }
 
 /**
@@ -40,8 +37,6 @@
  * Otherwise, `onSessionCreated` callback is called asynchronously
  */
 - (void)mount {
-    _isMounted = YES;
-    
     _session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:_sessionId delegate:self];
     
     OTError *error = nil;
@@ -70,6 +65,8 @@
         _onPublishError(RCTJSErrorFromNSError(error));
         return;
     }
+    
+    _onPublishStart(@{});
     
     [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:_publisher.view];

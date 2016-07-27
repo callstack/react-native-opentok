@@ -3,8 +3,6 @@
 
 @interface RCTOpenTokPublisherViewManager : RCTViewManager
 
-- (UIView *)view {
-    return [RCTOpenTokPublisherView new];
-}
+- (UIView *)view;
 
 @end

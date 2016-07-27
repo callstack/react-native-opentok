@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { requireNativeComponent, ActivityIndicator, View } from 'react-native';
+import { requireNativeComponent, StyleSheet, ActivityIndicator, View } from 'react-native';
 import React from 'react';
 
 const noop = () => {};
@@ -14,7 +14,9 @@ const noop = () => {};
 class PublisherView extends React.Component {
   static propTypes = {
     ...View.propTypes,
-    spinnerColor: React.PropTypes.string,
+    // Custom spinner container style to override
+    // default style
+    spinnerContainerStyle: React.PropTypes.any,
     token: React.PropTypes.string.isRequired,
     sessionId: React.PropTypes.string.isRequired,
     apiKey: React.PropTypes.string.isRequired,
@@ -46,24 +48,43 @@ class PublisherView extends React.Component {
   };
 
   render() {
-    const { spinnerColor, ...passProps } = this.props;
+    const { spinnerContainerStyle, ...passProps } = this.props;
 
     return (
-      <View>
+      <View style={styles.container}>
         <RCTPublisherView
           {...passProps}
           onPublishStart={this.onPublishStart}
         />
-        {this.state.renderSpinner && (
+      {this.state.renderSpinner && (
+        <View style={[styles.spinnerContainer, spinnerContainerStyle]}>
           <ActivityIndicator
             animating
             color={spinnerColor}
           />
-        )}
+        </View>
+      )}
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+  },
+  spinnerContainer: {
+    backgroundColor: '#f1f1f1',
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 const RCTPublisherView = requireNativeComponent('RCTOpenTokPublisherView', PublisherView);
 

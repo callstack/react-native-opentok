@@ -12,7 +12,7 @@
 #import "RCTUtils.h"
 #import <OpenTok/OpenTok.h>
 
-@interface RCTOpenTokPublisherView () <OTSessionDelegate>
+@interface RCTOpenTokPublisherView () <OTSessionDelegate, OTPublisherDelegate>
 
 @end
 
@@ -38,10 +38,10 @@
  */
 - (void)mount {
     _session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:_sessionId delegate:self];
-    
+
     OTError *error = nil;
     [_session connectWithToken:_token error:&error];
-    
+
     if (error) {
         _onPublishError(RCTJSErrorFromNSError(error));
     }
@@ -56,26 +56,36 @@
  */
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
-    
+
     OTError *error = nil;
-    
+
     [_session publish:_publisher error:&error];
-    
+
     if (error) {
         _onPublishError(RCTJSErrorFromNSError(error));
         return;
     }
-    
+
+    [self attachPublisherView];
+}
+
+/**
+ * Attaches publisher preview
+ */
+- (void)attachPublisherView {
     [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:_publisher.view];
 }
 
+/**
+ * Cleans up publisher
+ */
 - (void)cleanupPublisher {
     [_publisher.view removeFromSuperview];
     _publisher = nil;
 }
 
-# pragma mark - OTSession delegate callbacks
+#pragma mark - OTSession delegate callbacks
 
 /**
  * When session is created, we start publishing straight away
@@ -117,9 +127,9 @@
     _onPublishError(RCTJSErrorFromNSError(error));
 }
 
-# pragma mark - OTPublisher delegate callbacks
+#pragma mark - OTPublisher delegate callbacks
 
-- (void)publisher:(OTPublisherKit *)publisher streamCreated:(OTStream *)stream {
+- (void)publisher:(OTPublisherKit*)publisher streamCreated:(OTStream *)stream {
     _onPublishStart(@{});
 }
 

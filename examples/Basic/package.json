@@ -13,5 +13,9 @@
     "eslint-plugin-import": "^1.11.1",
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^5.2.2"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-inline-environment-variables": "^6.8.0",
+    "babel-preset-react-native": "^1.9.0"
   }
 }

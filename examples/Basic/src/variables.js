@@ -1,2 +1,2 @@
-export const API_URL = '<YOUR_API_URL>';
-export const OPENTOK_API_KEY = '<YOUR_API_KEY>';
+export const API_URL = process.env.EXAMPLE_OPENTOK_API_URL;
+export const OPENTOK_API_KEY = process.env.EXAMPLE_OPENTOK_API_KEY;

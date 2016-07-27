@@ -108,16 +108,18 @@
 # pragma mark - OTPublisher delegate callbacks
 
 - (void)publisher:(OTPublisherKit *)publisher streamCreated:(OTStream *)stream {
-
+    _onStreamCreated(@{});
 }
 
 - (void)publisher:(OTPublisherKit*)publisher streamDestroyed:(OTStream *)stream
 {
+    _onStreamDestroyed(@{});
     [self cleanupPublisher];
 }
 
 - (void)publisher:(OTPublisherKit*)publisher didFailWithError:(OTError*) error
 {
+    _onUnknownError(@{});
     [self cleanupPublisher];
 }
 

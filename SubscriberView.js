@@ -45,8 +45,6 @@ class SubscriberView extends React.Component {
     onSubscribeStart: noop,
     onSubscribeError: noop,
     onSubscribeStop: noop,
-    onClientConnected: noop,
-    onClientDisconnected: noop,
   };
 
   render() {

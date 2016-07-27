@@ -6,8 +6,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { requireNativeComponent, StyleSheet, ActivityIndicator, View } from 'react-native';
+import { requireNativeComponent } from 'react-native';
 import React from 'react';
+import SessionViewProps from './SessionViewProps';
+import withLoadingSpinner from './withLoadingSpinner';
 
 const noop = () => {};
 
@@ -24,18 +26,7 @@ const noop = () => {};
 class PublisherView extends React.Component {
   static propTypes = {
     ...View.propTypes,
-    /**
-     * OpenTok token to use when publishing
-     */
-    token: React.PropTypes.string.isRequired,
-    /**
-     * OpenTok sessionId to use when publishing
-     */
-    sessionId: React.PropTypes.string.isRequired,
-    /**
-     * OpenTok API Key to be used
-     */
-    apiKey: React.PropTypes.string.isRequired,
+    ...SessionViewProps,
     /**
      * This function is called on publish start
      */
@@ -74,11 +65,6 @@ class PublisherView extends React.Component {
      * ```
      */
     onClientDisconnected: React.PropTypes.func,
-    /**
-     * Custom style of the spinner that should overwrite default
-     * styling
-     */
-    spinnerContainerStyle: React.PropTypes.any,
   };
 
   static defaultProps = {
@@ -89,55 +75,11 @@ class PublisherView extends React.Component {
     onClientDisconnected: noop,
   };
 
-  state = {
-    renderSpinner: true,
-  };
-
-  onPublishStart = () => {
-    this.props.onPublishStart();
-    this.setState({
-      renderSpinner: false,
-    });
-  };
-
   render() {
-    const { spinnerContainerStyle, ...passProps } = this.props;
-
-    return (
-      <View style={styles.container}>
-        <RCTPublisherView
-          {...passProps}
-          onPublishStart={this.onPublishStart}
-        />
-        {this.state.renderSpinner && (
-          <View style={[styles.spinnerContainer, spinnerContainerStyle]}>
-            <ActivityIndicator
-              animating
-            />
-          </View>
-        )}
-      </View>
-    );
+    return <RCTPublisherView {...this.props} />;
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    position: 'relative',
-  },
-  spinnerContainer: {
-    backgroundColor: '#f1f1f1',
-    flex: 1,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
 const RCTPublisherView = requireNativeComponent('RCTOpenTokPublisherView', PublisherView);
 
-export default PublisherView;
+export default withLoadingSpinner(PublisherView);

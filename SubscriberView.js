@@ -6,8 +6,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { requireNativeComponent, ActivityIndicator, View, StyleSheet } from 'react-native';
+import { requireNativeComponent } from 'react-native';
 import React from 'react';
+import SessionViewProps from './SessionViewProps';
+import withLoadingSpinner from './withLoadingSpinner';
 
 const noop = () => {};
 
@@ -24,18 +26,7 @@ const noop = () => {};
 class SubscriberView extends React.Component {
   static propTypes = {
     ...View.propTypes,
-    /**
-     * OpenTok token to use when publishing
-     */
-    token: React.PropTypes.string.isRequired,
-    /**
-     * OpenTok sessionId to use when publishing
-     */
-    sessionId: React.PropTypes.string.isRequired,
-    /**
-     * OpenTok API Key to be used
-     */
-    apiKey: React.PropTypes.string.isRequired,
+    ...SessionViewProps,
     /**
      * This function is called on subscribe start
      */
@@ -48,11 +39,6 @@ class SubscriberView extends React.Component {
      * This function is called on subscribe stop
      */
     onSubscribeStop: React.PropTypes.func,
-    /**
-     * Custom style of the spinner that should overwrite default
-     * styling
-     */
-    spinnerContainerStyle: React.PropTypes.any,
   };
 
   static defaultProps = {
@@ -63,55 +49,10 @@ class SubscriberView extends React.Component {
     onClientDisconnected: noop,
   };
 
-  state = {
-    renderSpinner: true,
-  };
-
-  onSubscribeStart = () => {
-    this.props.onSubscribeStart();
-    this.setState({
-      renderSpinner: false,
-    });
-  };
-
   render() {
-    const { spinnerContainerStyle, ...passProps } = this.props;
-
-    return (
-      <View>
-        <RCTSubscriberView
-          {...passProps}
-          onSubscribeStart={this.onSubscribeStart}
-        />
-        {this.state.renderSpinner && (
-          <View style={[styles.spinnerContainer, spinnerContainerStyle]}>
-            <ActivityIndicator
-              animating
-            />
-          </View>
-        )}
-      </View>
-    );
+    return <RCTSubscriberView {...this.props} />;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'relative',
-  },
-  spinnerContainer: {
-    backgroundColor: '#f1f1f1',
-    flex: 1,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
 const RCTSubscriberView = requireNativeComponent('RCTOpenTokSubscriberView', SubscriberView);
 
-export default SubscriberView;
+export default withLoadingSpinner(SubscriberView);

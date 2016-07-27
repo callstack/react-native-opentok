@@ -12,7 +12,7 @@
 #import "RCTUtils.h"
 #import <OpenTok/OpenTok.h>
 
-@interface RCTOpenTokPublisherView () <OTSessionDelegate>
+@interface RCTOpenTokPublisherView () <OTSessionDelegate, OTPublisherDelegate>
 
 @end
 
@@ -66,6 +66,10 @@
         return;
     }
     
+    [self attachPublisherView];
+}
+
+- (void)attachPublisherView {
     [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:_publisher.view];
 }

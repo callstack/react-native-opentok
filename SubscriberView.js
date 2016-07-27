@@ -11,18 +11,73 @@ import React from 'react';
 
 const noop = () => {};
 
+/**
+ * A React component for subscribing to video stream over OpenTok to the
+ * session provided
+ *
+ * `Subscriber` supports default styling, just like any other View.
+ *
+ * After successfull session creation, the subscriber view displaying live
+ * preview of a stream will be appended to the container and will take available
+ * space, as layed out by React.
+ */
 class SubscriberView extends React.Component {
   static propTypes = {
     ...View.propTypes,
+    /**
+     * OpenTok token to use when publishing
+     */
     token: React.PropTypes.string.isRequired,
+    /**
+     * OpenTok sessionId to use when publishing
+     */
     sessionId: React.PropTypes.string.isRequired,
+    /**
+     * OpenTok API Key to be used
+     */
     apiKey: React.PropTypes.string.isRequired,
-    // Callbacks
+    /**
+     * This function is called on subscribe start
+     */
     onSubscribeStart: React.PropTypes.func,
+    /**
+     * This function is called on subscribe error
+     */
     onSubscribeError: React.PropTypes.func,
+    /**
+     * This function is called on subscribe stop
+     */
     onSubscribeStop: React.PropTypes.func,
+    /**
+     * This function is called when new client is connected to
+     * the current stream
+     *
+     * Receives payload:
+     * ```
+     * {
+     *   connectionId: string,
+     *   creationTime: string,
+     *   data: string,
+     * }
+     * ```
+     */
     onClientConnected: React.PropTypes.func,
+    /**
+     * This function is called when client is disconnected from
+     * the current stream
+     *
+     * Receives payload:
+     * ```
+     * {
+     *   connectionId: string,
+     * }
+     * ```
+     */
     onClientDisconnected: React.PropTypes.func,
+    /**
+     * Custom style of the spinner that should overwrite default
+     * styling
+     */
     spinnerContainerStyle: React.PropTypes.any,
   };
 

@@ -32,9 +32,7 @@
 /**
  * Creates a new session with a given apiKey, sessionID and token
  *
- * Calls `onStartFailure` in case an error happens during initial creation.
- *
- * Otherwise, `onSessionCreated` callback is called asynchronously
+ * Calls `onSubscribeError` in case an error happens during initial creation.
  */
 - (void)mount {
     _session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:_sessionId delegate:self];
@@ -74,6 +72,9 @@
     [self addSubview:_subscriber.view];
 }
 
+/**
+ * Cleans subscriber
+ */
 - (void)cleanupSubscriber {
   [_subscriber.view removeFromSuperview];
   _subscriber = nil;
@@ -82,12 +83,18 @@
 # pragma mark - OTSession delegate callbacks
 
 /**
- * When session is created, we start subscribing straight away
+ * Called when session is created
  */
 - (void)sessionDidConnect:(OTSession*)session {}
 
+/**
+ * Called when session is destroyed
+ */
 - (void)sessionDidDisconnect:(OTSession*)session {}
 
+/**
+ * When stream is created we start subscribtion
+ */
 - (void)session:(OTSession*)session streamCreated:(OTStream *)stream {
     if (nil == _subscriber)
     {
@@ -95,8 +102,15 @@
     }
 }
 
+/**
+ * Called when stream is destroyed
+ */
 - (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {}
 
+
+/**
+ * Called when session error occurs
+ */
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {
     _onSubscribeError(RCTJSErrorFromNSError(error));
 }

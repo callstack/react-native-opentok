@@ -113,7 +113,6 @@ class PublisherView extends React.Component {
           <View style={[styles.spinnerContainer, spinnerContainerStyle]}>
             <ActivityIndicator
               animating
-              color={spinnerColor}
             />
           </View>
         )}

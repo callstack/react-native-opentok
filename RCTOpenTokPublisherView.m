@@ -9,6 +9,7 @@
 @import UIKit;
 #import "RCTOpenTokPublisherView.h"
 #import "RCTEventDispatcher.h"
+#import "RCTUtils.h"
 #import <OpenTok/OpenTok.h>
 
 @interface RCTOpenTokPublisherView () <OTSessionDelegate>
@@ -47,7 +48,7 @@
     [_session connectWithToken:_token error:&error];
     
     if (error) {
-        _onStartFailure(@{});
+        _onStartFailure(RCTJSErrorFromNSError(error));
     }
 }
 
@@ -66,7 +67,7 @@
     [_session publish:_publisher error:&error];
     
     if (error) {
-        _onPublishError(@{});
+        _onPublishError(RCTJSErrorFromNSError(error));
         return;
     }
     
@@ -110,7 +111,7 @@
 }
 
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {
-    _onUnknownError(@{});
+    _onUnknownError(RCTJSErrorFromNSError(error));
 }
 
 # pragma mark - OTPublisher delegate callbacks
@@ -125,9 +126,9 @@
     [self cleanupPublisher];
 }
 
-- (void)publisher:(OTPublisherKit*)publisher didFailWithError:(OTError*) error
+- (void)publisher:(OTPublisherKit*)publisher didFailWithError:(OTError*)error
 {
-    _onUnknownError(@{});
+    _onUnknownError(RCTJSErrorFromNSError(error));
     [self cleanupPublisher];
 }
 

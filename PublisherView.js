@@ -48,11 +48,20 @@ class PublisherView extends React.Component {
      */
     onUnknownError: React.PropTypes.func,
     /**
-     * @todo investigate the following callbacks
+     * Called when stream is created by publisher
      */
     onStreamCreated: React.PropTypes.func,
+    /**
+     * Called when stream is destroyed by publisher
+     */
     onStreamDestroyed: React.PropTypes.func,
+    /**
+     * Called when connection is successfully created
+     */
     onConnectionCreated: React.PropTypes.func,
+    /**
+     * Called when connection is lost
+     */
     onConnectionDestroyed: React.PropTypes.func,
   };
 

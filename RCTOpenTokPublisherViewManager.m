@@ -8,6 +8,8 @@
     return [RCTOpenTokPublisherView new];
 }
 
+RCT_EXPORT_MODULE()
+
 RCT_EXPORT_VIEW_PROPERTY(apiKey, NSString)
 RCT_EXPORT_VIEW_PROPERTY(sessionId, NSString)
 RCT_EXPORT_VIEW_PROPERTY(token, NSString)

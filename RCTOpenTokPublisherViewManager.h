@@ -3,6 +3,4 @@
 
 @interface RCTOpenTokPublisherViewManager : RCTViewManager
 
-- (UIView *)view;
-
 @end

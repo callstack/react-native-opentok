@@ -7,4 +7,6 @@
     return [RCTOpenTokSubscriberView new];
 }
 
+RCT_EXPORT_MODULE()
+
 @end

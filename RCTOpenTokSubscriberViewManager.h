@@ -7,6 +7,7 @@
  */
 
 #import "RCTViewManager.h"
+#import "RCTOpenTokSubscriberView.h"
 
 @interface RCTOpenTokSubscriberViewManager : RCTViewManager
 

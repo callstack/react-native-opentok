@@ -53,4 +53,4 @@ class SubscriberView extends React.Component {
 }
 const RCTSubscriberView = requireNativeComponent('RCTOpenTokSubscriberView', SubscriberView);
 
-export default withLoadingSpinner(SubscriberView);
+export default withLoadingSpinner(SubscriberView, 'onSubscribeStart');

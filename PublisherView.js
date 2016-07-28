@@ -82,4 +82,4 @@ class PublisherView extends React.Component {
 
 const RCTPublisherView = requireNativeComponent('RCTOpenTokPublisherView', PublisherView);
 
-export default withLoadingSpinner(PublisherView);
+export default withLoadingSpinner(PublisherView, 'onPublishStart');

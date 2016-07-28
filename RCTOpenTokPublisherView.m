@@ -107,9 +107,14 @@
  * Called when another client connects to the session
  */
 - (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"EEE MMM dd HH:mm:ss ZZZ yyyy"];
+
+  [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+  NSString *creationTimeString = [dateFormatter stringFromDate:connection.creationTime];
     _onClientConnected(@{
         @"connectionId": connection.connectionId,
-        @"creationTime": connection.creationTime,
+        @"creationTime": creationTimeString,
         @"data": connection.data,
     });
 }

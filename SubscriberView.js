@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { requireNativeComponent } from 'react-native';
+import { requireNativeComponent, View } from 'react-native';
 import React from 'react';
 import SessionViewProps from './SessionViewProps';
 import withLoadingSpinner from './withLoadingSpinner';

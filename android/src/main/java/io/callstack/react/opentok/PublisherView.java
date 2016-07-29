@@ -1,9 +1,15 @@
 package io.callstack.react.opentok;
 
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
+import com.facebook.react.views.art.ARTGroupShadowNode;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
@@ -17,6 +23,25 @@ public class PublisherView extends FrameLayout implements Session.SessionListene
 
     private Session mSession;
     private Publisher mPublisher;
+
+    public enum Events {
+        EVENT_PUBLISH_START("onPublishStart"),
+        EVENT_PUBLISH_STOP("onPublishStop"),
+        EVENT_PUBLISH_ERROR("onPublishError"),
+        EVENT_CLIENT_CONNECTED("onClientConnected"),
+        EVENT_CLIENT_DISCONNECTED("onClientDisconnected");
+
+        private final String mName;
+
+        Events(final String name) {
+            mName = name;
+        }
+
+        @Override
+        public String toString() {
+            return mName;
+        }
+    }
 
     public PublisherView(ThemedReactContext reactContext) {
         super(reactContext);
@@ -50,6 +75,20 @@ public class PublisherView extends FrameLayout implements Session.SessionListene
         addView(mPublisher.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
+    private void sendEvent(Events event, WritableMap payload) {
+        ReactContext reactContext = (ReactContext)getContext();
+        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+                getId(),
+                event.toString(),
+                payload
+        );
+    }
+
+    private void cleanUpPublisher() {
+        removeView(mPublisher.getView());
+        mPublisher = null;
+    }
+
     /** Session listener **/
 
     @Override
@@ -72,11 +111,20 @@ public class PublisherView extends FrameLayout implements Session.SessionListene
     /** Publisher listener **/
 
     @Override
-    public void onStreamCreated(PublisherKit publisherKit, Stream stream) {}
+    public void onStreamCreated(PublisherKit publisherKit, Stream stream) {
+        sendEvent(Events.EVENT_PUBLISH_START, Arguments.createMap());
+    }
 
     @Override
-    public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {}
+    public void onStreamDestroyed(PublisherKit publisherKit, Stream stream) {
+        sendEvent(Events.EVENT_PUBLISH_STOP, Arguments.createMap());
+        cleanUpPublisher();
+    }
 
     @Override
-    public void onError(PublisherKit publisherKit, OpentokError opentokError) {}
+    public void onError(PublisherKit publisherKit, OpentokError opentokError) {
+        // @todo pass proper error here
+        sendEvent(Events.EVENT_PUBLISH_ERROR, Arguments.createMap());
+        cleanUpPublisher();
+    }
 }

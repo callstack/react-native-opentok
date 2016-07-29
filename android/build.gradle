@@ -19,3 +19,4 @@ dependencies {
     compile 'com.facebook.react:react-native:0.19.+'
     compile 'com.opentok.android:opentok-android-sdk:2.8.+'
 }
+

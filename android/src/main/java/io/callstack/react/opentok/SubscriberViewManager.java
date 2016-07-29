@@ -16,17 +16,17 @@ public class SubscriberViewManager extends SimpleViewManager<SubscriberView> {
     }
 
     @ReactProp(name = "apiKey")
-    public void setApiKey(PublisherView view, String apiKey) {
-        view.setApiKey(apiKey);
+    public void setApiKey(SubscriberView view, String apiKey) {
+        view.apiKey = apiKey;
     }
 
     @ReactProp(name = "sessionId")
-    public void setSessionId(PublisherView view, String sessionId) {
-        view.setSessionId(sessionId);
+    public void setSessionId(SubscriberView view, String sessionId) {
+        view.sessionId = sessionId;
     }
 
     @ReactProp(name = "token")
-    public void setToken(PublisherView view, String token) {
-        view.setToken(token);
+    public void setToken(SubscriberView view, String token) {
+        view.token = token;
     }
 }

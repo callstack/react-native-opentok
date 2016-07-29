@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 
 const withLoadingSpinner = (Component, callbackName) => class SpinnerView extends React.Component {
   static propTypes = {

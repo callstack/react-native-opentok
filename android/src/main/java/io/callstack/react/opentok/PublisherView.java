@@ -9,14 +9,14 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.facebook.react.views.art.ARTGroupShadowNode;
+import com.opentok.android.Connection;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
 
-public class PublisherView extends FrameLayout implements Session.SessionListener, PublisherKit.PublisherListener {
+public class PublisherView extends FrameLayout implements Session.SessionListener, PublisherKit.PublisherListener, Session.ConnectionListener {
     /* package */ String apiKey;
     /* package */ String sessionId;
     /* package */ String token;
@@ -58,6 +58,7 @@ public class PublisherView extends FrameLayout implements Session.SessionListene
     private void mount() {
         mSession = new Session(getContext(), this.apiKey, this.sessionId);
         mSession.setSessionListener(this);
+        mSession.setConnectionListener(this);
 
         mSession.connect(this.token);
     }
@@ -127,4 +128,26 @@ public class PublisherView extends FrameLayout implements Session.SessionListene
         sendEvent(Events.EVENT_PUBLISH_ERROR, Arguments.createMap());
         cleanUpPublisher();
     }
+
+    /** Connection listener **/
+    @Override
+    public void onConnectionCreated(Session session, Connection connection) {
+        WritableMap payload = Arguments.createMap();
+
+        payload.putString("connectionId", connection.getConnectionId());
+        payload.putString("creationTime", connection.getCreationTime().toString());
+        payload.putString("data", connection.getData());
+
+        sendEvent(Events.EVENT_CLIENT_CONNECTED, payload);
+    }
+
+    @Override
+    public void onConnectionDestroyed(Session session, Connection connection) {
+        WritableMap payload = Arguments.createMap();
+
+        payload.putString("connectionId", connection.getConnectionId());
+
+        sendEvent(Events.EVENT_CLIENT_DISCONNECTED, payload);
+    }
+
 }

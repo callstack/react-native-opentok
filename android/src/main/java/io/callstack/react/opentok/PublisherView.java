@@ -47,10 +47,7 @@ public class PublisherView extends FrameLayout implements Session.SessionListene
     }
 
     private void attachPublisherView() {
-        View publisherView = mPublisher.getView();
-        publisherView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
-        addView(publisherView);
+        addView(mPublisher.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
     /** Session listener **/

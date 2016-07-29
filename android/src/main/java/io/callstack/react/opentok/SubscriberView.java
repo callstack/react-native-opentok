@@ -47,10 +47,7 @@ public class SubscriberView extends FrameLayout implements Session.SessionListen
     }
 
     private void attachSubscriberView() {
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                getResources().getDisplayMetrics().widthPixels, getResources()
-                .getDisplayMetrics().heightPixels);
-        addView(mSubscriber.getView(), layoutParams);
+        addView(mSubscriber.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
     /** Session listener **/

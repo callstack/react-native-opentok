@@ -10,7 +10,14 @@ import com.opentok.android.PublisherKit;
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
 
+/**
+ * PublisherView
+ *
+ * React Component extending SessionView that publishes stream of video and audio to the stream
+ */
 public class PublisherView extends SessionView implements PublisherKit.PublisherListener, Session.ConnectionListener {
+
+    /** {Publisher} active instance of a publisher **/
     private Publisher mPublisher;
 
     public PublisherView(ThemedReactContext reactContext) {

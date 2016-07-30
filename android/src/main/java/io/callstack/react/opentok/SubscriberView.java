@@ -17,6 +17,7 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
     private void startSubscribing(Stream stream) {
         mSubscriber = new Subscriber(getContext(), stream);
         mSubscriber.setSubscriberListener(this);
+
         mSession.subscribe(mSubscriber);
 
         attachSubscriberView();
@@ -34,6 +35,8 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
             startSubscribing(stream);
         }
     }
+
+    /** Subscribe listener **/
 
     @Override
     public void onConnected(SubscriberKit subscriberKit) {}

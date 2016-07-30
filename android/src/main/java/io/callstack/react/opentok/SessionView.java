@@ -79,7 +79,7 @@ abstract public class SessionView extends FrameLayout implements Session.Session
     public void onError(Session session, OpentokError opentokError) {
         onError(opentokError);
     }
-    
+
     // todo(mike) - send onError properly
     protected void onError(OpentokError opentokError) {
         sendEvent(Events.EVENT_PUBLISH_ERROR, Arguments.createMap());

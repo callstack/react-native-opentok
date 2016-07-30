@@ -2,6 +2,7 @@ package io.callstack.react.opentok;
 
 import android.widget.FrameLayout;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
@@ -75,5 +76,12 @@ abstract public class SessionView extends FrameLayout implements Session.Session
     public void onStreamDropped(Session session, Stream stream) {}
 
     @Override
-    public void onError(Session session, OpentokError opentokError) {}
+    public void onError(Session session, OpentokError opentokError) {
+        onError(opentokError);
+    }
+    
+    // todo(mike) - send onError properly
+    protected void onError(OpentokError opentokError) {
+        sendEvent(Events.EVENT_PUBLISH_ERROR, Arguments.createMap());
+    }
 }

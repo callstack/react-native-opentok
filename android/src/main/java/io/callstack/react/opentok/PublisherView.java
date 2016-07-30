@@ -69,7 +69,7 @@ public class PublisherView extends SessionView implements PublisherKit.Publisher
 
     @Override
     public void onError(PublisherKit publisherKit, OpentokError opentokError) {
-        sendEvent(Events.EVENT_PUBLISH_ERROR, Arguments.createMap());
+        onError(opentokError);
         cleanUpPublisher();
     }
 

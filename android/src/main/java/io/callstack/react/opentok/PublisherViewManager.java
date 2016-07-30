@@ -22,24 +22,24 @@ public class PublisherViewManager extends SimpleViewManager<PublisherView> {
 
     @ReactProp(name = "apiKey")
     public void setApiKey(PublisherView view, String apiKey) {
-        view.apiKey = apiKey;
+        view.setApiKey(apiKey);
     }
 
     @ReactProp(name = "sessionId")
     public void setSessionId(PublisherView view, String sessionId) {
-        view.sessionId = sessionId;
+        view.setSessionId(sessionId);
     }
 
     @ReactProp(name = "token")
     public void setToken(PublisherView view, String token) {
-        view.token = token;
+        view.setToken(token);
     }
 
     @Override
     @Nullable
     public Map getExportedCustomDirectEventTypeConstants() {
         MapBuilder.Builder builder = MapBuilder.builder();
-        for (PublisherView.Events event : PublisherView.Events.values()) {
+        for (Events event : Events.values()) {
             builder.put(event.toString(), MapBuilder.of("registrationName", event.toString()));
         }
         return builder.build();

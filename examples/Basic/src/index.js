@@ -27,41 +27,41 @@ class Basic extends Component {
   async componentWillMount() {
     const { sessionId } = await fetch(`${API_URL}/create-session`, { method: 'GET' });
 
-    // const publisher = await fetch(`${API_URL}/create-token`, {
-    //   method: 'POST',
-    //   body: {
-    //     sessionId,
-    //     options: {
-    //       role: 'publisher',
-    //       data: 'username=testpublisher',
-    //     },
-    //   },
-    // });
-
-    const subscriber = await fetch(`${API_URL}/create-token`, {
+    const publisher = await fetch(`${API_URL}/create-token`, {
       method: 'POST',
       body: {
         sessionId,
         options: {
-          role: 'subscriber',
-          data: 'username=testsubscriber',
+          role: 'publisher',
+          data: 'username=testpublisher',
         },
       },
     });
 
+    // const subscriber = await fetch(`${API_URL}/create-token`, {
+    //   method: 'POST',
+    //   body: {
+    //     sessionId,
+    //     options: {
+    //       role: 'subscriber',
+    //       data: 'username=testsubscriber',
+    //     },
+    //   },
+    // });
+
     this.setState({
       sessionId,
-      // publisherToken: publisher.token,
-      subscriberToken: subscriber.token,
+      publisherToken: publisher.token,
+      // subscriberToken: subscriber.token,
     });
   }
 
-  // <Text>Publisher</Text>
-  // {!!publisherToken && (
-  //   <PublisherView
+  // <Text>Subscriber</Text>
+  // {!!subscriberToken && (
+  //   <SubscriberView
   //     apiKey={OPENTOK_API_KEY}
   //     sessionId={sessionId}
-  //     token={publisherToken}
+  //     token={subscriberToken}
   //     style={{ width: 300, height: 200 }}
   //   />
   // )}
@@ -69,18 +69,18 @@ class Basic extends Component {
   render() {
     const {
       sessionId,
-      // publisherToken,
-      subscriberToken,
+      publisherToken,
+      // subscriberToken,
     } = this.state;
 
     return (
       <View style={styles.container}>
-        <Text>Subscriber</Text>
-        {!!subscriberToken && (
-          <SubscriberView
+        <Text>Publisher</Text>
+        {!!publisherToken && (
+          <PublisherView
             apiKey={OPENTOK_API_KEY}
             sessionId={sessionId}
-            token={subscriberToken}
+            token={publisherToken}
             style={{ width: 300, height: 200 }}
           />
         )}

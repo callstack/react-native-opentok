@@ -6,10 +6,11 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-import io.callstack.react.opentok.MainPackage;
 
 import java.util.Arrays;
 import java.util.List;
+
+import io.callstack.react.opentok.MainPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -23,7 +24,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new MainPackage()
+              new MainPackage()
       );
     }
   };

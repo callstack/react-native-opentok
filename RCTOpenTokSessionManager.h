@@ -6,8 +6,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- #import "RCTBridgeModule.h"
- #import "RCTOpenTokSession.h"
+#import "RCTBridgeModule.h"
+#import <OpenTok/OpenTok.h>
 
- @interface RCTOpenTokSessionManager : NSObject <RCTBridgeModule>
- @end
+@interface RCTOpenTokSessionManager : NSObject <RCTBridgeModule, OTSessionDelegate>
+
+@end

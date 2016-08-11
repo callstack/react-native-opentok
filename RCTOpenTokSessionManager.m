@@ -14,6 +14,8 @@
     OTSession *_session;
 }
 
+@synthesize bridge = _bridge;
+
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(connect:(NSString *)apiKey sessionId:(NSString *)sessionId token:(NSString *)token)
@@ -32,8 +34,9 @@ RCT_EXPORT_METHOD(connect:(NSString *)apiKey sessionId:(NSString *)sessionId tok
 
 RCT_EXPORT_METHOD(sendMessage:(NSString *)message)
 {
+  NSLog(@"signal error %@", message);
   OTError* error = nil;
-  [_session signalWithType:type string:message connection:nil error:&error)];
+  [_session signalWithType:@"message" string:message connection:nil error:&error];
   if (error) {
       NSLog(@"signal error %@", error);
   } else {
@@ -42,15 +45,25 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)message)
 }
 
 # pragma mark - OTSession delegate callbacks
+
+- (void)sessionDidConnect:(OTSession*)session {}
+- (void)sessionDidDisconnect:(OTSession*)session {}
+- (void)session:(OTSession*)session streamCreated:(OTStream *)stream {}
+- (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {}
+- (void)session:(OTSession*)session didFailWithError:(OTError*)error {}
+
 - (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)string {
     NSLog(@"Received signal %@", string);
-    [self onMessageRecieved:string];
+    [self onMessageRecieved:string data:connection.data];
 }
 
-- (void)onMessageRecieved:(NSString *)message
+- (void)onMessageRecieved:(NSString *)message data:(NSString *)data
 {
   [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageRecieved"
-                                               body:@{@"message": message}];
+    body:@{
+      @"message": message,
+      @"data": data,
+    }];
 }
 
 @end

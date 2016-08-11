@@ -14,7 +14,6 @@ import {
   StyleSheet,
 } from 'react-native';
 import { PublisherView, SubscriberView } from 'react-native-opentok';
-import { fetch } from './fetch';
 import { OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN } from './variables';
 
 class Basic extends Component {
@@ -23,14 +22,12 @@ class Basic extends Component {
     return (
       <View style={styles.container}>
         <Text>Publisher</Text>
-        {!!publisherToken && (
           <PublisherView
             apiKey={OPENTOK_API_KEY}
             sessionId={SESSION_ID}
             token={PUBLISHER_TOKEN}
             style={{ width: 300, height: 200 }}
           />
-        )}
       </View>
     );
   }

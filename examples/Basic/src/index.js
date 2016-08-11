@@ -14,76 +14,20 @@ import {
   StyleSheet,
 } from 'react-native';
 import { PublisherView, SubscriberView } from 'react-native-opentok';
-import { fetch } from './fetch';
-import { OPENTOK_API_KEY, API_URL } from './variables';
+import { OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN } from './variables';
 
 class Basic extends Component {
-  state = {
-    sessionId: '',
-    publisherToken: '',
-    subscriberToken: '',
-  }
-
-  async componentWillMount() {
-    const { sessionId } = await fetch(`${API_URL}/create-session`, { method: 'GET' });
-
-    const publisher = await fetch(`${API_URL}/create-token`, {
-      method: 'POST',
-      body: {
-        sessionId,
-        options: {
-          role: 'publisher',
-          data: 'username=testpublisher',
-        },
-      },
-    });
-
-    // const subscriber = await fetch(`${API_URL}/create-token`, {
-    //   method: 'POST',
-    //   body: {
-    //     sessionId,
-    //     options: {
-    //       role: 'subscriber',
-    //       data: 'username=testsubscriber',
-    //     },
-    //   },
-    // });
-
-    this.setState({
-      sessionId,
-      publisherToken: publisher.token,
-      // subscriberToken: subscriber.token,
-    });
-  }
-
-  // <Text>Subscriber</Text>
-  // {!!subscriberToken && (
-  //   <SubscriberView
-  //     apiKey={OPENTOK_API_KEY}
-  //     sessionId={sessionId}
-  //     token={subscriberToken}
-  //     style={{ width: 300, height: 200 }}
-  //   />
-  // )}
 
   render() {
-    const {
-      sessionId,
-      publisherToken,
-      // subscriberToken,
-    } = this.state;
-
     return (
       <View style={styles.container}>
         <Text>Publisher</Text>
-        {!!publisherToken && (
           <PublisherView
             apiKey={OPENTOK_API_KEY}
-            sessionId={sessionId}
-            token={publisherToken}
+            sessionId={SESSION_ID}
+            token={PUBLISHER_TOKEN}
             style={{ width: 300, height: 200 }}
           />
-        )}
       </View>
     );
   }

@@ -1,27 +1,29 @@
 PODS:
   - OpenTok (2.8.3)
-  - React (0.29.2):
-    - React/Core (= 0.29.2)
+  - React (0.31.0):
+    - React/Core (= 0.31.0)
   - react-native-opentok (0.0.1):
     - OpenTok
     - React
-  - React/Core (0.29.2)
-  - React/RCTActionSheet (0.29.2):
+  - React/Core (0.31.0):
+    - React/CSSLayout
+  - React/CSSLayout (0.31.0)
+  - React/RCTActionSheet (0.31.0):
     - React/Core
-  - React/RCTGeolocation (0.29.2):
+  - React/RCTGeolocation (0.31.0):
     - React/Core
-  - React/RCTImage (0.29.2):
+  - React/RCTImage (0.31.0):
     - React/Core
     - React/RCTNetwork
-  - React/RCTNetwork (0.29.2):
+  - React/RCTNetwork (0.31.0):
     - React/Core
-  - React/RCTSettings (0.29.2):
+  - React/RCTSettings (0.31.0):
     - React/Core
-  - React/RCTText (0.29.2):
+  - React/RCTText (0.31.0):
     - React/Core
-  - React/RCTVibration (0.29.2):
+  - React/RCTVibration (0.31.0):
     - React/Core
-  - React/RCTWebSocket (0.29.2):
+  - React/RCTWebSocket (0.31.0):
     - React/Core
 
 DEPENDENCIES:
@@ -43,7 +45,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   OpenTok: ad14a09847ba5d6485820f5946484b749de944d7
-  React: 3da805a4fcb127434843924494de838e9658ca78
+  React: 2f91a7f6fa19461502109a1e6ad6e0626ce76920
   react-native-opentok: 6138d482ebc4455eacafc712282b323044ecc8da
 
 PODFILE CHECKSUM: 2c9d2de73306b98ff783f36ff43156f4965bdbe7

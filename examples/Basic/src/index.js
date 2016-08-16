@@ -13,15 +13,20 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import { PublisherView, SubscriberView } from 'react-native-opentok';
+import { PublisherView, SubscriberView, Session } from 'react-native-opentok';
 import { OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN } from './variables';
 
 class Basic extends Component {
 
+  componentWillMount() {
+    Session.connect(OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN);
+    Session.onMessageRecieved((e) => console.log(e));
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Publisher</Text>
+        <Text onPress={() => Session.sendMessage("lol")}>Publisher</Text>
           <PublisherView
             apiKey={OPENTOK_API_KEY}
             sessionId={SESSION_ID}

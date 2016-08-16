@@ -35,6 +35,7 @@
  * Calls `onSubscribeError` in case an error happens during initial creation.
  */
 - (void)mount {
+    [self cleanupSubscriber];
     _session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:_sessionId delegate:self];
 
     OTError *error = nil;

@@ -131,6 +131,7 @@
 
 - (void)subscriberDidDisconnectFromStream:(OTSubscriberKit*)subscriber {
     _onSubscribeStop(@{});
+    [self cleanupSubscriber];
 }
 
 - (void)subscriberDidReconnectToStream:(OTSubscriberKit*)subscriber {

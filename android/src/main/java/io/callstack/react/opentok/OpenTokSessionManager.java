@@ -2,9 +2,7 @@ package io.callstack.react.opentok;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.facebook.react.bridge.NativeModule;
+import com.facebook.react.modules.core.RCTNativeAppEventEmitter;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -33,6 +31,7 @@ public class OpenTokSessionManager extends ReactContextBaseJavaModule implements
     public void connect(String apiKey, String sessionId, String token) {
         mSession = new Session(getReactApplicationContext(), apiKey, sessionId);
         mSession.setSessionListener(this);
+        mSession.setSignalListener(this);
         mSession.connect(token);
     }
 
@@ -44,7 +43,7 @@ public class OpenTokSessionManager extends ReactContextBaseJavaModule implements
     protected void sendEvent(Events event, WritableMap payload) {
         ReactContext reactContext = (ReactContext)getReactApplicationContext();
         reactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .getJSModule(RCTNativeAppEventEmitter.class)
                 .emit(event.toString(), payload);
     }
 
@@ -72,6 +71,6 @@ public class OpenTokSessionManager extends ReactContextBaseJavaModule implements
         WritableMap payload = Arguments.createMap();
         payload.putString("data", data);
 
-        sendEvent(Events.EVENT_PUBLISH_ERROR, payload);
+        sendEvent(Events.EVENT_ON_MESSAGE_RECIEVED, payload);
     }
 }

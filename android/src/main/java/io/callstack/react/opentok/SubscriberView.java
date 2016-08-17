@@ -7,7 +7,7 @@ import com.opentok.android.Session;
 import com.opentok.android.Stream;
 import com.opentok.android.SubscriberKit;
 
-public class SubscriberView extends SessionView implements SubscriberKit.SubscriberListener {
+public class SubscriberView extends SessionView implements SubscriberKit.SubscriberListener, Session.ConnectionListener {
     private Subscriber mSubscriber;
 
     public SubscriberView(ThemedReactContext reactContext) {
@@ -27,6 +27,11 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
         addView(mSubscriber.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
+    private void cleanUpSubscriber() {
+        removeView(mSubscriber.getView());
+        mSubscriber = null;
+    }
+
     /** Session listener **/
 
     @Override
@@ -34,6 +39,11 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
         if (mSubscriber != null) {
             startSubscribing(stream);
         }
+    }
+
+    @Override
+    public void onStreamDropped(Session session, Stream stream) {
+        sendEvent(Events.EVENT_SUBSCRIBE_STOP, Arguments.createMap());
     }
 
     /** Subscribe listener **/
@@ -47,5 +57,26 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
     @Override
     public void onError(SubscriberKit subscriberKit, OpentokError opentokError) {
         onError(opentokError);
+    }
+
+    /** Connection listener **/
+    @Override
+    public void onConnectionCreated(Session session, Connection connection) {
+        WritableMap payload = Arguments.createMap();
+
+        payload.putString("connectionId", connection.getConnectionId());
+        payload.putString("creationTime", connection.getCreationTime().toString());
+        payload.putString("data", connection.getData());
+
+        sendEvent(Events.EVENT_CLIENT_CONNECTED, payload);
+    }
+
+    @Override
+    public void onConnectionDestroyed(Session session, Connection connection) {
+        WritableMap payload = Arguments.createMap();
+
+        payload.putString("connectionId", connection.getConnectionId());
+
+        sendEvent(Events.EVENT_CLIENT_DISCONNECTED, payload);
     }
 }

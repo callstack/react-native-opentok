@@ -1,4 +1,4 @@
-import { NativeModules, NativeAppEventEmitter, DeviceEventEmitter, Platform } from 'react-native';
+import { NativeModules, NativeAppEventEmitter, Platform } from 'react-native';
 const SessionManager = NativeModules.OpenTokSessionManager;
 
 const listener = null;

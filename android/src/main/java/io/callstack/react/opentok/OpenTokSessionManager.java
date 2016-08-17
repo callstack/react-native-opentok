@@ -29,10 +29,12 @@ public class OpenTokSessionManager extends ReactContextBaseJavaModule implements
 
     @ReactMethod
     public void connect(String apiKey, String sessionId, String token) {
-        mSession = new Session(getReactApplicationContext(), apiKey, sessionId);
-        mSession.setSessionListener(this);
-        mSession.setSignalListener(this);
-        mSession.connect(token);
+        if (mSession == null) {
+            mSession = new Session(getReactApplicationContext(), apiKey, sessionId);
+            mSession.setSessionListener(this);
+            mSession.setSignalListener(this);
+            mSession.connect(token);
+        }
     }
 
     @ReactMethod

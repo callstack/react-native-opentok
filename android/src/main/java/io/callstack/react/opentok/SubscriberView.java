@@ -1,6 +1,10 @@
 package io.callstack.react.opentok;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.opentok.android.BaseVideoRenderer;
+import com.opentok.android.Connection;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Subscriber;
 import com.opentok.android.Session;
@@ -17,10 +21,9 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
     private void startSubscribing(Stream stream) {
         mSubscriber = new Subscriber(getContext(), stream);
         mSubscriber.setSubscriberListener(this);
-
+        mSubscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
+                BaseVideoRenderer.STYLE_VIDEO_FILL);
         mSession.subscribe(mSubscriber);
-
-        attachSubscriberView();
     }
 
     private void attachSubscriberView() {
@@ -36,7 +39,7 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
 
     @Override
     public void onStreamReceived(Session session, Stream stream) {
-        if (mSubscriber != null) {
+        if (mSubscriber == null) {
             startSubscribing(stream);
         }
     }
@@ -49,7 +52,9 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
     /** Subscribe listener **/
 
     @Override
-    public void onConnected(SubscriberKit subscriberKit) {}
+    public void onConnected(SubscriberKit subscriberKit) {
+        attachSubscriberView();
+    }
 
     @Override
     public void onDisconnected(SubscriberKit subscriberKit) {}

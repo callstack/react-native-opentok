@@ -69,7 +69,8 @@ public class OpenTokSessionManager extends ReactContextBaseJavaModule implements
     @Override
     public void onSignalReceived(Session session, String type, String data, Connection connection) {
         WritableMap payload = Arguments.createMap();
-        payload.putString("data", data);
+        payload.putString("message", data);
+        payload.putString("data", connection.getData());
 
         sendEvent(Events.EVENT_ON_MESSAGE_RECIEVED, payload);
     }

@@ -33,11 +33,6 @@ public class PublisherView extends SessionView implements PublisherKit.Publisher
         attachPublisherView();
     }
 
-    @Override
-    protected void onSessionCreated(Session session) {
-        session.setConnectionListener(this);
-    }
-
     private void attachPublisherView() {
         addView(mPublisher.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
@@ -45,6 +40,11 @@ public class PublisherView extends SessionView implements PublisherKit.Publisher
     private void cleanUpPublisher() {
         removeView(mPublisher.getView());
         mPublisher = null;
+    }
+
+    @Override
+    protected void onSessionCreated(Session session) {
+        session.setConnectionListener(this);
     }
 
     /** Session listener **/

@@ -28,7 +28,7 @@ dependencies {
 ```
 
 - In your `android/settings.gradle` add:
-```
+```groovy
 ...
 include ':react-native-maps'
 project(':react-native-maps').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-maps/android')
@@ -70,7 +70,7 @@ onSubscribeStop | function
 
 #### Publisher
 
-```
+```js
 import { PublisherView } from 'react-native-opentok';
 
 export default function Publisher() {
@@ -87,7 +87,7 @@ export default function Publisher() {
 
 #### Subscriber
 
-```
+```js
 import { SubscriberView } from 'react-native-opentok';
 
 export default function Subscriber() {
@@ -104,7 +104,7 @@ export default function Subscriber() {
 
 #### Signaling
 
-```
+```js
 import { Session } from 'react-native-opentok';
 
 Session.connect(OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN || SUBSCRIBER_TOKEN);

@@ -1,3 +1,4 @@
-export const OPENTOK_API_KEY = '';
-export const SESSION_ID = '';
-export const PUBLISHER_TOKEN = '';
+export const OPENTOK_API_KEY = '<YOUR API KEY>';
+export const SESSION_ID = '<YOUR SESSION ID>';
+export const PUBLISHER_TOKEN = '<YOUR PUBLISHER TOKEN>';
+export const SUBSCRIBER_TOKEN = '<YOUR SUBSCRIBER TOKEN>';

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Callstack Sp z o.o.
+ * Copyright (c) 2016-present, Callstack Sp z o.o.
  * All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
@@ -12,27 +12,54 @@ import {
   View,
   Text,
   StyleSheet,
+  Switch,
 } from 'react-native';
 import { PublisherView, SubscriberView, Session } from 'react-native-opentok';
-import { OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN } from './variables';
+import { OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN, SUBSCRIBER_TOKEN } from './variables';
 
 class Basic extends Component {
 
   componentWillMount() {
-    Session.connect(OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN);
+    Session.connect(OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN || SUBSCRIBER_TOKEN);
     Session.onMessageRecieved((e) => console.log(e));
   }
 
+  state = {
+    isPublisher: true,
+  }
+
   render() {
+    const { isPublisher } = this.state;
     return (
       <View style={styles.container}>
-        <Text onPress={() => Session.sendMessage("lol")}>Publisher</Text>
-          <PublisherView
-            apiKey={OPENTOK_API_KEY}
-            sessionId={SESSION_ID}
-            token={PUBLISHER_TOKEN}
-            style={{ width: 300, height: 200 }}
+        <Text onPress={() => { Session.sendMessage('test'); }}>
+          {isPublisher ? 'Publisher' : 'Subscriber'}
+        </Text>
+        {
+          isPublisher ? (
+            <PublisherView
+              apiKey={OPENTOK_API_KEY}
+              sessionId={SESSION_ID}
+              token={PUBLISHER_TOKEN}
+              style={{ width: 300, height: 200 }}
+            />
+          ) : (
+            <SubscriberView
+              apiKey={OPENTOK_API_KEY}
+              sessionId={SESSION_ID}
+              token={SUBSCRIBER_TOKEN}
+              style={{ width: 300, height: 200 }}
+            />
+          )
+        }
+        <Text>
+          Is Publisher:
+          <Switch
+            value={isPublisher}
+            onChange={() => this.setState({ isPublisher: !isPublisher })}
           />
+        </Text>
+
       </View>
     );
   }

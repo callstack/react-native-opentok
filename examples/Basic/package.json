@@ -15,8 +15,8 @@
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^5.2.2",
     "react-native-opentok": "../..",
-    "react": "15.2.1",
-    "react-native": "0.31.0"
+    "react": "15.3.0",
+    "react-native": "0.32.0"
   },
   "devDependencies": {
     "babel-plugin-transform-inline-environment-variables": "^6.8.0",

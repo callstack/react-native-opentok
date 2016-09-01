@@ -17,6 +17,17 @@ import {
 import { PublisherView, SubscriberView, Session } from 'react-native-opentok';
 import { OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN, SUBSCRIBER_TOKEN } from './variables';
 
+export default function Subscriber() {
+  return (
+    <SubscriberView
+      apiKey={OPENTOK_API_KEY}
+      sessionId={OPENTOK_SESSION_ID}
+      token={OPENTOK_SUBSCRIBER_TOKEN}
+      style={{ width: 300, height: 200 }}
+    />
+  );
+}
+
 class Basic extends Component {
 
   componentWillMount() {

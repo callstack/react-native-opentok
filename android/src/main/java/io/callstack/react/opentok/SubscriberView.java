@@ -24,6 +24,7 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
         mSubscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                 BaseVideoRenderer.STYLE_VIDEO_FILL);
         mSession.subscribe(mSubscriber);
+        attachSubscriberView();
     }
 
     private void attachSubscriberView() {
@@ -41,6 +42,7 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
     public void onStreamReceived(Session session, Stream stream) {
         if (mSubscriber == null) {
             startSubscribing(stream);
+            sendEvent(Events.EVENT_SUBSCRIBE_START, Arguments.createMap());
         }
     }
 
@@ -52,9 +54,7 @@ public class SubscriberView extends SessionView implements SubscriberKit.Subscri
     /** Subscribe listener **/
 
     @Override
-    public void onConnected(SubscriberKit subscriberKit) {
-        attachSubscriberView();
-    }
+    public void onConnected(SubscriberKit subscriberKit) {}
 
     @Override
     public void onDisconnected(SubscriberKit subscriberKit) {}

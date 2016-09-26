@@ -55,8 +55,16 @@
  * inside the mounted view
  */
 - (void)startPublishing {
-    _publisher = [[OTPublisher alloc] initWithDelegate:self];
+    _publisher = [[OTPublisher alloc] initWithDelegate:self
+                                                  name: @"My Video"
+                                      cameraResolution: _cameraResolution
+                                       cameraFrameRate: (OTCameraCaptureResolution)_cameraFrameRate];
 
+    // we'll need some of this for audio only scenarios - whitelisting config
+   _publisher.publishAudio = YES;
+   _publisher.publishVideo = YES;
+   _publisher.audioFallbackEnabled = YES;
+    
     OTError *error = nil;
 
     [_session publish:_publisher error:&error];

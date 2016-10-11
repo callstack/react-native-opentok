@@ -28,18 +28,18 @@ PODS:
 
 DEPENDENCIES:
   - react-native-opentok (from `../../../`)
-  - React/RCTActionSheet (from `../../../node_modules/react-native`)
-  - React/RCTGeolocation (from `../../../node_modules/react-native`)
-  - React/RCTImage (from `../../../node_modules/react-native`)
-  - React/RCTNetwork (from `../../../node_modules/react-native`)
-  - React/RCTSettings (from `../../../node_modules/react-native`)
-  - React/RCTText (from `../../../node_modules/react-native`)
-  - React/RCTVibration (from `../../../node_modules/react-native`)
-  - React/RCTWebSocket (from `../../../node_modules/react-native`)
+  - React/RCTActionSheet (from `../node_modules/react-native`)
+  - React/RCTGeolocation (from `../node_modules/react-native`)
+  - React/RCTImage (from `../node_modules/react-native`)
+  - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTSettings (from `../node_modules/react-native`)
+  - React/RCTText (from `../node_modules/react-native`)
+  - React/RCTVibration (from `../node_modules/react-native`)
+  - React/RCTWebSocket (from `../node_modules/react-native`)
 
 EXTERNAL SOURCES:
   React:
-    :path: "../../../node_modules/react-native"
+    :path: "../node_modules/react-native"
   react-native-opentok:
     :path: "../../../"
 
@@ -48,6 +48,6 @@ SPEC CHECKSUMS:
   React: 0245b401173a94a5fba0f440aab3fb2f79b738f3
   react-native-opentok: 6138d482ebc4455eacafc712282b323044ecc8da
 
-PODFILE CHECKSUM: 2c9d2de73306b98ff783f36ff43156f4965bdbe7
+PODFILE CHECKSUM: 85946f8c1a9d9b290024edb7d0e17d3ebb5a48ad
 
 COCOAPODS: 1.0.1

@@ -8,7 +8,7 @@ target 'Basic' do
     'RCTText',
     'RCTVibration',
     'RCTWebSocket',
-  ], path: '../../../node_modules/react-native'
+  ], path: '../node_modules/react-native'
 
   pod 'react-native-opentok',  path: '../../../'
 end

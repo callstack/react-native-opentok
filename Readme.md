@@ -30,8 +30,8 @@ dependencies {
 - In your `android/settings.gradle` add:
 ```groovy
 ...
-include ':react-native-maps'
-project(':react-native-maps').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-maps/android')
+include ':react-native-opentok'
+project(':react-native-opentok').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-opentok/android')
 ```
 
 - In your application object, add:

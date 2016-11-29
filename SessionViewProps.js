@@ -21,4 +21,8 @@ export default {
    * OpenTok API Key to be used
    */
   apiKey: React.PropTypes.string.isRequired,
+
+  cameraResolution: React.PropTypes.number.isRequired,
+
+  cameraFrameRate: React.PropTypes.number.isRequired,
 };

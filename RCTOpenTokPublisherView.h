@@ -15,6 +15,8 @@
 @property (nonatomic, strong) NSString *apiKey;
 @property (nonatomic, strong) NSString *sessionId;
 @property (nonatomic, strong) NSString *token;
+@property (nonatomic, assign) NSInteger cameraResolution;
+@property (nonatomic, assign) NSInteger cameraFrameRate;
 
 @property (nonatomic, copy) RCTDirectEventBlock onPublishError;
 @property (nonatomic, copy) RCTDirectEventBlock onPublishStop;

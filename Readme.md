@@ -15,7 +15,17 @@ To install using Cocoapods, simply insert the following line into your `Podfile`
 `pod 'react-native-opentok',  :path => '../node_modules/react-native-opentok'`
 
 ### Android
-
+- In your `android/build.gradle` add:
+```groovy
+...
+allprojects {
+    repositories {
+       ...
+        maven { url  "http://tokbox.bintray.com/maven" }
+       ...
+    }
+}
+```
 
 - In your `android/app/build.gradle` add:
 ```groovy

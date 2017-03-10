@@ -2,6 +2,7 @@ package io.callstack.react.opentok;
 
 import android.support.annotation.Nullable;
 
+import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
@@ -20,9 +21,7 @@ abstract class SessionViewManager<T extends SessionView> extends SimpleViewManag
     }
 
     @ReactProp(name = "token")
-    public void setToken(T view, String token) {
-        view.setToken(token);
-    }
+    public void setToken(T view, String token) { view.setToken(token); }
 
     @Override
     @Nullable

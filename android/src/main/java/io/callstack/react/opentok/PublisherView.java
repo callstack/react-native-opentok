@@ -1,5 +1,8 @@
 package io.callstack.react.opentok;
 
+import android.graphics.Camera;
+import android.util.Log;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
@@ -15,7 +18,7 @@ import com.opentok.android.Stream;
  *
  * React Component extending SessionView that publishes stream of video and audio to the stream
  */
-public class PublisherView extends SessionView implements PublisherKit.PublisherListener, Session.ConnectionListener {
+public class PublisherView extends SessionView implements PublisherKit.PublisherListener, Session.ConnectionListener, CameraListener {
 
     /** {Publisher} active instance of a publisher **/
     private Publisher mPublisher;
@@ -33,8 +36,14 @@ public class PublisherView extends SessionView implements PublisherKit.Publisher
         attachPublisherView();
     }
 
+    @Override
+    public void onCameraPosChanged() {
+        mPublisher.cycleCamera();
+    }
+
     private void attachPublisherView() {
         addView(mPublisher.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
     }
 
     private void cleanUpPublisher() {

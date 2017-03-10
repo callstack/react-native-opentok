@@ -8,6 +8,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.opentok.android.OpentokError;
+import com.opentok.android.Publisher;
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
 
@@ -15,6 +16,7 @@ abstract public class SessionView extends FrameLayout implements Session.Session
     protected String mApiKey;
     protected String mSessionId;
     protected String mToken;
+    protected String mCameraPos;
     protected Session mSession;
 
     public SessionView(ThemedReactContext context) {

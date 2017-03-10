@@ -112,6 +112,24 @@ Session.onMessageRecieved((e) => console.log(e));
 Session.sendMessage('message');
 ```
 
+#### Change camera position for iOS
+
+```js
+import { NativeModules } from 'react-native';
+const PublisherManager =  NativeModules.OpenTokPublisherViewManager;
+
+PublisherManager.cameraPosChanged();
+```
+
+#### Change camera position for Android
+
+```js
+import { NativeModules } from 'react-native';
+const PublisherManager =  NativeModules.OpenTokPublisherManager;
+
+PublisherManager.updateCameraPosition();
+```
+
 ### Running example project
 
 ```bash

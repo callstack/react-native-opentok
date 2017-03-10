@@ -28,4 +28,9 @@ RCT_EXPORT_VIEW_PROPERTY(onPublishStop, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onClientConnected, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onClientDisconnected, RCTDirectEventBlock)
 
+RCT_EXPORT_METHOD(cameraPosChanged)
+{
+    [_publisher onCameraPosChanged];
+}
+
 @end

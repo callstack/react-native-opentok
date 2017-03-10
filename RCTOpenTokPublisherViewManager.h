@@ -11,4 +11,6 @@
 
 @interface RCTOpenTokPublisherViewManager : RCTViewManager
 
+@property (nonatomic, strong) RCTOpenTokPublisherView *publisher;
+
 @end

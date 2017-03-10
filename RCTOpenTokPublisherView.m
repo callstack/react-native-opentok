@@ -47,6 +47,14 @@
     }
 }
 
+- (void)onCameraPosChanged {
+    if (_publisher.cameraPosition == AVCaptureDevicePositionFront) {
+        _publisher.cameraPosition = AVCaptureDevicePositionBack;
+    } else {
+        _publisher.cameraPosition = AVCaptureDevicePositionFront;
+    }
+}
+
 /**
  * Creates an instance of `OTPublisher` and publishes stream to the current
  * session

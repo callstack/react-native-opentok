@@ -7,7 +7,7 @@
  */
 
 #import "RCTOpenTokSessionManager.h"
-#import "RCTEventDispatcher.h"
+#import <React/RCTEventDispatcher.h>
 #import <OpenTok/OpenTok.h>
 
 @implementation RCTOpenTokSessionManager {

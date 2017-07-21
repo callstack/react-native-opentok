@@ -1,0 +1,288 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		696797751F22521000A7C3C1 /* RCTOpenTokPublisherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6967976C1F22521000A7C3C1 /* RCTOpenTokPublisherView.m */; };
+		696797761F22521000A7C3C1 /* RCTOpenTokPublisherViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6967976E1F22521000A7C3C1 /* RCTOpenTokPublisherViewManager.m */; };
+		696797771F22521000A7C3C1 /* RCTOpenTokSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 696797701F22521000A7C3C1 /* RCTOpenTokSessionManager.m */; };
+		696797781F22521000A7C3C1 /* RCTOpenTokSubscriberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 696797721F22521000A7C3C1 /* RCTOpenTokSubscriberView.m */; };
+		696797791F22521000A7C3C1 /* RCTOpenTokSubscriberViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 696797741F22521000A7C3C1 /* RCTOpenTokSubscriberViewManager.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6967974E1F2250C300A7C3C1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		696797501F2250C300A7C3C1 /* libRCTOpenTok.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTOpenTok.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6967976B1F22521000A7C3C1 /* RCTOpenTokPublisherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokPublisherView.h; sourceTree = SOURCE_ROOT; };
+		6967976C1F22521000A7C3C1 /* RCTOpenTokPublisherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokPublisherView.m; sourceTree = SOURCE_ROOT; };
+		6967976D1F22521000A7C3C1 /* RCTOpenTokPublisherViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokPublisherViewManager.h; sourceTree = SOURCE_ROOT; };
+		6967976E1F22521000A7C3C1 /* RCTOpenTokPublisherViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokPublisherViewManager.m; sourceTree = SOURCE_ROOT; };
+		6967976F1F22521000A7C3C1 /* RCTOpenTokSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokSessionManager.h; sourceTree = SOURCE_ROOT; };
+		696797701F22521000A7C3C1 /* RCTOpenTokSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokSessionManager.m; sourceTree = SOURCE_ROOT; };
+		696797711F22521000A7C3C1 /* RCTOpenTokSubscriberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokSubscriberView.h; sourceTree = SOURCE_ROOT; };
+		696797721F22521000A7C3C1 /* RCTOpenTokSubscriberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokSubscriberView.m; sourceTree = SOURCE_ROOT; };
+		696797731F22521000A7C3C1 /* RCTOpenTokSubscriberViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTOpenTokSubscriberViewManager.h; sourceTree = SOURCE_ROOT; };
+		696797741F22521000A7C3C1 /* RCTOpenTokSubscriberViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTOpenTokSubscriberViewManager.m; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6967974D1F2250C300A7C3C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		696797471F2250C300A7C3C1 = {
+			isa = PBXGroup;
+			children = (
+				696797521F2250C300A7C3C1 /* RCTOpenTok */,
+				696797511F2250C300A7C3C1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		696797511F2250C300A7C3C1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				696797501F2250C300A7C3C1 /* libRCTOpenTok.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		696797521F2250C300A7C3C1 /* RCTOpenTok */ = {
+			isa = PBXGroup;
+			children = (
+				6967976B1F22521000A7C3C1 /* RCTOpenTokPublisherView.h */,
+				6967976C1F22521000A7C3C1 /* RCTOpenTokPublisherView.m */,
+				6967976D1F22521000A7C3C1 /* RCTOpenTokPublisherViewManager.h */,
+				6967976E1F22521000A7C3C1 /* RCTOpenTokPublisherViewManager.m */,
+				6967976F1F22521000A7C3C1 /* RCTOpenTokSessionManager.h */,
+				696797701F22521000A7C3C1 /* RCTOpenTokSessionManager.m */,
+				696797711F22521000A7C3C1 /* RCTOpenTokSubscriberView.h */,
+				696797721F22521000A7C3C1 /* RCTOpenTokSubscriberView.m */,
+				696797731F22521000A7C3C1 /* RCTOpenTokSubscriberViewManager.h */,
+				696797741F22521000A7C3C1 /* RCTOpenTokSubscriberViewManager.m */,
+			);
+			path = RCTOpenTok;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6967974F1F2250C300A7C3C1 /* RCTOpenTok */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 696797591F2250C300A7C3C1 /* Build configuration list for PBXNativeTarget "RCTOpenTok" */;
+			buildPhases = (
+				6967974C1F2250C300A7C3C1 /* Sources */,
+				6967974D1F2250C300A7C3C1 /* Frameworks */,
+				6967974E1F2250C300A7C3C1 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RCTOpenTok;
+			productName = RCTOpenTok;
+			productReference = 696797501F2250C300A7C3C1 /* libRCTOpenTok.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		696797481F2250C300A7C3C1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = Callstack.io;
+				TargetAttributes = {
+					6967974F1F2250C300A7C3C1 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = PJL7DA2X5F;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 6967974B1F2250C300A7C3C1 /* Build configuration list for PBXProject "RCTOpenTok" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 696797471F2250C300A7C3C1;
+			productRefGroup = 696797511F2250C300A7C3C1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6967974F1F2250C300A7C3C1 /* RCTOpenTok */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6967974C1F2250C300A7C3C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				696797761F22521000A7C3C1 /* RCTOpenTokPublisherViewManager.m in Sources */,
+				696797781F22521000A7C3C1 /* RCTOpenTokSubscriberView.m in Sources */,
+				696797771F22521000A7C3C1 /* RCTOpenTokSessionManager.m in Sources */,
+				696797751F22521000A7C3C1 /* RCTOpenTokPublisherView.m in Sources */,
+				696797791F22521000A7C3C1 /* RCTOpenTokSubscriberViewManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		696797571F2250C300A7C3C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		696797581F2250C300A7C3C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6967975A1F2250C300A7C3C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = PJL7DA2X5F;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		6967975B1F2250C300A7C3C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = PJL7DA2X5F;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6967974B1F2250C300A7C3C1 /* Build configuration list for PBXProject "RCTOpenTok" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				696797571F2250C300A7C3C1 /* Debug */,
+				696797581F2250C300A7C3C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		696797591F2250C300A7C3C1 /* Build configuration list for PBXNativeTarget "RCTOpenTok" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6967975A1F2250C300A7C3C1 /* Debug */,
+				6967975B1F2250C300A7C3C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 696797481F2250C300A7C3C1 /* Project object */;
+}

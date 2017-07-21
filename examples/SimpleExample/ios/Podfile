@@ -1,5 +1,3 @@
 target 'SimpleExample' do
-  pod 'React', :path => '../node_modules/react-native'
-  pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
-  pod 'ReactNativeOpentok', :path => '../node_modules/react-native-opentok/ios'
+  pod 'OpenTok'
 end

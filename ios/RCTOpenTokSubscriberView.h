@@ -7,8 +7,8 @@
  */
 
 @import UIKit;
-#import "RCTEventDispatcher.h"
-#import "RCTComponent.h"
+#import <React/RCTEventDispatcher.h>
+#import <React/RCTComponent.h>
 
 @interface RCTOpenTokSubscriberView : UIView
 

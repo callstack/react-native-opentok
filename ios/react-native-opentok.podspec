@@ -3,7 +3,7 @@ require "json"
 package = JSON.parse(File.read(File.join(__dir__, "../package.json")))
 
 Pod::Spec.new do |s|
-  s.name         = "react-native-opentok"
+  s.name         = "ReactNativeOpentok"
   s.version      = package["version"]
   s.summary      = "An OpenTok SDK for react-native"
   s.authors      = {
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
     'Piotr Drapich' => 'piotr.drapich@callstack.io',
   }
 
-  s.homepage     = "https://github.com/callstack/react-native-video"
+  s.homepage     = "https://github.com/callstack/react-native-opentok"
 
   s.license      = "MIT"
   s.platform     = :ios, "7.0"

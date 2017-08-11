@@ -118,7 +118,7 @@ export default function Subscriber() {
 import { Session } from 'react-native-opentok';
 
 Session.connect(OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN || SUBSCRIBER_TOKEN);
-Session.onMessageRecieved((e) => console.log(e));
+Session.onMessageReceived((e) => console.log(e));
 Session.sendMessage('message');
 ```
 

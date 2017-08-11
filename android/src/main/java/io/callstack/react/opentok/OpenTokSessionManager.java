@@ -74,6 +74,6 @@ public class OpenTokSessionManager extends ReactContextBaseJavaModule implements
         payload.putString("message", data);
         payload.putString("data", connection.getData());
 
-        sendEvent(Events.EVENT_ON_MESSAGE_RECIEVED, payload);
+        sendEvent(Events.EVENT_ON_MESSAGE_RECEIVED, payload);
     }
 }

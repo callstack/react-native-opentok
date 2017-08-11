@@ -9,7 +9,7 @@ enum Events {
     EVENT_SUBSCRIBE_ERROR("onSubscribeError"),
     EVENT_CLIENT_CONNECTED("onClientConnected"),
     EVENT_CLIENT_DISCONNECTED("onClientDisconnected"),
-    EVENT_ON_MESSAGE_RECIEVED("onMessageRecieved");
+    EVENT_ON_MESSAGE_RECEIVED("onMessageReceived");
 
     private final String mName;
 

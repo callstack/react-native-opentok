@@ -6,9 +6,9 @@ const listener = null;
 export const connect = SessionManager.connect;
 export const sendMessage = SessionManager.sendMessage;
 
-export const onMessageRecieved = (callback) => {
+export const onMesssageReceived = (callback) => {
   listener = NativeAppEventEmitter.addListener(
-      'onMessageRecieved',
+      'onMessageReceived',
       (e) => callback(e)
     );
 };

@@ -32,7 +32,7 @@ class Basic extends Component {
 
   componentWillMount() {
     Session.connect(OPENTOK_API_KEY, SESSION_ID, PUBLISHER_TOKEN || SUBSCRIBER_TOKEN);
-    Session.onMessageRecieved((e) => console.log(e));
+    Session.onMessageReceived((e) => console.log(e));
   }
 
   state = {

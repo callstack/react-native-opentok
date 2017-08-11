@@ -54,12 +54,12 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)message)
 
 - (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)string {
     NSLog(@"Received signal %@", string);
-    [self onMessageRecieved:string data:connection.data];
+    [self onMessageReceived:string data:connection.data];
 }
 
-- (void)onMessageRecieved:(NSString *)message data:(NSString *)data
+- (void)onMessageReceived:(NSString *)message data:(NSString *)data
 {
-  [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageRecieved"
+  [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived"
     body:@{
       @"message": message,
       @"data": data,

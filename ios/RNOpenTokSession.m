@@ -47,8 +47,8 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)message) {
     _session = session;
 }
 
-- (void) onMessageRecieved:(NSString *)message {
-  [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageRecieved"
+- (void) onMessageReceived:(NSString *)message {
+  [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived"
     body:@{@"message": message}];
 }
 
@@ -62,7 +62,7 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)message) {
 
 - (void)session:(OTSession*)session receivedSignalType:(NSString*)type
   fromConnection:(OTConnection*)connection withString:(NSString*)message {
-    [self onMessageRecieved:message];
+    [self onMessageReceived:message];
 }
 
 @end

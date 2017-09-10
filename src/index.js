@@ -7,18 +7,18 @@ const listeners = {};
 
 const Session = {
   sendMessage: NativeModules.RNOpenTokSession.sendMessage,
-  onMessageRecieved(callback) {
-    if (!listeners.onMessageRecieved) {
-      listeners.onMessageRecieved = NativeAppEventEmitter.addListener(
-        'onMessageRecieved',
+  onMessageReceived(callback) {
+    if (!listeners.onMessageReceived) {
+      listeners.onMessageReceived = NativeAppEventEmitter.addListener(
+        'onMessageReceived',
         (e) => callback(e)
       );
     }
   },
   stopListener() {
-    if (listeners.onMessageRecieved) {
-      listeners.onMessageRecieved.remove();
-      Reflect.deleteProperty(this.props.listeners, 'onMessageRecieved');
+    if (listeners.onMessageReceived) {
+      listeners.onMessageReceived.remove();
+      Reflect.deleteProperty(this.props.listeners, 'onMessageReceived');
     }
   },
 };

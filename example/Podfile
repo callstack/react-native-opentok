@@ -1,0 +1,33 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '9.0'
+
+target 'RNApp' do
+  node_modules_path = '../node_modules'
+
+  pod 'Yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/Yoga.podspec"
+  pod 'React', path: "#{node_modules_path}/react-native", subspecs: [
+    'Core',
+    'RCTActionSheet',
+    'RCTAnimation',
+    'RCTGeolocation',
+    'RCTImage',
+    'RCTLinkingIOS',
+    'RCTNetwork',
+    'RCTSettings',
+    'RCTText',
+    'RCTVibration',
+    'RCTWebSocket',
+    'BatchedBridge'
+  ]
+
+  pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok"
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+end

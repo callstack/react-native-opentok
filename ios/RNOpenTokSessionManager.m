@@ -13,8 +13,7 @@
     static RNOpenTokSessionManager *sharedRNOpenTokSessionManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-      sharedRNOpenTokSessionManager =
-        [[self alloc] initWithApiKey:apiKey sessionId:sessionId];
+        sharedRNOpenTokSessionManager = [[self alloc] initWithApiKey:apiKey sessionId:sessionId];
     });
     return sharedRNOpenTokSessionManager;
 }

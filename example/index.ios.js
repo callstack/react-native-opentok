@@ -19,8 +19,8 @@ import OpenTok from '../';
 
 export default class App extends Component {
   componentWillMount() {
-    OpenTok.init('', '');
-    OpenTok.connectWithToken('');
+    OpenTok.initSession('YOUR_SESSION_ID');
+    OpenTok.connectWithToken('YOUR_TOKEN');
   }
 
   render() {

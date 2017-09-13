@@ -4,6 +4,7 @@ import SubscriberView from './components/SubscriberView';
 import PublisherView from './components/PublisherView';
 
 const listeners = {};
+let isInitialized = false;
 
 const Session = {
   sendMessage: NativeModules.RNOpenTokSession.sendMessage,
@@ -24,12 +25,12 @@ const Session = {
 };
 
 export default {
-  init: (apiKey: string, sessionId: string) => {
-    NativeModules.RNOpenTok.init(apiKey, sessionId);
-  },
-
-  changeSession: (sessionId: string): void => {
-    NativeModules.RNOpenTok.changeSession(sessionId);
+  initSession: (sessionId: string) => {
+    if (!isInitialized) {
+      NativeModules.RNOpenTok.initSession(sessionId);
+    } else {
+      NativeModules.RNOpenTok.changeSession(sessionId);
+    }
   },
 
   connectWithToken: (token: string): void => {

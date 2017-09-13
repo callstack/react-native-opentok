@@ -16,17 +16,17 @@
 @end
 
 @implementation RNOpenTokPublisherView : UIView  {
-  OTSession *_session;
-  OTPublisher *_publisher;
-  RCTEventDispatcher *_eventDispatcher;
+    OTSession *_session;
+    OTPublisher *_publisher;
+    RCTEventDispatcher *_eventDispatcher;
 }
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher {
-  if ((self = [super init])) {
-    _eventDispatcher = eventDispatcher;
-  }
+    if ((self = [super init])) {
+      _eventDispatcher = eventDispatcher;
+    }
 
-  return self;
+    return self;
 }
 
 - (void)didMoveToWindow {
@@ -38,7 +38,7 @@
     [self cleanupPublisher];
 
     if (!_session) {
-      [self createSession];
+        [self createSession];
     }
 }
 
@@ -56,8 +56,8 @@
     [_session publish:_publisher error:&error];
 
     if (error) {
-      [_eventDispatcher sendAppEventWithName:@"onPublishError" body:@{@"error": [error description]}];
-      return;
+        [_eventDispatcher sendAppEventWithName:@"onPublishError" body:@{@"error": [error description]}];
+        return;
     }
 
     [self attachPublisherView];

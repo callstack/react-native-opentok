@@ -17,7 +17,7 @@
 RCT_EXPORT_MODULE();
 
 - (UIView *)view {
-  return [[RNOpenTokSubscriberView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
+    return [[RNOpenTokSubscriberView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
 }
 
 @end

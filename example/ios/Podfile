@@ -2,8 +2,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '9.0'
 
-target 'RNApp' do
-  node_modules_path = '../node_modules'
+target 'example' do
+  # Path to your node_modules: usually it's:
+  #node_modules_path = '../node_modules'
+  node_modules_path = '../../node_modules'
 
   pod 'Yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/Yoga.podspec"
   pod 'React', path: "#{node_modules_path}/react-native", subspecs: [
@@ -21,7 +23,10 @@ target 'RNApp' do
     'BatchedBridge'
   ]
 
-  pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok"
+  # Changed for development case. In real life it should look like in line below.
+  # pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok"
+
+  pod 'RNOpenTok', path: "../.."
 end
 
 post_install do |installer|

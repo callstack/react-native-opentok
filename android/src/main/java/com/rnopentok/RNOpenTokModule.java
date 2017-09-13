@@ -1,16 +1,12 @@
 package com.rnopentok;
 
-import android.support.annotation.Nullable;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RNOpenTokModule extends ReactContextBaseJavaModule {
     public static final String REACT_CLASS = "RNOpenTok";
@@ -28,11 +24,30 @@ public class RNOpenTokModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void exampleMethod () {
-        Log.d("Works", "works");
+    public void initSession (String sessionId) {
+        ApplicationInfo ai = null;
+        try {
+            ai = reactContext.getPackageManager().getApplicationInfo(reactContext.getPackageName(), PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String apiKey = (String)ai.metaData.get("OPENTOK_API_KEY");
+
+        Log.d("API_KEY", apiKey);
     }
 
-    private static void emitDeviceEvent(String eventName, @Nullable WritableMap eventData) {
-        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, eventData);
+    @ReactMethod
+    public void createSession (String sessionId) {
+
+    }
+
+    @ReactMethod
+    public void connectWithToken (String token) {
+
+    }
+
+    @ReactMethod
+    public void disconnect () {
+
     }
 }

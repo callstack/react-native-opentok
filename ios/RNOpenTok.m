@@ -29,7 +29,11 @@ RCT_EXPORT_METHOD(init:(NSString *)apiKey sessionId:(NSString *)sessionId) {
     [RNOpenTokSessionManager initSessionManager:apiKey sessionId:sessionId];
 }
 
-RCT_EXPORT_METHOD(connect:(NSString *)token) {
+RCT_EXPORT_METHOD(changeSession:(NSString *)sessionId) {
+    [[RNOpenTokSessionManager sessionManager] connectToSession:sessionId];
+}
+
+RCT_EXPORT_METHOD(connectWithToken:(NSString *)token) {
     OTSession *session = [[RNOpenTokSessionManager sessionManager] session];
 
     NSError *error;

@@ -19,12 +19,14 @@ import OpenTok from '../';
 
 export default class App extends Component {
   componentWillMount() {
-    console.log(OpenTok);
+    OpenTok.init('', '');
+    OpenTok.connectWithToken('');
   }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
+        <Text style={styles.welcome} onPress={() => OpenTok.Session.sendMessage('a')}>
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
@@ -34,6 +36,9 @@ export default class App extends Component {
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
+        <OpenTok.SubscriberView
+          style={{ width: 200, height: 100, backgroundColor: 'white'}}
+        />
       </View>
     );
   }

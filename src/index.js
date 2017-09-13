@@ -24,7 +24,18 @@ const Session = {
 };
 
 export default {
-  ...NativeModules.RNOpenTok,
+  init: (apiKey: string, sessionId: string) => {
+    NativeModules.RNOpenTok.init(apiKey, sessionId);
+  },
+
+  changeSession: (sessionId: string): void => {
+    NativeModules.RNOpenTok.changeSession(sessionId);
+  },
+
+  connectWithToken: (token: string): void => {
+    NativeModules.RNOpenTok.connectWithToken(token);
+  },
+
   Session,
   SubscriberView: (props) => <SubscriberView listeners={listeners} {...props} />,
   PublisherView: (props) => <PublisherView listeners={listeners} {...props} />,

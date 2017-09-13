@@ -44,6 +44,7 @@
 
 - (id)createSession {
     OTSession *session = [[RNOpenTokSessionManager sessionManager] session];
+    NSLog(@"%@", [session description]);
     session.delegate = self;
     _session = session;
 }

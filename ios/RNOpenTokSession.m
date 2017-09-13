@@ -28,7 +28,7 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(sendMessage:(NSString *)message) {
     if (!_session) {
-      [self createSession];
+        [self createSession];
     }
 
     OTError* error = nil;
@@ -48,8 +48,7 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)message) {
 }
 
 - (void) onMessageReceived:(NSString *)message {
-  [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived"
-    body:@{@"message": message}];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived" body:@{@"message": message}];
 }
 
 # pragma mark - OTSession delegate callbacks
@@ -60,8 +59,7 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)message) {
 - (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {}
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {}
 
-- (void)session:(OTSession*)session receivedSignalType:(NSString*)type
-  fromConnection:(OTConnection*)connection withString:(NSString*)message {
+- (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)message {
     [self onMessageReceived:message];
 }
 

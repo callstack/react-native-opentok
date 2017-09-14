@@ -7,6 +7,7 @@ import android.util.Log;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.opentok.android.Session;
 
 public class RNOpenTokModule extends ReactContextBaseJavaModule {
     public static final String REACT_CLASS = "RNOpenTok";
@@ -33,23 +34,29 @@ public class RNOpenTokModule extends ReactContextBaseJavaModule {
         }
         String apiKey = (String) ai.metaData.get("OPENTOK_API_KEY");
 
-        RNOpenTokSessionManager.initSessionManager(apiKey, sessionId);
+        RNOpenTokSessionManager.initSessionManager(reactContext, apiKey, sessionId);
     }
 
     @ReactMethod
     public void createSession(String sessionId) {
-        String test = RNOpenTokSessionManager.getSessionManager().getSession();
-
-        Log.d("test", test);
+        RNOpenTokSessionManager.getSessionManager().connectToSession(sessionId);
     }
 
     @ReactMethod
     public void connectWithToken(String token) {
+        Session session = RNOpenTokSessionManager.getSessionManager().getSession();
 
+        if(session != null) {
+            session.connect(token);
+        }
     }
 
     @ReactMethod
     public void disconnect() {
+        Session session = RNOpenTokSessionManager.getSessionManager().getSession();
 
+        if(session != null) {
+            session.disconnect();
+        }
     }
 }

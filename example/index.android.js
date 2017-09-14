@@ -29,7 +29,7 @@ export default class App extends Component {
         <Text style={styles.welcome} onPress={() => OpenTok.initSession('')}>
           Welcome to React Native!
         </Text>
-        <Text style={styles.instructions}>
+        <Text style={styles.instructions} onPress={() => OpenTok.createSession('')}>
           To get started, edit index.ios.js
         </Text>
         <Text style={styles.instructions}>

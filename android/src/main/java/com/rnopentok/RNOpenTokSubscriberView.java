@@ -29,6 +29,7 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
 
     private void attachSubscriberView() {
         addView(mSubscriber.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        requestLayout();
     }
 
     private void cleanUpSubscriber() {
@@ -76,4 +77,21 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
     public void onConnectionDestroyed(Session session, Connection connection) {
         cleanUpSubscriber();
     }
+
+
+    @Override
+    public void requestLayout() {
+        super.requestLayout();
+        post(mLayoutRunnable);
+    }
+
+    private final Runnable mLayoutRunnable = new Runnable() {
+        @Override
+        public void run() {
+            measure(
+                    MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY));
+            layout(getLeft(), getTop(), getRight(), getBottom());
+        }
+    };
 }

@@ -41,13 +41,13 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)message) {
 
 #pragma mark - Private methods
 
-- (id) createSession {
+- (void)createSession {
     OTSession *session = [[RNOpenTokSessionManager sessionManager] session];
     session.delegate = self;
     _session = session;
 }
 
-- (void) onMessageReceived:(NSString *)message {
+- (void)onMessageReceived:(NSString *)message {
     [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived" body:@{@"message": message}];
 }
 

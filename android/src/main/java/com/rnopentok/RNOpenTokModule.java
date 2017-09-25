@@ -33,8 +33,11 @@ public class RNOpenTokModule extends ReactContextBaseJavaModule {
             e.printStackTrace();
         }
         String apiKey = ai.metaData.get("OPENTOK_API_KEY").toString();
-
-        RNOpenTokSessionManager.initSessionManager(reactContext, apiKey, sessionId);
+        RNOpenTokSessionManager sessionManager = RNOpenTokSessionManager.initSessionManager(reactContext, apiKey);
+        if (sessionManager.getSession() != null) {
+            sessionManager.getSession().disconnect();
+        }
+        sessionManager.connectToSession(sessionId);
     }
 
     @ReactMethod

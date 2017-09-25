@@ -11,23 +11,21 @@ public class RNOpenTokSessionManager {
     private String mApiKey = null;
     protected Session mSession = null;
 
-    protected RNOpenTokSessionManager(ReactApplicationContext context, String apiKey, String sessionId) {
-        Session session = new Session(context, apiKey, sessionId);
-        this.mSession = session;
+    protected RNOpenTokSessionManager(ReactApplicationContext context, String apiKey) {
+        this.mSession = null;
         this.mApiKey = apiKey;
         this.mContext = context;
-
     }
 
-    public static RNOpenTokSessionManager initSessionManager(ReactApplicationContext context, String apiKey, String sessionId) {
+    public static RNOpenTokSessionManager initSessionManager(ReactApplicationContext context, String apiKey) {
         if (instance == null) {
-            instance = new RNOpenTokSessionManager(context, apiKey, sessionId);
+            instance = new RNOpenTokSessionManager(context, apiKey);
         }
         return instance;
     }
 
     public static RNOpenTokSessionManager getSessionManager() {
-        return RNOpenTokSessionManager.initSessionManager(null, null, null);
+        return RNOpenTokSessionManager.initSessionManager(null, null);
     }
 
     public Session getSession() {

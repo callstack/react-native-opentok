@@ -23,7 +23,9 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
         mSubscriber.setSubscriberListener(this);
         mSubscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                 BaseVideoRenderer.STYLE_VIDEO_FILL);
+
         mSession.subscribe(mSubscriber);
+
         attachSubscriberView();
     }
 

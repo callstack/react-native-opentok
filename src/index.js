@@ -2,7 +2,7 @@
 import React from 'react';
 import { NativeModules, NativeAppEventEmitter } from 'react-native';
 import SubscriberView from './components/SubscriberView';
-// import PublisherView from './components/PublisherView';
+import PublisherView from './components/PublisherView';
 
 const listeners = {};
 let isInitialized = false;
@@ -41,5 +41,5 @@ export default {
 
   Session,
   SubscriberView: (props) => <SubscriberView listeners={listeners} {...props} />,
-  // PublisherView: (props) => <PublisherView listeners={listeners} {...props} />,
+  PublisherView: (props) => <PublisherView listeners={listeners} {...props} />,
 };

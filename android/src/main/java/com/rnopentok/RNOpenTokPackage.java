@@ -22,7 +22,8 @@ public class RNOpenTokPackage implements ReactPackage {
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
         return Arrays.<ViewManager>asList(
-                new RNOpenTokSubscriberViewManager()
+                new RNOpenTokSubscriberViewManager(),
+                new RNOpenTokPublisherViewManager()
         );
     }
 }

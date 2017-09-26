@@ -12,19 +12,29 @@ import {
   View
 } from 'react-native';
 
-export default class example extends Component {
+// Import should look like this:
+//import OpenTok from 'react-native-open-tok';
+
+import OpenTok from '../';
+
+export default class App extends Component {
+  componentWillMount() {
+    // OpenTok.initSession('YOUR_SESSION_ID');
+    // OpenTok.connectWithToken('YOUR_TOKEN');
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
+        <Text style={styles.welcome} onPress={() => OpenTok.initSession('')}>
           Welcome to React Native!
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
+        <Text style={styles.instructions} onPress={() => OpenTok.createSession('')}>
+          To get started, edit index.ios.js
         </Text>
         <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
+          Press Cmd+R to reload,{'\n'}
+          Cmd+D or shake for dev menu
         </Text>
       </View>
     );
@@ -50,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('example', () => example);
+AppRegistry.registerComponent('example', () => App);

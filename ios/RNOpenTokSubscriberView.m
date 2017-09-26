@@ -42,7 +42,7 @@
     }
 }
 
-- (id)createSession {
+- (void)createSession {
     OTSession *session = [[RNOpenTokSessionManager sessionManager] session];
     session.delegate = self;
     _session = session;

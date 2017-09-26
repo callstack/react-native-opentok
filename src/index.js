@@ -1,3 +1,4 @@
+/* @flow */
 import React from 'react';
 import { NativeModules, NativeAppEventEmitter } from 'react-native';
 import SubscriberView from './components/SubscriberView';
@@ -12,7 +13,7 @@ const Session = {
     if (!listeners.onMessageReceived) {
       listeners.onMessageReceived = NativeAppEventEmitter.addListener(
         'onMessageReceived',
-        (e) => callback(e)
+        (e: Object) => callback(e)
       );
     }
   },
@@ -28,6 +29,7 @@ export default {
   initSession: (sessionId: string) => {
     if (!isInitialized) {
       NativeModules.RNOpenTok.initSession(sessionId);
+      isInitialized = true;
     } else {
       NativeModules.RNOpenTok.changeSession(sessionId);
     }

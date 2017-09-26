@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
+/* @flow */
+import React from 'react';
 import { requireNativeComponent, NativeAppEventEmitter } from 'react-native';
 
+import type { SubscriberViewProps } from '../types';
+
+/* $FlowFixMe - We are disabling flow here, because refernece is needed at this point */
 const RNOpenTokSubscriberView = requireNativeComponent('RNOpenTokSubscriberView', SubscriberView);
 
 const subscribeListeners = ['onSubscribeStart', 'onSubscribeStop', 'onSubscribeError'];
 const NOOP = () => {};
 
-export default class SubscriberView extends Component {
+export default class SubscriberView extends React.Component {
+  props: SubscriberViewProps;
+  
   static defaultProps = {
     onSubscribeStart: NOOP,
     onSubscribeStop: NOOP,
@@ -21,7 +27,7 @@ export default class SubscriberView extends Component {
     subscribeListeners.forEach((listener) => this.removeListener(listener));
   }
 
-  addListener = (name) => {
+  addListener = (name: string) => {
     if (!this.props.listeners[name]) {
       this.props.listeners[name] = NativeAppEventEmitter.addListener(
         name,
@@ -30,7 +36,7 @@ export default class SubscriberView extends Component {
     }
   }
 
-  removeListener = (name) => {
+  removeListener = (name: string) => {
     if (this.props.listeners[name]) {
       this.props.listeners[name].remove();
       Reflect.deleteProperty(this.props.listeners, name);

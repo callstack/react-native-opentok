@@ -35,17 +35,17 @@
 }
 
 - (void)mount {
+    [self observeSession];
     [self cleanupPublisher];
 
     if (!_session) {
-        [self createSession];
+        [self connectToSession];
     }
 }
 
-- (void)createSession {
-    OTSession *session = [[RNOpenTokSessionManager sessionManager] session];
-    session.delegate = self;
-    _session = session;
+- (void)connectToSession {
+    _session = [[RNOpenTokSessionManager sessionManager] getSession:_sessionId];
+    _session.delegate = self;
 }
 
 - (void)startPublishing {
@@ -63,6 +63,16 @@
     [self attachPublisherView];
 }
 
+- (void)stopPublishing {
+    OTError *error = nil;
+    
+    [_session unpublish:_publisher error:&error];
+    
+    if (error) {
+        NSLog(@"%@", error);
+    }
+}
+
 - (void)attachPublisherView {
     [_publisher.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:_publisher.view];
@@ -70,11 +80,34 @@
 
 - (void)cleanupPublisher {
     [_publisher.view removeFromSuperview];
+    _publisher.delegate = nil;
     _publisher = nil;
 }
 
+- (void)cleanupSession {
+    [self stopPublishing];
+    _session.delegate = nil;
+}
+
 - (void)dealloc {
+    [self stopObserveSession];
+    [self cleanupSession];
     [self cleanupPublisher];
+}
+
+- (void)observeSession {
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(connectToSession)
+     name:[@"session-updated:" stringByAppendingString:_sessionId]
+     object:nil];
+}
+
+- (void)stopObserveSession {
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:[@"session-updated:" stringByAppendingString:_sessionId]
+     object:nil];
 }
 
 #pragma mark - OTSession delegate callbacks

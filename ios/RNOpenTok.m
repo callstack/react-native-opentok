@@ -25,8 +25,9 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(connect:(NSString *)sessionId withToken:(NSString *)token) {
+RCT_EXPORT_METHOD(connect:(NSString *)sessionId withToken:(NSString *)token resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     [[RNOpenTokSessionManager sessionManager] connectToSession:sessionId withToken:token];
+    resolve(@YES);
 }
 
 RCT_EXPORT_METHOD(disconnect:(NSString *)sessionId) {

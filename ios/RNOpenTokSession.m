@@ -19,9 +19,8 @@
 #import <OpenTok/OpenTok.h>
 #import "RNOpenTokSessionManager.h"
 
-@implementation RNOpenTokSession {
-    OTSession *_session;
-}
+@implementation RNOpenTokSession
+
 @synthesize bridge = _bridge;
 
 RCT_EXPORT_MODULE();
@@ -31,11 +30,11 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)sessionId message:(NSString *)message 
     OTError* error = nil;
     
     [session signalWithType:@"message" string:message connection:nil error:&error];
-    
-    resolve(@YES);
 
     if (error) {
-        reject(@"no_events", @"There were no events", error);
+        reject(@"not_sent", @"Message wasn't sent", error);
+    } else {
+        resolve(@YES);
     }
 }
 

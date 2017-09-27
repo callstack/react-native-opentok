@@ -14,14 +14,16 @@ const Session = {
     if (!listeners.onMessageReceived) {
       listeners.onMessageReceived = NativeAppEventEmitter.addListener(
         'onMessageReceived',
-        (e: MessageEvent) => callback(e.sessionId, e.message)
+        (e: MessageEvent) => {
+          callback(e);
+        }
       );
     }
   },
   stopListener() {
     if (listeners.onMessageReceived) {
       listeners.onMessageReceived.remove();
-      Reflect.deleteProperty(this.props.listeners, 'onMessageReceived');
+      delete this.props.listeners.onMessageReceived;
     }
   },
 };

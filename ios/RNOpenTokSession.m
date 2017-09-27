@@ -26,29 +26,27 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(sendMessage:(NSString *)sessionId message:(NSString *)message) {
-//    if (!_session) {
-//        [self createSession];
-//    }
-//
-//    OTError* error = nil;
-//    [_session signalWithType:@"message" string:message connection:nil error:&error];
-//
-//    if (error) {
-//        NSLog(@"Error while sending an signal: %@", error);
-//    }
+RCT_EXPORT_METHOD(sendMessage:(NSString *)sessionId message:(NSString *)message resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+    OTSession *session = [[RNOpenTokSessionManager sessionManager] getSession:sessionId];
+    OTError* error = nil;
+    
+    [session signalWithType:@"message" string:message connection:nil error:&error];
+    
+    resolve(@YES);
+
+    if (error) {
+        reject(@"no_events", @"There were no events", error);
+    }
 }
 
 #pragma mark - Private methods
 
-- (void)createSession {
-    OTSession *session = [[RNOpenTokSessionManager sessionManager] session];
-    session.delegate = self;
-    _session = session;
+- (NSArray<NSString *> *)supportedEvents {
+    return @[@"onMessageReceived"];
 }
 
-- (void)onMessageReceived:(NSString *)message {
-    [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived" body:@{@"sessionId":_session.sessionId,@"message": message}];
+- (void)onMessageReceived:(NSString*)sessionId withMessage:(NSString *)message {
+    [self sendEventWithName:@"onMessageReceived" body:@{@"sessionId":sessionId,@"message": message}];
 }
 
 # pragma mark - OTSession delegate callbacks
@@ -60,7 +58,7 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)sessionId message:(NSString *)message)
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {}
 
 - (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)message {
-    [self onMessageReceived:message];
+    [self onMessageReceived:session.sessionId withMessage:message];
 }
 
 @end

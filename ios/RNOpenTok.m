@@ -26,8 +26,12 @@
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(initSession:(NSString *)sessionId) {
-    NSString *apiKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"OPENTOK_API_KEY"];
-    [RNOpenTokSessionManager initSessionManager:apiKey sessionId:sessionId];
+    RNOpenTokSessionManager *sessionManager = [RNOpenTokSessionManager initSessionManager];
+    OTSession *session = [sessionManager session];
+    if( session ) {
+        [session disconnect];
+    }
+    [[RNOpenTokSessionManager sessionManager] connectToSession:sessionId];
 }
 
 RCT_EXPORT_METHOD(changeSession:(NSString *)sessionId) {
@@ -36,10 +40,10 @@ RCT_EXPORT_METHOD(changeSession:(NSString *)sessionId) {
 
 RCT_EXPORT_METHOD(connectWithToken:(NSString *)token) {
     OTSession *session = [[RNOpenTokSessionManager sessionManager] session];
-
+    
     NSError *error;
     [session connectWithToken:token error:&error];
-
+    
     if (error) {
         NSLog(@"%@", error);
     }
@@ -47,10 +51,10 @@ RCT_EXPORT_METHOD(connectWithToken:(NSString *)token) {
 
 RCT_EXPORT_METHOD(disconnect) {
     OTSession *session = [[RNOpenTokSessionManager sessionManager] session];
-
+    
     NSError *error;
     [session disconnect:&error];
-
+    
     if (error) {
         NSLog(@"%@", error);
     }

@@ -25,7 +25,7 @@
     if ((self = [super init])) {
         _eventDispatcher = eventDispatcher;
     }
-
+    [self observeSession];
     return self;
 }
 
@@ -35,33 +35,39 @@
 }
 
 - (void)mount {
-    [self cleanupSubscriber];
-
     if (!_session) {
         [self createSession];
     }
 }
 
 - (void)createSession {
-    OTSession *session = [[RNOpenTokSessionManager sessionManager] session];
-    session.delegate = self;
-    _session = session;
+    _session = [[RNOpenTokSessionManager sessionManager] session];
+    _session.delegate = self;
 }
 
 - (void)doSubscribe:(OTStream*)stream {
     _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
-
+    
     OTError *error = nil;
-
     [_session subscribe:_subscriber error:&error];
-
+    
     if (error) {
         [_eventDispatcher sendAppEventWithName:@"onSubscribeError" body:@{@"error": [error description]}];
         return;
     }
-
+    
     [self attachSubscriberView];
 }
+
+- (void)unsubscribe {
+    OTError *error = nil;
+    [_session unsubscribe:_subscriber error:&error];
+    
+    if (error) {
+        NSLog(@"%@", error);
+    }
+}
+
 
 - (void)attachSubscriberView {
     [_subscriber.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
@@ -70,11 +76,34 @@
 
 - (void)cleanupSubscriber {
     [_subscriber.view removeFromSuperview];
+    _subscriber.delegate = nil;
     _subscriber = nil;
 }
 
+- (void)cleanupSession {
+    [self unsubscribe];
+    _session.delegate = nil;
+}
+
 - (void)dealloc {
+    [self stopObserveSession];
+    [self cleanupSession];
     [self cleanupSubscriber];
+}
+
+- (void)observeSession {
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(createSession)
+     name:@"UpdatedSession"
+     object:nil];
+}
+
+- (void)stopObserveSession {
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:@"UpdatedSession"
+     object:nil];
 }
 
 #pragma mark - OTSession delegate callbacks

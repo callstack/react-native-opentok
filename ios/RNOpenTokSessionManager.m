@@ -37,7 +37,6 @@
         NSLog(@"%@", error);
     }
     [sessions removeObjectForKey:sessionId];
-    //Should we notify about that?
 }
 
 - (void)disconnectAllSessions {

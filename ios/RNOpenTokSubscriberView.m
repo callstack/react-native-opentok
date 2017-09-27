@@ -25,7 +25,6 @@
     if ((self = [super init])) {
         _eventDispatcher = eventDispatcher;
     }
-    [self observeSession];
     return self;
 }
 
@@ -35,13 +34,14 @@
 }
 
 - (void)mount {
+    [self observeSession];
     if (!_session) {
-        [self createSession];
+        [self connectToSession];
     }
 }
 
-- (void)createSession {
-    _session = [[RNOpenTokSessionManager sessionManager] session];
+- (void)connectToSession {
+    _session = [[RNOpenTokSessionManager sessionManager] getSession:_sessionId];
     _session.delegate = self;
 }
 
@@ -68,7 +68,6 @@
     }
 }
 
-
 - (void)attachSubscriberView {
     [_subscriber.view setFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:_subscriber.view];
@@ -94,15 +93,15 @@
 - (void)observeSession {
     [[NSNotificationCenter defaultCenter]
      addObserver:self
-     selector:@selector(createSession)
-     name:@"UpdatedSession"
+     selector:@selector(connectToSession)
+     name:[@"session-updated:" stringByAppendingString:_sessionId]
      object:nil];
 }
 
 - (void)stopObserveSession {
     [[NSNotificationCenter defaultCenter]
      removeObserver:self
-     name:@"UpdatedSession"
+     name:[@"session-updated:" stringByAppendingString:_sessionId]
      object:nil];
 }
 

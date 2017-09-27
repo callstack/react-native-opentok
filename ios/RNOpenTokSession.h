@@ -18,6 +18,4 @@
 
 @interface RNOpenTokSession : RCTEventEmitter <RCTBridgeModule, OTSessionDelegate>
 
-@property (nonatomic) OTSession *session;
-
 @end

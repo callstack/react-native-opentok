@@ -39,7 +39,7 @@ export default class PublisherView extends React.Component {
   removeListener = (name: string) => {
     if (this.props.listeners[name]) {
       this.props.listeners[name].remove();
-      Reflect.deleteProperty(this.props.listeners, name);
+      delete this.props.listeners[name];
     }
   }
 

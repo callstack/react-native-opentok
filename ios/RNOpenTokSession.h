@@ -6,9 +6,17 @@
 #import "React/RCTBridgeModule.h"
 #endif
 
+#if __has_include(<React/RCTBridgeModule.h>)
+#import <React/RCTEventEmitter.h>
+#elif __has_include("RCTEventEmitter.h")
+#import "RCTEventEmitter"
+#else
+#import "React/RCTEventEmitter.h"
+#endif
+
 #import <OpenTok/OpenTok.h>
 
-@interface RNOpenTokSession : NSObject <RCTBridgeModule, OTSessionDelegate>
+@interface RNOpenTokSession : RCTEventEmitter <RCTBridgeModule, OTSessionDelegate>
 
 @property (nonatomic) OTSession *session;
 

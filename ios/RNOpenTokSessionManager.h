@@ -6,9 +6,10 @@
 
 @property (nonatomic, retain) OTSession *session;
 @property (nonatomic, retain) NSString *_apiKey;
+@property (nonatomic, retain) NSString* const UpdatedSession;
 
 + (id)sessionManager;
-+ (id)initSessionManager:(NSString*)apiKey sessionId:(NSString*)sessionId;
++ (id)initSessionManager;
 
 - (void)connectToSession:(NSString*)sessionId;
 

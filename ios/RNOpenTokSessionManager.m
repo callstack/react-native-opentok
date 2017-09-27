@@ -7,7 +7,6 @@
 @synthesize _apiKey;
 @synthesize sessions;
 
-NSString* const UpdatedSession = @"UpdatedSession";
 
 #pragma mark Public Methods
 
@@ -25,6 +24,36 @@ NSString* const UpdatedSession = @"UpdatedSession";
     return [self initSessionManager];
 }
 
+- (id)getSession:(NSString *)sessionId {
+    return sessions[sessionId];
+}
+
+- (void)disconnectSession:(NSString*)sessionId {
+    OTSession *session = sessions[sessionId];
+    NSError *error;
+    [session disconnect:&error];
+    
+    if (error) {
+        NSLog(@"%@", error);
+    }
+    [sessions removeObjectForKey:sessionId];
+    //Should we notify about that?
+}
+
+- (void)disconnectAllSessions {
+    for (NSString* key in sessions) {
+        id session = sessions[key];
+        NSError *error;
+        
+        [session disconnect:&error];
+        
+        if (error) {
+            NSLog(@"%@", error);
+        }
+    }
+    [sessions removeAllObjects];
+}
+
 - (void)connectToSession:(NSString*)sessionId withToken:(NSString*)token{
     OTSession *session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:sessionId delegate:nil];
     NSError *error;
@@ -34,7 +63,7 @@ NSString* const UpdatedSession = @"UpdatedSession";
         NSLog(@"%@", error);
     }
     sessions[sessionId] = session;
-    [self notifyObservers];
+    [self notifyObservers:sessionId];
 }
 
 #pragma mark Private Methods
@@ -45,9 +74,9 @@ NSString* const UpdatedSession = @"UpdatedSession";
     return self;
 }
 
-- (void)notifyObservers {
+- (void)notifyObservers:(NSString *)sessionId {
     [[NSNotificationCenter defaultCenter]
-     postNotificationName:UpdatedSession
+     postNotificationName:[@"session-updated:" stringByAppendingString:sessionId]
      object:nil];
 }
 

@@ -1,16 +1,15 @@
 #import <OpenTok/OpenTok.h>
 
-@interface RNOpenTokSessionManager : NSObject {
-    OTSession *session;
-}
+@interface RNOpenTokSessionManager : NSObject;
 
-@property (nonatomic, retain) OTSession *session;
 @property (nonatomic, retain) NSMutableDictionary *sessions;
 @property (nonatomic, retain) NSString *_apiKey;
-@property (nonatomic, retain) NSString* const UpdatedSession;
 
 + (id)sessionManager;
 
 - (void)connectToSession:(NSString*)sessionId withToken:(NSString*)token;
+- (id)getSession:(NSString*)sessionId;
+- (void)disconnectSession:(NSString*)sessionId;
+- (void)disconnectAllSessions;
 
 @end

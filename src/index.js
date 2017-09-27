@@ -10,11 +10,11 @@ const listeners = {};
 
 const Session = {
   sendMessage: NativeModules.RNOpenTokSession.sendMessage,
-  onMessageReceived(callback: (e: Message) => void) {
+  onMessageReceived(callback: (e: MessageEvent) => void) {
     if (!listeners.onMessageReceived) {
       listeners.onMessageReceived = NativeAppEventEmitter.addListener(
         'onMessageReceived',
-        (e: Message) => callback(e)
+        (e: MessageEvent) => callback(e.sessionId, e.message)
       );
     }
   },
@@ -27,8 +27,16 @@ const Session = {
 };
 
 export default {
-  connectToSession: (sessionId: string, token: string) => {
-    NativeModules.RNOpenTok.connectToSession(sessionId, token);
+  connect: (sessionId: string, token: string) => {
+    NativeModules.RNOpenTok.connect(sessionId, token);
+  },
+
+  disconnect: (sessionId: string) => {
+    NativeModules.RNOpenTok.disconnect(sessionId);
+  },
+
+  disconnectAll: () => {
+    NativeModules.RNOpenTok.disconnectAll();
   },
 
   Session,

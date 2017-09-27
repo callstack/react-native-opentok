@@ -12,6 +12,8 @@
 
 @interface RNOpenTokSubscriberView : UIView
 
+@property (nonatomic, strong) NSString *sessionId;
+
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 
 @end

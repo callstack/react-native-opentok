@@ -1,6 +1,7 @@
 /* @flow */
 
-export type Message = {
+export type MessageEvent = {
+  sessionId: string,
   message: string,
 }
 

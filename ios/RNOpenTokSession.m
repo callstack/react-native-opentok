@@ -26,17 +26,17 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(sendMessage:(NSString *)message) {
-    if (!_session) {
-        [self createSession];
-    }
-
-    OTError* error = nil;
-    [_session signalWithType:@"message" string:message connection:nil error:&error];
-
-    if (error) {
-        NSLog(@"Error while sending an signal: %@", error);
-    }
+RCT_EXPORT_METHOD(sendMessage:(NSString *)sessionId message:(NSString *)message) {
+//    if (!_session) {
+//        [self createSession];
+//    }
+//
+//    OTError* error = nil;
+//    [_session signalWithType:@"message" string:message connection:nil error:&error];
+//
+//    if (error) {
+//        NSLog(@"Error while sending an signal: %@", error);
+//    }
 }
 
 #pragma mark - Private methods
@@ -48,7 +48,7 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)message) {
 }
 
 - (void)onMessageReceived:(NSString *)message {
-    [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived" body:@{@"message": message}];
+    [self.bridge.eventDispatcher sendAppEventWithName:@"onMessageReceived" body:@{@"sessionId":_session.sessionId,@"message": message}];
 }
 
 # pragma mark - OTSession delegate callbacks

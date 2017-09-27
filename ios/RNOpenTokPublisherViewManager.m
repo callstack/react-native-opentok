@@ -14,7 +14,9 @@
 
 @synthesize bridge = _bridge;
 
-RCT_EXPORT_MODULE();
+RCT_EXPORT_MODULE()
+
+RCT_EXPORT_VIEW_PROPERTY(sessionId, NSString)
 
 - (UIView *)view {
     return [[RNOpenTokPublisherView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];

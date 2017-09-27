@@ -4,10 +4,9 @@ import { NativeModules, NativeAppEventEmitter } from 'react-native';
 import SubscriberView from './components/SubscriberView';
 import PublisherView from './components/PublisherView';
 
-import type { Message, PublisherViewProps, SubscriberViewProps} from './types';
+import type { Message, PublisherViewProps, SubscriberViewProps } from './types';
 
 const listeners = {};
-let isInitialized = false;
 
 const Session = {
   sendMessage: NativeModules.RNOpenTokSession.sendMessage,
@@ -28,20 +27,15 @@ const Session = {
 };
 
 export default {
-  initSession: (sessionId: string) => {
-    if (!isInitialized) {
-      NativeModules.RNOpenTok.initSession(sessionId);
-      isInitialized = true;
-    } else {
-      NativeModules.RNOpenTok.changeSession(sessionId);
-    }
-  },
-
-  connectWithToken: (token: string) => {
-    NativeModules.RNOpenTok.connectWithToken(token);
+  connectToSession: (sessionId: string, token: string) => {
+    NativeModules.RNOpenTok.connectToSession(sessionId, token);
   },
 
   Session,
-  SubscriberView: (props: SubscriberViewProps) => <SubscriberView listeners={listeners} {...props} />,
-  PublisherView: (props: PublisherViewProps) => <PublisherView listeners={listeners} {...props} />,
+  SubscriberView: (props: SubscriberViewProps) => (
+    <SubscriberView listeners={listeners} {...props} />
+  ),
+  PublisherView: (props: PublisherViewProps) => (
+    <PublisherView listeners={listeners} {...props} />
+  ),
 };

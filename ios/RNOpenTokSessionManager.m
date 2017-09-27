@@ -4,8 +4,8 @@
 
 @implementation RNOpenTokSessionManager
 
-@synthesize session;
 @synthesize _apiKey;
+@synthesize sessions;
 
 NSString* const UpdatedSession = @"UpdatedSession";
 
@@ -25,28 +25,30 @@ NSString* const UpdatedSession = @"UpdatedSession";
     return [self initSessionManager];
 }
 
-- (void)connectToSession:(NSString*)sessionId {
+- (void)connectToSession:(NSString*)sessionId withToken:(NSString*)token{
+    OTSession *session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:sessionId delegate:nil];
     NSError *error;
-    [session disconnect:&error];
     
+    [session connectWithToken:token error:&error];
     if (error) {
         NSLog(@"%@", error);
     }
-    session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:sessionId delegate:nil];
+    sessions[sessionId] = session;
     [self notifyObservers];
-}
-
-- (void)notifyObservers {
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:UpdatedSession
-     object:nil];
 }
 
 #pragma mark Private Methods
 
 - (id)initWithApiKey:(NSString*)apiKey {
     _apiKey = apiKey;
+    sessions = [[NSMutableDictionary alloc] init];
     return self;
+}
+
+- (void)notifyObservers {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:UpdatedSession
+     object:nil];
 }
 
 - (void)dealloc {}

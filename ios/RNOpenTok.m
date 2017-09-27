@@ -25,28 +25,9 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(initSession:(NSString *)sessionId) {
-    RNOpenTokSessionManager *sessionManager = [RNOpenTokSessionManager initSessionManager];
-    OTSession *session = [sessionManager session];
-    if( session ) {
-        [session disconnect];
-    }
-    [[RNOpenTokSessionManager sessionManager] connectToSession:sessionId];
-}
-
-RCT_EXPORT_METHOD(changeSession:(NSString *)sessionId) {
-    [[RNOpenTokSessionManager sessionManager] connectToSession:sessionId];
-}
-
-RCT_EXPORT_METHOD(connectWithToken:(NSString *)token) {
-    OTSession *session = [[RNOpenTokSessionManager sessionManager] session];
-    
-    NSError *error;
-    [session connectWithToken:token error:&error];
-    
-    if (error) {
-        NSLog(@"%@", error);
-    }
+RCT_EXPORT_METHOD(connectToSession:(NSString *)sessionId withToken:(NSString *)token) {
+    RNOpenTokSessionManager *sessionManager = [RNOpenTokSessionManager sessionManager];
+    [[RNOpenTokSessionManager sessionManager] connectToSession:sessionId withToken:token];
 }
 
 RCT_EXPORT_METHOD(disconnect) {

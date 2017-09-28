@@ -47,7 +47,7 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
     [session signalWithType:type string:data connection:nil error:&error];
     
     if (error) {
-        reject(@"not_sent", @"Message wasn't sent", error);
+        reject(@"not_sent", @"Signal wasn't sent", error);
     } else {
         resolve(@YES);
     }

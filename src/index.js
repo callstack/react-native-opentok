@@ -1,36 +1,14 @@
 /* @flow */
 import React from 'react';
-import { NativeModules, Platform, NativeEventEmitter, DeviceEventEmitter } from 'react-native';
+import { NativeModules } from 'react-native';
+
+import NativeEventEmitter from './NativeEventEmitter';
 import SubscriberView from './components/SubscriberView';
 import PublisherView from './components/PublisherView';
 
 import type { Message, PublisherViewProps, SubscriberViewProps } from './types';
 
 const listeners = {};
-
-const onSignalReceivedIOS = (callback: (e: MessageEvent) => void) => {
-  const sessionEventEmitter = new NativeEventEmitter(NativeModules.RNOpenTok);
-  if (!listeners.onSignalReceived) {
-    listeners.onSignalReceived = sessionEventEmitter.addListener(
-      'onSignalReceived',
-      (e: MessageEvent) => {
-        callback(e);
-      }
-    );
-  }
-};
-
-const onSignalReceivedAndroid = (callback: (e: MessageEvent) => void) => {
-  if (!listeners.onSignalReceived) {
-    listeners.onSignalReceived = DeviceEventEmitter.addListener(
-      'onSignalReceived',
-      (e: MessageEvent) => {
-        callback(e);
-      }
-    );
-  }
-};
-
 
 export default {
   connect: async (sessionId: string, token: string) => {
@@ -49,10 +27,16 @@ export default {
     return await NativeModules.RNOpenTok.sendSignal(sessionId, type, message);
   },
 
-  onSignalReceived: Platform.select({
-    ios: onSignalReceivedIOS,
-    android: onSignalReceivedAndroid,
-  }),
+  onSignalReceived: (callback: (e: MessageEvent) => void) => {
+    if (!listeners.onSignalReceived) {
+      listeners.onSignalReceived = NativeEventEmitter.addListener(
+        'onSignalReceived',
+        (e: MessageEvent) => {
+          callback(e);
+        }
+      );
+    }
+  },
 
   removeSignalListener: () => {
     if (listeners.onSignalReceived) {

@@ -10,28 +10,25 @@ import com.opentok.android.Session;
 import com.opentok.android.Stream;
 
 public class RNOpenTokView extends FrameLayout implements Session.SessionListener {
-    protected Session mSession = null;
+    protected String mSessionId;
     private static ThemedReactContext reactContext = null;
 
     public RNOpenTokView(ThemedReactContext context) {
         super(context);
 
-        this.reactContext = context;
+        reactContext = context;
+    }
+
+    public void setSessionId(String sessionId) {
+        mSessionId = sessionId;
     }
 
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        if (mSession == null) {
-            this.mount();
-        }
-    }
-
-    private void mount() {
-        Session session = RNOpenTokSessionManager.getSessionManager().getSession("");
+        Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
         session.setSessionListener(this);
-        this.mSession = session;
     }
 
     protected void sendEvent(Events event, WritableMap payload) {

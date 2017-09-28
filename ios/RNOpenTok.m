@@ -65,9 +65,19 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
 
 # pragma mark - OTSession delegate callbacks
 
-- (void)sessionDidConnect:(OTSession*)session {}
+- (void)sessionDidConnect:(OTSession*)session {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:[@"session-did-connect:" stringByAppendingString:session.sessionId]
+     object:nil];
+}
 - (void)sessionDidDisconnect:(OTSession*)session {}
-- (void)session:(OTSession*)session streamCreated:(OTStream *)stream {}
+- (void)session:(OTSession*)session streamCreated:(OTStream *)stream {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:[@"stream-created:" stringByAppendingString:session.sessionId]
+     object:nil
+     userInfo:@{@"stream":stream}];
+}
+
 - (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {}
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {}
 

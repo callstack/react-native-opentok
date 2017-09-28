@@ -37,15 +37,9 @@
 
 - (void)mount {
     [self observeSession];
+    [self observeStream];
     if (!_session) {
         [self connectToSession];
-    }
-}
-
-- (void)connectToSession {
-    [super connectToSession];
-    if ( _session ) {
-        [self observeStream];
     }
 }
 

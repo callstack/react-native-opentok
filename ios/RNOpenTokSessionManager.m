@@ -24,6 +24,19 @@
     return [self initSessionManager];
 }
 
+- (id)connectToSession:(NSString*)sessionId withToken:(NSString*)token {
+    OTSession *session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:sessionId delegate:nil];
+    NSError *error;
+    
+    [session connectWithToken:token error:&error];
+    if (error) {
+        NSLog(@"%@", error);
+    }
+    sessions[sessionId] = session;
+    [self notifyObservers:sessionId];
+    return session;
+}
+
 - (id)getSession:(NSString *)sessionId {
     return sessions[sessionId];
 }
@@ -51,19 +64,6 @@
         }
     }
     [sessions removeAllObjects];
-}
-
-- (id)connectToSession:(NSString*)sessionId withToken:(NSString*)token {
-    OTSession *session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:sessionId delegate:nil];
-    NSError *error;
-    
-    [session connectWithToken:token error:&error];
-    if (error) {
-        NSLog(@"%@", error);
-    }
-    sessions[sessionId] = session;
-    [self notifyObservers:sessionId];
-    return session;
 }
 
 #pragma mark Private Methods

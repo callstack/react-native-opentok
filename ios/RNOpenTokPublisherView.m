@@ -12,14 +12,16 @@
 
 #import <OpenTok/OpenTok.h>
 
-@interface RNOpenTokPublisherView () <OTSessionDelegate, OTPublisherDelegate>
+@interface RNOpenTokPublisherView () <OTPublisherDelegate>
 @end
 
-@implementation RNOpenTokPublisherView : RNOpenTokSessionObserver  {
-    OTSession *_session;
+@implementation RNOpenTokPublisherView  {
     OTPublisher *_publisher;
     RCTEventDispatcher *_eventDispatcher;
 }
+
+@synthesize sessionId = _sessionId;
+@synthesize session = _session;
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher {
     if ((self = [super init])) {
@@ -36,7 +38,7 @@
 
 - (void)mount {
     [self observeSession];
-
+    [self observeConnection];
     if (!_session) {
         [self connectToSession];
     }
@@ -74,30 +76,35 @@
 
 - (void)cleanupPublisher {
     [_publisher.view removeFromSuperview];
+    [self stopPublishing];
     _publisher.delegate = nil;
     _publisher = nil;
 }
 
-- (void)cleanupSession {
-    [self stopPublishing];
-    _session.delegate = nil;
+- (void)onSessionConnect {
+    [self startPublishing];
 }
 
 - (void)dealloc {
     [self stopObserveSession];
-    [self cleanupSession];
+    [self stopObserveConnection];
     [self cleanupPublisher];
 }
 
-#pragma mark - OTSession delegate callbacks
-
-- (void)sessionDidConnect:(OTSession*)session {
-    [self startPublishing];
+- (void)observeConnection {
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(onSessionConnect)
+     name:[@"session-did-connect:" stringByAppendingString:_sessionId]
+     object:nil];
 }
-- (void)sessionDidDisconnect:(OTSession*)session {}
-- (void)session:(OTSession*)session streamCreated:(OTStream*)stream {}
-- (void)session:(OTSession*)session streamDestroyed:(OTStream*)stream {}
-- (void)session:(OTSession*)session didFailWithError:(OTError*)error {}
+
+- (void)stopObserveConnection {
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:[@"session-did-connect:" stringByAppendingString:_sessionId]
+     object:nil];
+}
 
 #pragma mark - OTPublisher delegate callbacks
 

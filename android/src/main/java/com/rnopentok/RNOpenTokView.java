@@ -29,7 +29,7 @@ public class RNOpenTokView extends FrameLayout implements Session.SessionListene
     }
 
     private void mount() {
-        Session session = RNOpenTokSessionManager.getSessionManager().getSession();
+        Session session = RNOpenTokSessionManager.getSessionManager().getSession("");
         session.setSessionListener(this);
         this.mSession = session;
     }

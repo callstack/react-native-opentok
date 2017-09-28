@@ -14,8 +14,7 @@ public class RNOpenTokPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(
-                new RNOpenTokModule(reactContext),
-                new RNOpenTokSessionModule(reactContext)
+                new RNOpenTokModule(reactContext)
         );
     }
 

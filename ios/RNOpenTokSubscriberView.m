@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "RNOpenTokSubscriberView.h"
-#import "RNOpenTokSessionManager.h"
+#import "RNOpenTokSessionObserver.h"
 
 #if __has_include(<React/RCTEventDispatcher.h>)
 #import <React/RCTEventDispatcher.h>
@@ -15,8 +15,7 @@
 @interface RNOpenTokSubscriberView () <OTSessionDelegate, OTSubscriberDelegate>
 @end
 
-@implementation RNOpenTokSubscriberView : UIView  {
-    OTSession *_session;
+@implementation RNOpenTokSubscriberView : RNOpenTokSessionObserver  {
     OTSubscriber *_subscriber;
     RCTEventDispatcher *_eventDispatcher;
 }
@@ -40,12 +39,8 @@
     }
 }
 
-- (void)connectToSession {
-    _session = [[RNOpenTokSessionManager sessionManager] getSession:_sessionId];
-    _session.delegate = self;
-}
-
 - (void)doSubscribe:(OTStream*)stream {
+    [self unsubscribe];
     _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
     
     OTError *error = nil;
@@ -90,20 +85,6 @@
     [self cleanupSubscriber];
 }
 
-- (void)observeSession {
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(connectToSession)
-     name:[@"session-updated:" stringByAppendingString:_sessionId]
-     object:nil];
-}
-
-- (void)stopObserveSession {
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:[@"session-updated:" stringByAppendingString:_sessionId]
-     object:nil];
-}
 
 #pragma mark - OTSession delegate callbacks
 

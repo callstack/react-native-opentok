@@ -15,7 +15,7 @@
 @interface RNOpenTokPublisherView () <OTSessionDelegate, OTPublisherDelegate>
 @end
 
-@implementation RNOpenTokPublisherView : UIView  {
+@implementation RNOpenTokPublisherView : RNOpenTokSessionObserver  {
     OTSession *_session;
     OTPublisher *_publisher;
     RCTEventDispatcher *_eventDispatcher;
@@ -36,16 +36,10 @@
 
 - (void)mount {
     [self observeSession];
-    [self cleanupPublisher];
 
     if (!_session) {
         [self connectToSession];
     }
-}
-
-- (void)connectToSession {
-    _session = [[RNOpenTokSessionManager sessionManager] getSession:_sessionId];
-    _session.delegate = self;
 }
 
 - (void)startPublishing {
@@ -93,21 +87,6 @@
     [self stopObserveSession];
     [self cleanupSession];
     [self cleanupPublisher];
-}
-
-- (void)observeSession {
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(connectToSession)
-     name:[@"session-updated:" stringByAppendingString:_sessionId]
-     object:nil];
-}
-
-- (void)stopObserveSession {
-    [[NSNotificationCenter defaultCenter]
-     removeObserver:self
-     name:[@"session-updated:" stringByAppendingString:_sessionId]
-     object:nil];
 }
 
 #pragma mark - OTSession delegate callbacks

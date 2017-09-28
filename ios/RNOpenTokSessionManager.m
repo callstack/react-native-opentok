@@ -53,7 +53,7 @@
     [sessions removeAllObjects];
 }
 
-- (void)connectToSession:(NSString*)sessionId withToken:(NSString*)token{
+- (id)connectToSession:(NSString*)sessionId withToken:(NSString*)token {
     OTSession *session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:sessionId delegate:nil];
     NSError *error;
     
@@ -63,6 +63,7 @@
     }
     sessions[sessionId] = session;
     [self notifyObservers:sessionId];
+    return session;
 }
 
 #pragma mark Private Methods

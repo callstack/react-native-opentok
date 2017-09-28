@@ -10,11 +10,11 @@ const listeners = {};
 
 const Session = {
   sendMessage: async (sessionId: string, message: string) => {
-    return await NativeModules.RNOpenTokSession.sendMessage(sessionId, message);
+    return await NativeModules.RNOpenTok.sendMessage(sessionId, message);
   },
 
   onMessageReceived: (callback: (e: MessageEvent) => void) => {
-    const sessionEventEmitter = new NativeEventEmitter(NativeModules.RNOpenTokSession);
+    const sessionEventEmitter = new NativeEventEmitter(NativeModules.RNOpenTok);
     if (!listeners.onMessageReceived) {
       listeners.onMessageReceived = sessionEventEmitter.addListener(
         'onMessageReceived',

@@ -26,7 +26,9 @@
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(connect:(NSString *)sessionId withToken:(NSString *)token resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-    [[RNOpenTokSessionManager sessionManager] connectToSession:sessionId withToken:token];
+    OTSession* session = [[RNOpenTokSessionManager sessionManager] connectToSession:sessionId withToken:token];
+    session.delegate = self;
+    
     resolve(@YES);
 }
 
@@ -37,5 +39,41 @@ RCT_EXPORT_METHOD(disconnect:(NSString *)sessionId) {
 RCT_EXPORT_METHOD(disconnectAll) {
     [[RNOpenTokSessionManager sessionManager] disconnectAllSessions];
 }
+
+RCT_EXPORT_METHOD(sendMessage:(NSString *)sessionId message:(NSString *)message resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+    OTSession *session = [[RNOpenTokSessionManager sessionManager] getSession:sessionId];
+    OTError* error = nil;
+    
+    [session signalWithType:@"message" string:message connection:nil error:&error];
+    
+    if (error) {
+        reject(@"not_sent", @"Message wasn't sent", error);
+    } else {
+        resolve(@YES);
+    }
+}
+
+#pragma mark - Private methods
+
+- (NSArray<NSString *> *)supportedEvents {
+    return @[@"onMessageReceived"];
+}
+
+- (void)onMessageReceived:(NSString*)sessionId withMessage:(NSString *)message {
+    [self sendEventWithName:@"onMessageReceived" body:@{@"sessionId":sessionId,@"message": message}];
+}
+
+# pragma mark - OTSession delegate callbacks
+
+- (void)sessionDidConnect:(OTSession*)session {}
+- (void)sessionDidDisconnect:(OTSession*)session {}
+- (void)session:(OTSession*)session streamCreated:(OTStream *)stream {}
+- (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {}
+- (void)session:(OTSession*)session didFailWithError:(OTError*)error {}
+
+- (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)message {
+    [self onMessageReceived:session.sessionId withMessage:message];
+}
+
 
 @end

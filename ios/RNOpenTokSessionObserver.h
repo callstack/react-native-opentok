@@ -3,11 +3,9 @@
 #endif
 #import "RNOpenTokSessionManager.h"
 
-@interface RNOpenTokSessionObserver : UIView {
-    OTSession *_session;
-};
-
+@interface RNOpenTokSessionObserver : UIView;
 @property (nonatomic, strong) NSString *sessionId;
+@property (nonatomic, strong) OTSession *session;
 
 - (void)observeSession;
 - (void)stopObserveSession;

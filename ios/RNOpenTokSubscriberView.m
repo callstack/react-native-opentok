@@ -12,13 +12,16 @@
 
 #import <OpenTok/OpenTok.h>
 
-@interface RNOpenTokSubscriberView () <OTSessionDelegate, OTSubscriberDelegate>
+@interface RNOpenTokSubscriberView () <OTSubscriberDelegate>
 @end
 
-@implementation RNOpenTokSubscriberView : RNOpenTokSessionObserver  {
+@implementation RNOpenTokSubscriberView {
     OTSubscriber *_subscriber;
     RCTEventDispatcher *_eventDispatcher;
 }
+
+@synthesize sessionId = _sessionId;
+@synthesize session = _session;
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher {
     if ((self = [super init])) {
@@ -36,6 +39,13 @@
     [self observeSession];
     if (!_session) {
         [self connectToSession];
+    }
+}
+
+- (void)connectToSession {
+    [super connectToSession];
+    if ( _session ) {
+        [self observeStream];
     }
 }
 
@@ -70,35 +80,38 @@
 
 - (void)cleanupSubscriber {
     [_subscriber.view removeFromSuperview];
+    [self unsubscribe];
     _subscriber.delegate = nil;
     _subscriber = nil;
 }
 
-- (void)cleanupSession {
-    [self unsubscribe];
-    _session.delegate = nil;
-}
-
 - (void)dealloc {
     [self stopObserveSession];
-    [self cleanupSession];
+    [self stopObserveStream];
     [self cleanupSubscriber];
 }
 
-
-#pragma mark - OTSession delegate callbacks
-
-- (void)sessionDidConnect:(OTSession*)session {}
-- (void)sessionDidDisconnect:(OTSession*)session {}
-
-- (void)session:(OTSession*)session streamCreated:(OTStream*)stream {
+- (void)onStreamCreated:(NSNotification *)notification {
+    OTStream *stream = notification.userInfo[@"stream"];
     if (_subscriber == nil) {
         [self doSubscribe:stream];
     }
 }
 
-- (void)session:(OTSession*)session streamDestroyed:(OTStream*)stream {}
-- (void)session:(OTSession*)session didFailWithError:(OTError*)error {}
+- (void)observeStream {
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(onStreamCreated:)
+     name:[@"stream-created:" stringByAppendingString:_sessionId]
+     object:nil];
+}
+
+- (void)stopObserveStream {
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self
+     name:[@"stream-created:" stringByAppendingString:_sessionId]
+     object:nil];
+}
 
 #pragma mark - OTSubscriber delegate callbacks
 

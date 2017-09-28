@@ -4,21 +4,21 @@
 @implementation RNOpenTokSessionObserver : UIView
 
 - (void)connectToSession {
-    _session = [[RNOpenTokSessionManager sessionManager] getSession:_sessionId];
+    self.session = [[RNOpenTokSessionManager sessionManager] getSession:self.sessionId];
 }
 
 - (void)observeSession {
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(connectToSession)
-     name:[@"session-updated:" stringByAppendingString:_sessionId]
+     name:[@"session-updated:" stringByAppendingString:self.sessionId]
      object:nil];
 }
 
 - (void)stopObserveSession {
     [[NSNotificationCenter defaultCenter]
      removeObserver:self
-     name:[@"session-updated:" stringByAppendingString:_sessionId]
+     name:[@"session-updated:" stringByAppendingString:self.sessionId]
      object:nil];
 }
 

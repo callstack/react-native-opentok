@@ -7,7 +7,7 @@ enum Events {
     EVENT_SUBSCRIBE_START("onSubscribeStart"),
     EVENT_SUBSCRIBE_STOP("onSubscribeStop"),
     EVENT_SUBSCRIBE_ERROR("onSubscribeError"),
-    EVENT_ON_MESSAGE_RECEIVED("onMessageReceived");
+    EVENT_ON_SIGNAL_RECEIVED("onSignalReceived");
 
     private final String mName;
 

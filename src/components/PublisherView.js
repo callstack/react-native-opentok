@@ -1,6 +1,8 @@
 /* @flow */
 import React from 'react';
-import { requireNativeComponent, NativeAppEventEmitter } from 'react-native';
+import { requireNativeComponent } from 'react-native';
+
+import NativeEventEmitter from './NativeEventEmitter';
 
 import type { PublisherViewProps } from '../types';
 
@@ -29,7 +31,7 @@ export default class PublisherView extends React.Component {
 
   addListener = (name: string) => {
     if (!this.props.listeners[name]) {
-      this.props.listeners[name] = NativeAppEventEmitter.addListener(
+      this.props.listeners[name] = NativeEventEmitter.addListener(
         name,
         () => this.props[name]()
       );

@@ -22,7 +22,8 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         mPublisher = new Publisher(getContext());
         mPublisher.setPublisherListener(this);
 
-        mSession.publish(mPublisher);
+        Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
+        session.publish(mPublisher);
 
         attachPublisherView();
     }
@@ -34,6 +35,7 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
 
     private void cleanUpPublisher() {
         removeView(mPublisher.getView());
+        mPublisher.destroy();
         mPublisher = null;
     }
 
@@ -75,6 +77,8 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     public void onConnectionDestroyed(Session session, Connection connection) {
     }
 
+    /** View methods **/
+
     @Override
     public void requestLayout() {
         super.requestLayout();
@@ -84,10 +88,10 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     private final Runnable mLayoutRunnable = new Runnable() {
         @Override
         public void run() {
-            measure(
-                    MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
-                    MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY));
-            layout(getLeft(), getTop(), getRight(), getBottom());
+        measure(
+            MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY));
+        layout(getLeft(), getTop(), getRight(), getBottom());
         }
     };
 }

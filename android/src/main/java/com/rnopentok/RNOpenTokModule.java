@@ -1,21 +1,25 @@
 package com.rnopentok;
 
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.util.Log;
-
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.opentok.android.Connection;
+import com.opentok.android.OpentokError;
 import com.opentok.android.Session;
+import com.opentok.android.Stream;
 
-public class RNOpenTokModule extends ReactContextBaseJavaModule {
+public class RNOpenTokModule extends ReactContextBaseJavaModule implements Session.SessionListener, Session.SignalListener {
     public static final String REACT_CLASS = "RNOpenTok";
     private static ReactApplicationContext reactContext = null;
 
     public RNOpenTokModule(ReactApplicationContext context) {
         super(context);
 
+        RNOpenTokSessionManager.initSessionManager(context);
         reactContext = context;
     }
 
@@ -25,41 +29,66 @@ public class RNOpenTokModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void initSession(String sessionId) {
-        ApplicationInfo ai = null;
-        try {
-            ai = reactContext.getPackageManager().getApplicationInfo(reactContext.getPackageName(), PackageManager.GET_META_DATA);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        String apiKey = ai.metaData.get("OPENTOK_API_KEY").toString();
-        RNOpenTokSessionManager sessionManager = RNOpenTokSessionManager.initSessionManager(reactContext, apiKey);
-        if (sessionManager.getSession() != null) {
-            sessionManager.getSession().disconnect();
-        }
-        sessionManager.connectToSession(sessionId);
+    public void connect(String sessionId, String token, Promise promise) {
+        Session session = RNOpenTokSessionManager.getSessionManager().connectToSession(sessionId, token);
+        session.setSessionListener(this);
+        session.setSignalListener(this);
+        promise.resolve(Boolean.valueOf(true));
     }
 
     @ReactMethod
-    public void createSession(String sessionId) {
-        RNOpenTokSessionManager.getSessionManager().connectToSession(sessionId);
+    public void disconnect(String sessionId) {
+        RNOpenTokSessionManager.getSessionManager().disconnectSession(sessionId);
     }
 
     @ReactMethod
-    public void connectWithToken(String token) {
-        Session session = RNOpenTokSessionManager.getSessionManager().getSession();
-
-        if(session != null) {
-            session.connect(token);
-        }
+    public void disconnectAll() {
+        RNOpenTokSessionManager.getSessionManager().disconnectAllSessions();
     }
 
     @ReactMethod
-    public void disconnect() {
-        Session session = RNOpenTokSessionManager.getSessionManager().getSession();
+    public void sendSignal(String sessionId, String type, String data, Promise promise) {
+        Session session = RNOpenTokSessionManager.getSessionManager().getSession(sessionId);
 
-        if(session != null) {
-            session.disconnect();
-        }
+        session.sendSignal(type, data);
+        promise.resolve(Boolean.valueOf(true));
     }
+
+    private void onMessageReceived(WritableMap payload) {
+
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(Events.EVENT_ON_SIGNAL_RECEIVED.toString(), payload);
+    }
+
+    @Override
+    public void onConnected(Session session) {
+    }
+
+    @Override
+    public void onDisconnected(Session session) {
+    }
+
+    @Override
+    public void onStreamReceived(Session session, Stream stream) {
+    }
+
+    @Override
+    public void onStreamDropped(Session session, Stream stream) {
+    }
+
+    @Override
+    public void onError(Session session, OpentokError opentokError) {
+    }
+
+    @Override
+    public void onSignalReceived(Session session, String type, String data, Connection connection) {
+        WritableMap payload = Arguments.createMap();
+        payload.putString("sessionId", session.getSessionId());
+        payload.putString("type", type);
+        payload.putString("data", data);
+
+        onMessageReceived(payload);
+    }
+
 }

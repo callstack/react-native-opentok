@@ -1,6 +1,8 @@
 /* @flow */
 import React from 'react';
-import { NativeModules, NativeEventEmitter } from 'react-native';
+import { NativeModules } from 'react-native';
+
+import NativeEventEmitter from './NativeEventEmitter';
 import SubscriberView from './components/SubscriberView';
 import PublisherView from './components/PublisherView';
 
@@ -26,9 +28,8 @@ export default {
   },
 
   onSignalReceived: (callback: (e: MessageEvent) => void) => {
-    const sessionEventEmitter = new NativeEventEmitter(NativeModules.RNOpenTok);
     if (!listeners.onSignalReceived) {
-      listeners.onSignalReceived = sessionEventEmitter.addListener(
+      listeners.onSignalReceived = NativeEventEmitter.addListener(
         'onSignalReceived',
         (e: MessageEvent) => {
           callback(e);

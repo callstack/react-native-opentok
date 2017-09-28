@@ -2,6 +2,8 @@
 import React from 'react';
 import { requireNativeComponent, NativeAppEventEmitter } from 'react-native';
 
+import NativeEventEmitter from './NativeEventEmitter';
+
 import type { SubscriberViewProps } from '../types';
 
 /* $FlowFixMe - We are disabling flow here, because refernece is needed at this point */
@@ -29,7 +31,7 @@ export default class SubscriberView extends React.Component {
 
   addListener = (name: string) => {
     if (!this.props.listeners[name]) {
-      this.props.listeners[name] = NativeAppEventEmitter.addListener(
+      this.props.listeners[name] = NativeEventEmitter.addListener(
         name,
         () => this.props[name]()
       );

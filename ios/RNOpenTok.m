@@ -40,11 +40,11 @@ RCT_EXPORT_METHOD(disconnectAll) {
     [[RNOpenTokSessionManager sessionManager] disconnectAllSessions];
 }
 
-RCT_EXPORT_METHOD(sendMessage:(NSString *)sessionId message:(NSString *)message resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(NSString *)data resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     OTSession *session = [[RNOpenTokSessionManager sessionManager] getSession:sessionId];
     OTError* error = nil;
     
-    [session signalWithType:@"message" string:message connection:nil error:&error];
+    [session signalWithType:type string:data connection:nil error:&error];
     
     if (error) {
         reject(@"not_sent", @"Message wasn't sent", error);
@@ -56,11 +56,11 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)sessionId message:(NSString *)message 
 #pragma mark - Private methods
 
 - (NSArray<NSString *> *)supportedEvents {
-    return @[@"onMessageReceived"];
+    return @[@"onSignalReceived"];
 }
 
-- (void)onMessageReceived:(NSString*)sessionId withMessage:(NSString *)message {
-    [self sendEventWithName:@"onMessageReceived" body:@{@"sessionId":sessionId,@"message": message}];
+- (void)onSignalReceived:(NSString*)sessionId ofType:(NSString *)type withMessage:(NSString *)message {
+    [self sendEventWithName:@"onSignalReceived" body:@{@"sessionId":sessionId, @"type":type, @"data": message}];
 }
 
 # pragma mark - OTSession delegate callbacks
@@ -72,7 +72,7 @@ RCT_EXPORT_METHOD(sendMessage:(NSString *)sessionId message:(NSString *)message 
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {}
 
 - (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)message {
-    [self onMessageReceived:session.sessionId withMessage:message];
+    [self onSignalReceived:session.sessionId ofType:type withMessage:message];
 }
 
 

@@ -2,7 +2,8 @@
 
 export type MessageEvent = {
   sessionId: string,
-  message: string,
+  type: string,
+  data: string,
 }
 
 type OpenTokViewProps = {

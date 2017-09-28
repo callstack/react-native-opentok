@@ -7,12 +7,11 @@
 #else
 #import "React/RCTEventDispatcher.h"
 #endif
+#import "RNOpenTokSessionObserver.h"
 
 @class RCTEventDispatcher;
 
-@interface RNOpenTokPublisherView : UIView
-
-@property (nonatomic, strong) NSString *sessionId;
+@interface RNOpenTokPublisherView : RNOpenTokSessionObserver
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 

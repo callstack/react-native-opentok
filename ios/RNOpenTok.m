@@ -35,35 +35,70 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
     }
 }
 
-#pragma mark - Private methods
-
-- (void)onSignalReceived:(NSString*)sessionId ofType:(NSString *)type withMessage:(NSString *)message {
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"onSignalReceived"
-     object:nil
-     userInfo:@{@"sessionId":sessionId, @"type":type, @"data": message}];
-}
-
 # pragma mark - OTSession delegate callbacks
 
 - (void)sessionDidConnect:(OTSession*)session {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:[@"session-did-connect:" stringByAppendingString:session.sessionId]
      object:nil];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionDidConnect"
+     object:nil
+     userInfo:@{@"sessionId": session.sessionId}];
 }
-- (void)sessionDidDisconnect:(OTSession*)session {}
+
+- (void)sessionDidDisconnect:(OTSession*)session {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionDidDisconnect"
+     object:nil
+     userInfo:@{@"sessionId": session.sessionId}];
+}
+
 - (void)session:(OTSession*)session streamCreated:(OTStream *)stream {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:[@"stream-created:" stringByAppendingString:session.sessionId]
      object:nil
      userInfo:@{@"stream":stream}];
+
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionStreamCreated"
+     object:nil
+     userInfo:@{@"sessionId": session.sessionId}];
 }
 
-- (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {}
-- (void)session:(OTSession*)session didFailWithError:(OTError*)error {}
+- (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionStreamDestroyed"
+     object:nil
+     userInfo:@{@"sessionId": session.sessionId}];
+}
+
+- (void)session:(OTSession*)session didFailWithError:(OTError*)error {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionDidFailWithError"
+     object:nil
+     userInfo:@{@"sessionId": session.sessionId, @"error": [error description]}];
+}
 
 - (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)message {
-    [self onSignalReceived:session.sessionId ofType:type withMessage:message];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSignalReceived"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId, @"type":type, @"data": message, @"connectionId": connection.connectionId}];
+}
+
+- (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionConnectionCreated"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId, @"connectionId": connection.connectionId}];
+}
+
+- (void)session:(OTSession *)session connectionDestroyed:(OTConnection *)connection {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionConnectionDestroyed"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId, @"connectionId": connection.connectionId}];
 }
 
 @end

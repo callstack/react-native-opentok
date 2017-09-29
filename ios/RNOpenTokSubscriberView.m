@@ -97,20 +97,22 @@
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onSubscribeError"
      object:nil
-     userInfo:@{@"error": [error description]}];
+     userInfo:@{@"sessionId": _sessionId, @"error": [error description]}];
     [self cleanupSubscriber];
 }
 
 - (void)subscriberDidConnectToStream:(OTSubscriberKit*)subscriber {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onSubscribeStart"
-     object:nil];
+     object:nil
+     userInfo:@{@"sessionId": _sessionId}];
 }
 
 - (void)subscriberDidDisconnectFromStream:(OTSubscriberKit*)subscriber {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onSubscribeStop"
-     object:nil];
+     object:nil
+     userInfo:@{@"sessionId": _sessionId}];
     [self cleanupSubscriber];
 }
 

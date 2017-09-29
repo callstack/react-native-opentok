@@ -6,7 +6,11 @@ import NativeEventEmitter from './NativeEventEmitter';
 import SubscriberView from './components/SubscriberView';
 import PublisherView from './components/PublisherView';
 
-import type { Message, PublisherViewProps, SubscriberViewProps } from './types';
+import type {
+  RNOpenTokEventCallback,
+  PublisherViewProps,
+  SubscriberViewProps,
+} from './types';
 
 const listeners = {};
 
@@ -24,23 +28,19 @@ export default {
   },
 
   sendSignal: async (sessionId: string, type: string, message: string) =>
-    await NativeModules.RNOpenTok.sendSignal(sessionId, type, message),
+    NativeModules.RNOpenTok.sendSignal(sessionId, type, message),
 
-  onSignalReceived: (callback: (e: MessageEvent) => void) => {
-    if (!listeners.onSignalReceived) {
-      listeners.onSignalReceived = NativeEventEmitter.addListener(
-        'onSignalReceived',
-        (e: MessageEvent) => {
-          callback(e);
-        }
-      );
+  on: (name: string, callback: RNOpenTokEventCallback) => {
+    if (listeners[name]) {
+      listeners[name].remove();
     }
+    listeners[name] = NativeEventEmitter.addListener(name, callback);
   },
 
-  removeSignalListener: () => {
-    if (listeners.onSignalReceived) {
-      listeners.onSignalReceived.remove();
-      delete this.props.listeners.onSignalReceived;
+  removeListener: (name: string) => {
+    if (listeners[name]) {
+      listeners[name].remove();
+      delete listeners[name];
     }
   },
 

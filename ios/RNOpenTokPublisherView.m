@@ -93,13 +93,15 @@
 - (void)publisher:(OTPublisherKit*)publisher streamCreated:(OTStream *)stream {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onPublishStart"
-     object:nil];
+     object:nil
+     userInfo:@{@"sessionId": _sessionId}];
 }
 
 - (void)publisher:(OTPublisherKit*)publisher streamDestroyed:(OTStream *)stream {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onPublishStop"
-     object:nil];
+     object:nil
+     userInfo:@{@"sessionId": _sessionId}];
     [self cleanupPublisher];
 }
 
@@ -107,7 +109,7 @@
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onPublishError"
      object:nil
-     userInfo:@{@"error": [error description]}];
+     userInfo:@{@"sessionId": _sessionId, @"error": [error description]}];
     [self cleanupPublisher];
 }
 

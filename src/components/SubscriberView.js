@@ -39,8 +39,8 @@ export default class SubscriberView extends React.Component {
 
   addListener = (name: string) => {
     if (!this.props.listeners[name]) {
-      this.props.listeners[name] = NativeEventEmitter.addListener(name, () =>
-        this.props[name]()
+      this.props.listeners[name] = NativeEventEmitter.addListener(name, e =>
+        this.props[name](e)
       );
     }
   };

@@ -7,7 +7,6 @@
 @synthesize _apiKey;
 @synthesize sessions;
 
-
 #pragma mark Public Methods
 
 + (id)initSessionManager {

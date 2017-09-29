@@ -23,9 +23,8 @@ export default {
     NativeModules.RNOpenTok.disconnectAll();
   },
 
-  sendSignal: async (sessionId: string, type: string, message: string) => {
-    return await NativeModules.RNOpenTok.sendSignal(sessionId, type, message);
-  },
+  sendSignal: async (sessionId: string, type: string, message: string) =>
+    await NativeModules.RNOpenTok.sendSignal(sessionId, type, message),
 
   onSignalReceived: (callback: (e: MessageEvent) => void) => {
     if (!listeners.onSignalReceived) {

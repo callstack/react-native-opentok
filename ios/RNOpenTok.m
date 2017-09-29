@@ -1,21 +1,4 @@
 #import "RNOpenTok.h"
-
-#if __has_include(<React/RCTBridge.h>)
-#import <React/RCTBridge.h>
-#elif __has_include("RCTBridge.h")
-#import "RCTBridge.h"
-#else
-#import "React/RCTBridge.h"
-#endif
-
-#if __has_include(<React/RCTEventDispatcher.h>)
-#import <React/RCTEventDispatcher.h>
-#elif __has_include("RCTEventDispatcher.h")
-#import "RCTEventDispatcher.h"
-#else
-#import "React/RCTEventDispatcher.h"
-#endif
-
 #import <OpenTok/OpenTok.h>
 #import "RNOpenTokSessionManager.h"
 
@@ -28,7 +11,6 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(connect:(NSString *)sessionId withToken:(NSString *)token resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     OTSession* session = [[RNOpenTokSessionManager sessionManager] connectToSession:sessionId withToken:token];
     session.delegate = self;
-    
     resolve(@YES);
 }
 
@@ -55,12 +37,11 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
 
 #pragma mark - Private methods
 
-- (NSArray<NSString *> *)supportedEvents {
-    return @[@"onSignalReceived"];
-}
-
 - (void)onSignalReceived:(NSString*)sessionId ofType:(NSString *)type withMessage:(NSString *)message {
-    [self sendEventWithName:@"onSignalReceived" body:@{@"sessionId":sessionId, @"type":type, @"data": message}];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSignalReceived"
+     object:nil
+     userInfo:@{@"sessionId":sessionId, @"type":type, @"data": message}];
 }
 
 # pragma mark - OTSession delegate callbacks
@@ -84,6 +65,5 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
 - (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)message {
     [self onSignalReceived:session.sessionId ofType:type withMessage:message];
 }
-
 
 @end

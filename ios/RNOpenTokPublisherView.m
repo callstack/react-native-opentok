@@ -1,40 +1,28 @@
 #import <Foundation/Foundation.h>
 #import "RNOpenTokPublisherView.h"
-#import "RNOpenTokSessionManager.h"
-
-#if __has_include(<React/RCTEventDispatcher.h>)
-#import <React/RCTEventDispatcher.h>
-#elif __has_include("RCTEventDispatcher.h")
-#import "RCTEventDispatcher.h"
-#else
-#import "React/RCTEventDispatcher.h"
-#endif
-
-#import <OpenTok/OpenTok.h>
 
 @interface RNOpenTokPublisherView () <OTPublisherDelegate>
 @end
 
 @implementation RNOpenTokPublisherView  {
     OTPublisher *_publisher;
-    RCTEventDispatcher *_eventDispatcher;
 }
 
 @synthesize sessionId = _sessionId;
 @synthesize session = _session;
 
-- (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher {
-    if ((self = [super init])) {
-      _eventDispatcher = eventDispatcher;
-    }
-
-    return self;
-}
-
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
     [self mount];
 }
+
+- (void)dealloc {
+    [self stopObserveSession];
+    [self stopObserveConnection];
+    [self cleanupPublisher];
+}
+
+#pragma mark - Private methods
 
 - (void)mount {
     [self observeSession];
@@ -46,16 +34,16 @@
 
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
-
+    
     OTError *error = nil;
-
+    
     [_session publish:_publisher error:&error];
-
+    
     if (error) {
-        [_eventDispatcher sendAppEventWithName:@"onPublishError" body:@{@"error": [error description]}];
+        [self publisher:_publisher didFailWithError:error];
         return;
     }
-
+    
     [self attachPublisherView];
 }
 
@@ -85,12 +73,6 @@
     [self startPublishing];
 }
 
-- (void)dealloc {
-    [self stopObserveSession];
-    [self stopObserveConnection];
-    [self cleanupPublisher];
-}
-
 - (void)observeConnection {
     [[NSNotificationCenter defaultCenter]
      addObserver:self
@@ -109,16 +91,23 @@
 #pragma mark - OTPublisher delegate callbacks
 
 - (void)publisher:(OTPublisherKit*)publisher streamCreated:(OTStream *)stream {
-    [_eventDispatcher sendAppEventWithName:@"onPublishStart" body:nil];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onPublishStart"
+     object:nil];
 }
 
 - (void)publisher:(OTPublisherKit*)publisher streamDestroyed:(OTStream *)stream {
-    [_eventDispatcher sendAppEventWithName:@"onPublishStop" body:nil];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onPublishStop"
+     object:nil];
     [self cleanupPublisher];
 }
 
 - (void)publisher:(OTPublisherKit*)publisher didFailWithError:(OTError*)error {
-    [_eventDispatcher sendAppEventWithName:@"onPublishError" body:nil];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onPublishError"
+     object:nil
+     userInfo:@{@"error": [error description]}];
     [self cleanupPublisher];
 }
 

@@ -8,7 +8,10 @@ Pod::Spec.new do |s|
   s.homepage     = "lol"
   s.license      = "MIT"
   s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
-  s.author             = { "author" => "mike.chudziak@callstack.io" }
+  s.authors      = {
+    "Michal Chudziak" => "mike.chudziak@callstack.io",
+    "Piotr Drapich" => "drapich.piotr@gmail.com"
+  }
   s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/callstack/react-native-opentok.git", :tag => "master" }
   s.source_files  = "ios/*.{h,m}"

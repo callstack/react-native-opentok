@@ -1,7 +1,12 @@
 /* @flow */
-import { NativeModules, Platform, NativeEventEmitter, DeviceEventEmitter } from 'react-native';
+import {
+  NativeModules,
+  Platform,
+  NativeEventEmitter,
+  DeviceEventEmitter,
+} from 'react-native';
 
 export default Platform.select({
-    ios: new NativeEventEmitter(NativeModules.RNOpenTok),
-    android: DeviceEventEmitter,
-})
+  ios: new NativeEventEmitter(NativeModules.RNOpenTokEventEmitter),
+  android: DeviceEventEmitter,
+});

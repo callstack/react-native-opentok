@@ -63,14 +63,14 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onSessionStreamCreated"
      object:nil
-     userInfo:@{@"sessionId": session.sessionId}];
+     userInfo:@{@"sessionId": session.sessionId, @"streamId": stream.streamId}];
 }
 
 - (void)session:(OTSession*)session streamDestroyed:(OTStream *)stream {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onSessionStreamDestroyed"
      object:nil
-     userInfo:@{@"sessionId": session.sessionId}];
+     userInfo:@{@"sessionId": session.sessionId, @"streamId": stream.streamId}];
 }
 
 - (void)session:(OTSession*)session didFailWithError:(OTError*)error {

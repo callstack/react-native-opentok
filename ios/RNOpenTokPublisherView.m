@@ -55,6 +55,7 @@
     if (error) {
         NSLog(@"%@", error);
     }
+    [self cleanupPublisher];
 }
 
 - (void)attachPublisherView {
@@ -94,14 +95,14 @@
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onPublishStart"
      object:nil
-     userInfo:@{@"sessionId": _sessionId}];
+     userInfo:@{@"sessionId": _sessionId, @"streamId": stream.streamId}];
 }
 
 - (void)publisher:(OTPublisherKit*)publisher streamDestroyed:(OTStream *)stream {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onPublishStop"
      object:nil
-     userInfo:@{@"sessionId": _sessionId}];
+     userInfo:@{@"sessionId": _sessionId, @"streamId": stream.streamId}];
     [self cleanupPublisher];
 }
 

@@ -11,11 +11,23 @@ import com.opentok.android.Stream;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
 
-public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKit.PublisherListener, Session.ConnectionListener {
+public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKit.PublisherListener {
     private Publisher mPublisher;
 
     public RNOpenTokPublisherView(ThemedReactContext context) {
         super(context);
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        RNOpenTokSessionManager.getSessionManager().setPublisherListener(mSessionId, this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        RNOpenTokSessionManager.getSessionManager().removePublisherListener(mSessionId);
     }
 
     private void startPublishing() {
@@ -39,9 +51,6 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         mPublisher = null;
     }
 
-    /** Session listener **/
-
-    @Override
     public void onConnected(Session session) {
         startPublishing();
     }
@@ -67,31 +76,4 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         sendEvent(Events.EVENT_PUBLISH_ERROR, payload);
         cleanUpPublisher();
     }
-
-    /** Connection listener **/
-    @Override
-    public void onConnectionCreated(Session session, Connection connection) {
-    }
-
-    @Override
-    public void onConnectionDestroyed(Session session, Connection connection) {
-    }
-
-    /** View methods **/
-
-    @Override
-    public void requestLayout() {
-        super.requestLayout();
-        post(mLayoutRunnable);
-    }
-
-    private final Runnable mLayoutRunnable = new Runnable() {
-        @Override
-        public void run() {
-        measure(
-            MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
-            MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY));
-        layout(getLeft(), getTop(), getRight(), getBottom());
-        }
-    };
 }

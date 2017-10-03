@@ -4,18 +4,29 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.opentok.android.BaseVideoRenderer;
-import com.opentok.android.Connection;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
 import com.opentok.android.Subscriber;
 import com.opentok.android.SubscriberKit;
 
-public class RNOpenTokSubscriberView extends RNOpenTokView implements SubscriberKit.SubscriberListener, Session.ConnectionListener {
+public class RNOpenTokSubscriberView extends RNOpenTokView implements SubscriberKit.SubscriberListener {
     private Subscriber mSubscriber;
 
     public RNOpenTokSubscriberView(ThemedReactContext context) {
         super(context);
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        RNOpenTokSessionManager.getSessionManager().setSubscriberListener(mSessionId, this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        RNOpenTokSessionManager.getSessionManager().removeSubscriberListener(mSessionId);
     }
 
     private void startSubscribing(Stream stream) {
@@ -40,9 +51,6 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
         mSubscriber = null;
     }
 
-    /** Session listener **/
-
-    @Override
     public void onStreamReceived(Session session, Stream stream) {
         if (mSubscriber == null) {
             startSubscribing(stream);
@@ -50,7 +58,6 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
         }
     }
 
-    @Override
     public void onStreamDropped(Session session, Stream stream) {
         sendEvent(Events.EVENT_SUBSCRIBE_STOP, Arguments.createMap());
     }
@@ -71,30 +78,4 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
         sendEvent(Events.EVENT_SUBSCRIBE_ERROR, payload);
     }
 
-    /** Connection listener **/
-    @Override
-    public void onConnectionCreated(Session session, Connection connection) {
-    }
-
-    @Override
-    public void onConnectionDestroyed(Session session, Connection connection) {
-        cleanUpSubscriber();
-    }
-
-
-    @Override
-    public void requestLayout() {
-        super.requestLayout();
-        post(mLayoutRunnable);
-    }
-
-    private final Runnable mLayoutRunnable = new Runnable() {
-        @Override
-        public void run() {
-            measure(
-                    MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
-                    MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY));
-            layout(getLeft(), getTop(), getRight(), getBottom());
-        }
-    };
 }

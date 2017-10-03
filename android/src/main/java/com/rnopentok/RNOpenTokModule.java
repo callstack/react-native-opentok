@@ -54,31 +54,57 @@ public class RNOpenTokModule extends ReactContextBaseJavaModule implements Sessi
         promise.resolve(Boolean.valueOf(true));
     }
 
-    private void onMessageReceived(WritableMap payload) {
+    @Override
+    public void onConnected(Session session) {
+        WritableMap payload = Arguments.createMap();
+        payload.putString("sessionId", session.getSessionId());
 
         reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(Events.EVENT_ON_SIGNAL_RECEIVED.toString(), payload);
-    }
-
-    @Override
-    public void onConnected(Session session) {
+                .emit(Events.ON_SESSION_DID_CONNECT.toString(), payload);
     }
 
     @Override
     public void onDisconnected(Session session) {
+        WritableMap payload = Arguments.createMap();
+        payload.putString("sessionId", session.getSessionId());
+
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(Events.ON_SESSION_DID_DISCONNECT.toString(), payload);
     }
 
     @Override
     public void onStreamReceived(Session session, Stream stream) {
+        WritableMap payload = Arguments.createMap();
+        payload.putString("sessionId", session.getSessionId());
+        payload.putString("streamId", stream.getStreamId());
+
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(Events.ON_SESSION_STREAM_CREATED.toString(), payload);
     }
 
     @Override
     public void onStreamDropped(Session session, Stream stream) {
+        WritableMap payload = Arguments.createMap();
+        payload.putString("sessionId", session.getSessionId());
+        payload.putString("streamId", stream.getStreamId());
+
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(Events.ON_SESSION_STREAM_DESTROYED.toString(), payload);
     }
 
     @Override
     public void onError(Session session, OpentokError opentokError) {
+        WritableMap payload = Arguments.createMap();
+        payload.putString("sessionId", session.getSessionId());
+        payload.putString("error", opentokError.getMessage());
+
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(Events.ON_SESSION_DID_FAIL_WITH_ERROR.toString(), payload);
     }
 
     @Override
@@ -88,7 +114,9 @@ public class RNOpenTokModule extends ReactContextBaseJavaModule implements Sessi
         payload.putString("type", type);
         payload.putString("data", data);
 
-        onMessageReceived(payload);
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(Events.EVENT_ON_SIGNAL_RECEIVED.toString(), payload);
     }
 
 }

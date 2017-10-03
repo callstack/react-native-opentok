@@ -14,29 +14,30 @@ public class RNOpenTokSessionManager {
     private static RNOpenTokSessionManager instance = null;
     private ReactApplicationContext mContext;
     private String mApiKey;
-    protected HashMap<String, Session> mSessions;
+    private HashMap<String, Session> mSessions;
 
-    protected RNOpenTokSessionManager(ReactApplicationContext context, String apiKey) {
+    private RNOpenTokSessionManager(ReactApplicationContext context, String apiKey) {
         this.mSessions = new HashMap();
         this.mApiKey = apiKey;
         this.mContext = context;
     }
 
-    public static RNOpenTokSessionManager initSessionManager(ReactApplicationContext context) {
+    static RNOpenTokSessionManager initSessionManager(ReactApplicationContext context) {
         if (instance == null) {
+            String apiKey = "";
             ApplicationInfo ai = null;
             try {
                 ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            } catch (PackageManager.NameNotFoundException e) {
+                apiKey = ai.metaData.get("OPENTOK_API_KEY").toString();
+            } catch (PackageManager.NameNotFoundException | NullPointerException e) {
                 e.printStackTrace();
             }
-            String apiKey = ai.metaData.get("OPENTOK_API_KEY").toString();
             instance = new RNOpenTokSessionManager(context, apiKey);
         }
         return instance;
     }
 
-    public static RNOpenTokSessionManager getSessionManager() {
+    static RNOpenTokSessionManager getSessionManager() {
         return RNOpenTokSessionManager.initSessionManager(null);
     }
 

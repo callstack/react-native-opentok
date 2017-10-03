@@ -7,7 +7,14 @@ enum Events {
     EVENT_SUBSCRIBE_START("onSubscribeStart"),
     EVENT_SUBSCRIBE_STOP("onSubscribeStop"),
     EVENT_SUBSCRIBE_ERROR("onSubscribeError"),
-    EVENT_ON_SIGNAL_RECEIVED("onSignalReceived");
+    EVENT_ON_SIGNAL_RECEIVED("onSignalReceived"),
+    ON_SESSION_CONNECTION_CREATED("onSessionConnectionCreated"),
+    ON_SESSION_CONNECTION_DESTROYED("onSessionConnectionDestroyed"),
+    ON_SESSION_DID_CONNECT("onSessionDidConnect"),
+    ON_SESSION_DID_DISCONNECT("onSessionDidDisconnect"),
+    ON_SESSION_DID_FAIL_WITH_ERROR("onSessionDidFailWithError"),
+    ON_SESSION_STREAM_CREATED("onSessionStreamCreated"),
+    ON_SESSION_STREAM_DESTROYED("onSessionStreamDestroyed");
 
     private final String mName;
 

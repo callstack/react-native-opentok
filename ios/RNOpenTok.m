@@ -101,4 +101,32 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
      userInfo:@{@"sessionId":session.sessionId, @"connectionId": connection.connectionId}];
 }
 
+- (void)session:(nonnull OTSession *)session archiveStoppedWithId:(nonnull NSString *)archiveId {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onArchiveStoppedWithId"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId, @"archiveId": archiveId}];
+}
+
+- (void)session:(nonnull OTSession *)session archiveStartedWithId:(nonnull NSString *)archiveId name:(NSString *_Nullable)name {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onArchiveStartedWithId"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId, @"archiveId": archiveId, @"name": name != nil ? name : @""}];
+}
+
+- (void)sessionDidBeginReconnecting:(nonnull OTSession *)session {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionDidBeginReconnecting"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId}];
+}
+
+- (void)sessionDidReconnect:(nonnull OTSession *)session {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionDidReconnect"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId}];
+}
+
 @end

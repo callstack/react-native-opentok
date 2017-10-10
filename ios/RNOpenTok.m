@@ -80,11 +80,11 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
      userInfo:@{@"sessionId": session.sessionId, @"error": [error description]}];
 }
 
-- (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)message {
+- (void)session:(nonnull OTSession *)session receivedSignalType:(NSString *_Nullable)type fromConnection:(OTConnection *_Nullable)connection withString:(NSString *_Nullable)string {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onSignalReceived"
      object:nil
-     userInfo:@{@"sessionId":session.sessionId, @"type":type, @"data": message, @"connectionId": connection.connectionId}];
+     userInfo:@{@"sessionId":session.sessionId, @"type": type != nil ? type : @"", @"data": string != nil ? string : @"", @"connectionId": connection != nil ? connection.connectionId : @""}];
 }
 
 - (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {

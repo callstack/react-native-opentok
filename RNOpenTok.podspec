@@ -19,6 +19,5 @@ Pod::Spec.new do |s|
 
   s.dependency "React"
   s.dependency "OpenTok"
-  s.dependency "Yoga"
 
 end

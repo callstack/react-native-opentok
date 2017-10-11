@@ -8,6 +8,7 @@
 
 import React from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
 
 const withLoadingSpinner = (Component, callbackName) => class SpinnerView extends React.Component {
   static propTypes = {
@@ -15,7 +16,7 @@ const withLoadingSpinner = (Component, callbackName) => class SpinnerView extend
      * Custom style of the spinner that should overwrite default
      * styling
      */
-    spinnerContainerStyle: React.PropTypes.any,
+    spinnerContainerStyle: PropTypes.any,
   };
 
   state = {

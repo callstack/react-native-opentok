@@ -7,18 +7,19 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default {
   /**
    * OpenTok token to use when publishing
    */
-  token: React.PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
   /**
    * OpenTok sessionId to use when publishing
    */
-  sessionId: React.PropTypes.string.isRequired,
+  sessionId: PropTypes.string.isRequired,
   /**
    * OpenTok API Key to be used
    */
-  apiKey: React.PropTypes.string.isRequired,
+  apiKey: PropTypes.string.isRequired,
 };

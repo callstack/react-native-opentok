@@ -10,6 +10,7 @@ import { requireNativeComponent, View } from 'react-native';
 import React from 'react';
 import SessionViewProps from './SessionViewProps';
 import withLoadingSpinner from './withLoadingSpinner';
+import PropTypes from 'prop-types';
 
 const noop = () => {};
 
@@ -30,15 +31,15 @@ class PublisherView extends React.Component {
     /**
      * This function is called on publish start
      */
-    onPublishStart: React.PropTypes.func,
+    onPublishStart: PropTypes.func,
     /**
      * This function is called on publish error
      */
-    onPublishError: React.PropTypes.func,
+    onPublishError: PropTypes.func,
     /**
      * This function is called on publish stop
      */
-    onPublishStop: React.PropTypes.func,
+    onPublishStop: PropTypes.func,
     /**
      * This function is called when new client is connected to
      * the current stream
@@ -52,7 +53,7 @@ class PublisherView extends React.Component {
      * }
      * ```
      */
-    onClientConnected: React.PropTypes.func,
+    onClientConnected: PropTypes.func,
     /**
      * This function is called when client is disconnected from
      * the current stream
@@ -64,7 +65,7 @@ class PublisherView extends React.Component {
      * }
      * ```
      */
-    onClientDisconnected: React.PropTypes.func,
+    onClientDisconnected: PropTypes.func,
   };
 
   static defaultProps = {

@@ -1,0 +1,6 @@
+rootProject.name = 'example'
+
+include ':app',
+        ':react-native-opentok'
+
+project(':react-native-opentok').projectDir = new File(rootProject.projectDir, '../../android')

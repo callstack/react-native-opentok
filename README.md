@@ -185,7 +185,7 @@ Check out [example project](https://github.com/callstack/react-native-opentok/tr
 ### Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://callstack.com/static/assets/team/chudziak@2x.jpg" width="100px;"/><br /><sub>Michał Chudziak</sub>](https://twitter.com/michal_chudziak)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=mike866 "Code") | [<img src="https://callstack.com/static/assets/team/dratwa@2x.jpg" width="100px;"/><br /><sub>Piotr Drapich</sub>](https://twitter.com/dratwas)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=dratwas "Code") | [<img src="https://callstack.com/static/assets/team/mike@2x.jpg" width="100px;"/><br /><sub>Mike Grabowski</sub>](https://twitter.com/grabbou)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=peggyrayzis "Code") |
+| [<img src="https://callstack.com/static/assets/team/chudziak@2x.jpg" width="100px;"/><br /><sub>Michał Chudziak</sub>](https://twitter.com/michal_chudziak)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=mike866 "Code") | [<img src="https://callstack.com/static/assets/team/dratwa@2x.jpg" width="100px;"/><br /><sub>Piotr Drapich</sub>](https://twitter.com/dratwas)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=dratwas "Code") | [<img src="https://callstack.com/static/assets/team/mike@2x.jpg" width="100px;"/><br /><sub>Mike Grabowski</sub>](https://twitter.com/grabbou)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=grabbou "Code") |
 | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 

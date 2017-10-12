@@ -118,14 +118,14 @@ const connectToSession = async () => {
 
 #### events 
 Constants for events thrown in app. Available values:
-    - *ON_SIGNAL_RECEIVED*
-    - *ON_SESSION_CONNECTION_CREATED*
-    - *ON_SESSION_CONNECTION_DESTROYED*
-    - *ON_SESSION_DID_CONNECT*
-    - *ON_SESSION_DID_DISCONNECT*
-    - *ON_SESSION_DID_FAIL_WITH_ERROR*
-    - *ON_SESSION_STREAM_CREATED*
-    - *ON_SESSION_STREAM_DESTROYED*
+- *ON_SIGNAL_RECEIVED*
+- *ON_SESSION_CONNECTION_CREATED*
+- *ON_SESSION_CONNECTION_DESTROYED*
+- *ON_SESSION_DID_CONNECT*
+- *ON_SESSION_DID_DISCONNECT*
+- *ON_SESSION_DID_FAIL_WITH_ERROR*
+- *ON_SESSION_STREAM_CREATED*
+- *ON_SESSION_STREAM_DESTROYED*
 
 #### on(name: string, callback: Function)
 Event listener, for events listed above.
@@ -145,10 +145,10 @@ OpenTok.removeListener(OpenTok.events.ON_SIGNAL_RECEIVED);
 Component used for publishing the video to the stream. 
 
 Available props:
-    - `sessionId: string` - ID of the session (you need to connect it before using this component).
-    - `onPublishStart?: Function` - Invoked when publishing starts. Optional.
-    - `onPublishStop?: () => void` - Invoked when publishing stops. Optional.
-    - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
+- `sessionId: string` - ID of the session (you need to connect it before using this component).
+- `onPublishStart?: Function` - Invoked when publishing starts. Optional.
+- `onPublishStop?: () => void` - Invoked when publishing stops. Optional.
+- `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
 
 ```js
 <OpenTok.PublisherView sessionId={sessionId} onPublishStart={() => { console.log('started')}} />
@@ -158,10 +158,10 @@ Available props:
 Component used for publishing the video to the stream. 
 
 Available props:
-    - `sessionId: string` - ID of the session (you need to connect it before using this component).
-    - `onSubscribeStart?: Function` - Invoked when stream starts. Optional.
-    - `onSubscribeStop?: () => void` - Invoked when stream stops. Optional.
-    - `onSubscribeError?: () => void` - Invoked when subscribing error occurs. Optional.
+- `sessionId: string` - ID of the session (you need to connect it before using this component).
+- `onSubscribeStart?: Function` - Invoked when stream starts. Optional.
+- `onSubscribeStop?: () => void` - Invoked when stream stops. Optional.
+- `onSubscribeError?: () => void` - Invoked when subscribing error occurs. Optional.
 
 ```js
 <OpenTok.SubscriberView sessionId={sessionId} onSubscribeStop={() => { console.log('stopped')}} />

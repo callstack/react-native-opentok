@@ -2,7 +2,7 @@
 
 <a title="Join on Slack" href="https://slack.callstack.io/"><img src="https://slack.callstack.io/badge.svg" /></a>
 
-React Native OpenTok is wrapper over native [TokBox OpenTok SDK](https://tokbox.com/developer/). 
+React Native OpenTok is wrapper over native [TokBox OpenTok SDK](https://tokbox.com/developer/). The OpenTok platform, developed by TokBox, makes it easy to embed high-quality interactive video, voice, messaging, and screen sharing into web and mobile apps. OpenTok uses WebRTC for audio-video communications. For more info on how OpenTok works, check out [OpenTok Basics](https://tokbox.com/developer/guides/basics/)
 
 Requirements:
 -  `react-native` >=0.49.3

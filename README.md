@@ -69,12 +69,12 @@ allprojects {
     repositories {
         ...
         maven {
-            url  "http://tokbox.bintray.com/maven"
+            url "http://tokbox.bintray.com/maven"
         }
     }
 }
 ```
-3. Add `OPENTOK_API_KEY` to your `AndroidManifest.xml`:
+3. Add `OPENTOK_API_KEY` to your `AndroidManifest.xml`(within <application> tag):
 ```xml
 <meta-data android:name="OPENTOK_API_KEY" android:value="YOUR_OPENTOK_API_KEY" />
 ```

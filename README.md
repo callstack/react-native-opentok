@@ -4,7 +4,7 @@
 
 [![OpenTok](https://res.cloudinary.com/crunchbase-production/image/upload/v1397239567/b6e16559b20f878d11be8a66e92d9c00.png)](https://tokbox.com)
 
-**React Native OpenTok** is wrapper over native [TokBox OpenTok SDK](https://tokbox.com/developer/). The OpenTok platform, developed by TokBox, makes it easy to embed high-quality interactive video, voice, messaging, and screen sharing into web and mobile apps. OpenTok uses WebRTC for audio-video communications. For more info on how OpenTok works, check out [OpenTok Basics](https://tokbox.com/developer/guides/basics/)
+**React Native OpenTok** is wrapper over native [TokBox OpenTok SDK](https://tokbox.com/developer/). The OpenTok platform, developed by TokBox, makes it easy to embed high-quality interactive video, voice, messaging, and screen sharing into web and mobile apps. OpenTok uses WebRTC for audio-video communications 👀🎧. For more info on how OpenTok works, check out [OpenTok Basics](https://tokbox.com/developer/guides/basics/).
 
 ## Requirements:
 -  `react-native` >=0.49.3
@@ -20,6 +20,8 @@ Supported OpenTok SDK version:
 
 ## Installation
 React native OpenTok SDK depends on native OpenTok SDK implementations. You need to integrate OpenTok SDK into your existing application. Following steps needs to be done in order to have library working correctly:
+
+Add library using `yarn` 📦 (or `npm`):
 
 ```bash
 yarn add git+ssh://git@github.com:callstack/react-native-opentok.git
@@ -53,12 +55,13 @@ post_install do |installer|
 end
 ```
 4. Run `pod install`.
-5. Open <YOUR_PROJECT_NAME>.xcworkspace file and run the project 🎉
+5. Open <YOUR_PROJECT_NAME>.xcworkspace file (you'll need to use it as a starting file from now on).
 6. Add `OPENTOK_API_KEY` key to your `Info.plist`:
 ```xml
 <key>OPENTOK_API_KEY</key>
 <string>YOUR_API_KEY</string>
 ```
+7. Run the project 🎉.
 
 ### Android
 
@@ -78,6 +81,7 @@ allprojects {
 ```xml
 <meta-data android:name="OPENTOK_API_KEY" android:value="YOUR_OPENTOK_API_KEY" />
 ```
+4. Run the project 🎉.
 
 ## API Reference
 

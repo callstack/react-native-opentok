@@ -11,9 +11,9 @@ target 'example' do
   pod 'React', path: "#{node_modules_path}/react-native"
 
   # Changed for development case. In real life it should look like in line below.
-  # pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok"
+  # pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok/ios"
 
-  pod 'RNOpenTok', path: "../.."
+  pod 'RNOpenTok', path: "../../ios"
 end
 
 post_install do |installer|

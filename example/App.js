@@ -3,13 +3,13 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 
-/* eslint-disable-next-line import/no-extraneous-dependencies, import/no-unresolved */
-import OpenTok from 'react-native-opentok';
+import OpenTok from "react-native-opentok"; // eslint-disable-line
 
 const sessionId = 'YOUR_SESSION_ID';
 const token = 'YOUR_TOKEN';
 
 export default class App extends Component<{}> {
+  /* $FlowFixMe we ignore the fact that componentWillMount shouldn't be async. Just for example purposes */
   async componentWillMount() {
     await OpenTok.connect(sessionId, token);
     OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => console.log(e));

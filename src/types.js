@@ -1,28 +1,34 @@
 /* @flow */
 
-export type MessageEvent = {
+export type MessageEvent = {|
   sessionId: string,
   type: string,
   data: string,
-};
+|};
 
 export type RNOpenTokEventCallback = (event: { [key: string]: string }) => void;
 
 type OpenTokViewProps = {
-  listeners: {
-    [listenerName: string]: RNOpenTokEventCallback,
-  },
   sessionId: string,
 };
 
+type Listeners = {
+  listeners: {
+    [listenerName: string]: RNOpenTokEventCallback,
+  },
+};
+
 export type PublisherViewProps = OpenTokViewProps & {
-  onPublishStart: () => void,
-  onPublishStop: () => void,
-  onPublishError: () => void,
+  onPublishStart?: () => void,
+  onPublishStop?: () => void,
+  onPublishError?: () => void,
 };
 
 export type SubscriberViewProps = OpenTokViewProps & {
-  onSubscribeStart: () => void,
-  onSubscribeStop: () => void,
-  onSubscribeError: () => void,
+  onSubscribeStart?: () => void,
+  onSubscribeStop?: () => void,
+  onSubscribeError?: () => void,
 };
+
+export type SubscriberViewPropsWithListeners = SubscriberViewProps & Listeners;
+export type PublisherViewPropsWithListeners = PublisherViewProps & Listeners;

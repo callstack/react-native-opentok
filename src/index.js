@@ -16,7 +16,8 @@ const listeners = {};
 
 export default {
   events: {
-    ON_SESSION_COONECTION_CREATED: 'onSessionConnectionCreated',
+    ON_SIGNAL_RECEIVED: 'onSignalReceived',
+    ON_SESSION_CONNECTION_CREATED: 'onSessionConnectionCreated',
     ON_SESSION_CONNECTION_DESTROYED: 'onSessionConnectionDestroyed',
     ON_SESSION_DID_CONNECT: 'onSessionDidConnect',
     ON_SESSION_DID_DISCONNECT: 'onSessionDidDisconnect',
@@ -24,29 +25,32 @@ export default {
     ON_SESSION_STREAM_CREATED: 'onSessionStreamCreated',
     ON_SESSION_STREAM_DESTROYED: 'onSessionStreamDestroyed',
   },
-  connect: async (sessionId: string, token: string): Promise<boolean> => {
-    await NativeModules.RNOpenTok.connect(sessionId, token);
-  },
+  connect: (sessionId: string, token: string): Promise<boolean | Error> =>
+    NativeModules.RNOpenTok.connect(sessionId, token),
 
-  disconnect: (sessionId: string) => {
+  disconnect: (sessionId: string): void => {
     NativeModules.RNOpenTok.disconnect(sessionId);
   },
 
-  disconnectAll: () => {
+  disconnectAll: (): void => {
     NativeModules.RNOpenTok.disconnectAll();
   },
 
-  sendSignal: async (sessionId: string, type: string, message: string) =>
+  sendSignal: (
+    sessionId: string,
+    type: string,
+    message: string
+  ): Promise<boolean | Error> =>
     NativeModules.RNOpenTok.sendSignal(sessionId, type, message),
 
-  on: (name: string, callback: RNOpenTokEventCallback) => {
+  on: (name: string, callback: RNOpenTokEventCallback): void => {
     if (listeners[name]) {
       listeners[name].remove();
     }
     listeners[name] = NativeEventEmitter.addListener(name, callback);
   },
 
-  removeListener: (name: string) => {
+  removeListener: (name: string): void => {
     if (listeners[name]) {
       listeners[name].remove();
       delete listeners[name];

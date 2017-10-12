@@ -5,10 +5,10 @@
 React Native OpenTok is wrapper over native [TokBox OpenTok SDK](https://tokbox.com/developer/). 
 
 Requirements:
--  `react-native` >= 0.49.3
+-  `react-native` >=0.49.3
 
 Supported OpenTok SDK version:
-- OpenTok SDK 2.11.4
+- `OpenTok SDK` 2.11.4
 
 ## Content
 - [Installation](#installation)
@@ -35,23 +35,10 @@ platform :ios, '9.0'
 target '<YOUR_PROJECT_NAME>' do
   node_modules_path = '../node_modules'
 
-  pod 'yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/Yoga.podspec"
-  pod 'React', path: "#{node_modules_path}/react-native", subspecs: [
-    'Core',
-    'RCTActionSheet',
-    'RCTAnimation',
-    'RCTGeolocation',
-    'RCTImage',
-    'RCTLinkingIOS',
-    'RCTNetwork',
-    'RCTSettings',
-    'RCTText',
-    'RCTVibration',
-    'RCTWebSocket',
-    'BatchedBridge'
-  ]
+  pod 'yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/yoga.podspec"
+  pod 'React', path: "#{node_modules_path}/react-native"
 
-  pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok"
+  pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok/ios"
 end
 
 post_install do |installer|
@@ -97,7 +84,7 @@ allprojects {
 - `sendSignal(sessionId: string, type: string, message: string): Promise<boolean | Error>` - Send signal to chosen session.
 - `events` - constants for events thrown in app. Available values:
     - ON_SIGNAL_RECEIVED
-    - ON_SESSION_COONECTION_CREATED
+    - ON_SESSION_CONNECTION_CREATED
     - ON_SESSION_CONNECTION_DESTROYED
     - ON_SESSION_DID_CONNECT
     - ON_SESSION_DID_DISCONNECT

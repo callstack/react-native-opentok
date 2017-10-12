@@ -16,6 +16,7 @@ Supported OpenTok SDK version:
 - [Installation](#installation)
 - [API Reference](#api-reference)
 - [Components](#components)
+- [Usage](#usage)
 
 ## Installation
 React native OpenTok SDK depends on native OpenTok SDK implementations. You need to integrate OpenTok SDK into your existing application. Following steps needs to be done in order to have library working correctly:

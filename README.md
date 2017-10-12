@@ -1,18 +1,21 @@
 # react-native-opentok
+============
 
 <a title="Join on Slack" href="https://slack.callstack.io/"><img src="https://slack.callstack.io/badge.svg" /></a>
 
-React Native OpenTok is wrapper over native [TokBox OpenTok SDK](https://tokbox.com/developer/). The OpenTok platform, developed by TokBox, makes it easy to embed high-quality interactive video, voice, messaging, and screen sharing into web and mobile apps. OpenTok uses WebRTC for audio-video communications. For more info on how OpenTok works, check out [OpenTok Basics](https://tokbox.com/developer/guides/basics/)
+[![OpenTok](https://res.cloudinary.com/crunchbase-production/image/upload/v1397239567/b6e16559b20f878d11be8a66e92d9c00.png)](https://tokbox.com)
 
-Requirements:
+**React Native OpenTok** is wrapper over native [TokBox OpenTok SDK](https://tokbox.com/developer/). The OpenTok platform, developed by TokBox, makes it easy to embed high-quality interactive video, voice, messaging, and screen sharing into web and mobile apps. OpenTok uses WebRTC for audio-video communications. For more info on how OpenTok works, check out [OpenTok Basics](https://tokbox.com/developer/guides/basics/)
+
+## Requirements:
 -  `react-native` >=0.49.3
 
 Supported OpenTok SDK version:
 - `OpenTok SDK` 2.11.4
 
-## Content
+## Table of contents
 - [Installation](#installation)
-- [API Reference](#api)
+- [API Reference](#api-reference)
 - [Components](#components)
 
 ## Installation
@@ -76,34 +79,105 @@ allprojects {
 <meta-data android:name="OPENTOK_API_KEY" android:value="YOUR_OPENTOK_API_KEY" />
 ```
 
-## API
+## API Reference
 
-- `connect(sessionId: string, token: string): Promise<boolean | Error>` - Connects to choosen session.
-- `disconnect(sessionId: string): void` - Disconnects from chosen session.
-- `disconnectAll(): void` - Disconnects all available sessions.
-- `sendSignal(sessionId: string, type: string, message: string): Promise<boolean | Error>` - Send signal to chosen session.
-- `events` - constants for events thrown in app. Available values:
-    - ON_SIGNAL_RECEIVED
-    - ON_SESSION_CONNECTION_CREATED
-    - ON_SESSION_CONNECTION_DESTROYED
-    - ON_SESSION_DID_CONNECT
-    - ON_SESSION_DID_DISCONNECT
-    - ON_SESSION_DID_FAIL_WITH_ERROR
-    - ON_SESSION_STREAM_CREATED
-    - ON_SESSION_STREAM_DESTROYED
-- `on(name: string, callback: Function)` - Event listener, for events listed above.
-- `removeListener(name: string): void` - Removes listener.
+#### connect(sessionId: string, token: string): Promise<boolean | Error>
+Connects to choosen session.
+```js
+const connectToSession = async () => {
+  try {
+    await OpenTok.connect('YOUR_SESSION_ID', 'YOUR_TOKEN');
+  } catch (e) {
+    console.log(e)
+  }
+}
+```
+
+#### disconnect(sessionId: string): void
+Disconnects from chosen session.
+```js
+OpenTok.disconnect('YOUR_SESSION_ID');
+```
+
+#### disconnectAll(): void
+Disconnects all available sessions.
+```js
+OpenTok.disconnectAll();
+```
+
+#### sendSignal(sessionId: string, type: string, message: string): Promise<boolean | Error>
+Send signal to chosen session.
+```js
+const connectToSession = async () => {
+  try {
+    await OpenTok.connect('YOUR_SESSION_ID', 'YOUR_TOKEN');
+  } catch (e) {
+    console.log(e)
+  }
+}
+```
+
+#### events 
+Constants for events thrown in app. Available values:
+    - *ON_SIGNAL_RECEIVED*
+    - *ON_SESSION_CONNECTION_CREATED*
+    - *ON_SESSION_CONNECTION_DESTROYED*
+    - *ON_SESSION_DID_CONNECT*
+    - *ON_SESSION_DID_DISCONNECT*
+    - *ON_SESSION_DID_FAIL_WITH_ERROR*
+    - *ON_SESSION_STREAM_CREATED*
+    - *ON_SESSION_STREAM_DESTROYED*
+
+#### on(name: string, callback: Function)
+Event listener, for events listed above.
+```js
+OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => console.log(e));
+```
+
+#### removeListener(name: string): void
+Removes listener.
+```js
+OpenTok.removeListener(OpenTok.events.ON_SIGNAL_RECEIVED);
+```
 
 ## Components
 
-- `<PublisherView />` - Component used for publishing the video to the stream. Available props:
-    - `sessionId: string` - ID of the session (you need to connect it before using this component).
-    - `onPublishStart: Function` - Invoked when publishing starts.
-    - `onPublishStop: () => void` - Invoked when publishing stops.
-    - `onPublishError: () => void` - Invoked when publish error occurs.
+#### <PublisherView />
+Component used for publishing the video to the stream. 
 
-- `<SubscriberView />` - Component used for publishing the video to the stream. Available props:
+Available props:
     - `sessionId: string` - ID of the session (you need to connect it before using this component).
-    - `onSubscribeStart: Function` - Invoked when stream starts.
-    - `onSubscribeStop: () => void` - Invoked when stream stops.
-    - `onSubscribeError: () => void` - Invoked when subscribing error occurs.
+    - `onPublishStart?: Function` - Invoked when publishing starts. Optional.
+    - `onPublishStop?: () => void` - Invoked when publishing stops. Optional.
+    - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
+
+```js
+<OpenTok.PublisherView sessionId={sessionId} onPublishStart={() => { console.log('started')}} />
+```
+
+#### <SubscriberView />
+Component used for publishing the video to the stream. 
+
+Available props:
+    - `sessionId: string` - ID of the session (you need to connect it before using this component).
+    - `onSubscribeStart?: Function` - Invoked when stream starts. Optional.
+    - `onSubscribeStop?: () => void` - Invoked when stream stops. Optional.
+    - `onSubscribeError?: () => void` - Invoked when subscribing error occurs. Optional.
+
+```js
+<OpenTok.SubscriberView sessionId={sessionId} onSubscribeStop={() => { console.log('stopped')}} />
+```
+
+## Usage
+
+Simply import the library and use methods/components listed above.
+
+```js
+import OpenTok from 'react-native-opentok';
+```
+
+Check out [example project](https://github.com/callstack/react-native-opentok/tree/master/example).
+
+### Credits
+
+Thanks to [TokBox](https://tokbox.com/) for native SDKs development.

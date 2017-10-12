@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 
-import OpenTok from "react-native-opentok"; // eslint-disable-line
+import OpenTok from 'react-native-opentok'; // eslint-disable-line
 
 const sessionId = 'YOUR_SESSION_ID';
 const token = 'YOUR_TOKEN';

@@ -10,6 +10,7 @@ import type {
   RNOpenTokEventCallback,
   PublisherViewProps,
   SubscriberViewProps,
+  OpenTokEvent,
 } from './types';
 
 const listeners = {};
@@ -43,14 +44,14 @@ export default {
   ): Promise<boolean | Error> =>
     NativeModules.RNOpenTok.sendSignal(sessionId, type, message),
 
-  on: (name: string, callback: RNOpenTokEventCallback): void => {
+  on: (name: OpenTokEvent, callback: RNOpenTokEventCallback): void => {
     if (listeners[name]) {
       listeners[name].remove();
     }
     listeners[name] = NativeEventEmitter.addListener(name, callback);
   },
 
-  removeListener: (name: string): void => {
+  removeListener: (name: OpenTokEvent): void => {
     if (listeners[name]) {
       listeners[name].remove();
       delete listeners[name];

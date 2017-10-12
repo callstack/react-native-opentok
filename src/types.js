@@ -8,6 +8,16 @@ export type MessageEvent = {|
 
 export type RNOpenTokEventCallback = (event: { [key: string]: string }) => void;
 
+export type OpenTokEvent =
+  | 'onSignalReceived'
+  | 'onSessionConnectionCreated'
+  | 'onSessionConnectionDestroyed'
+  | 'onSessionDidConnect'
+  | 'onSessionDidDisconnect'
+  | 'onSessionDidFailWithError'
+  | 'onSessionStreamCreated'
+  | 'onSessionStreamDestroyed';
+
 type OpenTokViewProps = {
   sessionId: string,
 };

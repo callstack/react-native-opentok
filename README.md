@@ -147,16 +147,21 @@ OpenTok.removeListener(OpenTok.events.ON_SIGNAL_RECEIVED);
 ## Components
 
 #### <PublisherView />
-Component used for publishing the video to the stream. 
+Component used for publishing the video to the stream.
 
 Available props:
 - `sessionId: string` - ID of the session (you need to connect it before using this component).
 - `onPublishStart?: Function` - Invoked when publishing starts. Optional.
 - `onPublishStop?: () => void` - Invoked when publishing stops. Optional.
 - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
+- every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 ```js
-<OpenTok.PublisherView sessionId={sessionId} onPublishStart={() => { console.log('started')}} />
+<OpenTok.PublisherView
+  style={{ height: 100, width: 200 }}
+  sessionId={sessionId} 
+  onPublishStart={() => { console.log('started')}} 
+/>
 ```
 
 #### <SubscriberView />
@@ -167,9 +172,14 @@ Available props:
 - `onSubscribeStart?: Function` - Invoked when stream starts. Optional.
 - `onSubscribeStop?: () => void` - Invoked when stream stops. Optional.
 - `onSubscribeError?: () => void` - Invoked when subscribing error occurs. Optional.
+- every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 ```js
-<OpenTok.SubscriberView sessionId={sessionId} onSubscribeStop={() => { console.log('stopped')}} />
+<OpenTok.SubscriberView 
+  style={{ height: 100, width: 200 }}
+  sessionId={sessionId} 
+  onSubscribeStop={() => { console.log('stopped')}} 
+/>
 ```
 
 ## Usage

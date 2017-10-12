@@ -74,7 +74,7 @@ allprojects {
     }
 }
 ```
-3. Add `OPENTOK_API_KEY` to your `AndroidManifest.xml`(within <application> tag):
+3. Add `OPENTOK_API_KEY` to your `AndroidManifest.xml`(within `<application>` tag):
 ```xml
 <meta-data android:name="OPENTOK_API_KEY" android:value="YOUR_OPENTOK_API_KEY" />
 ```

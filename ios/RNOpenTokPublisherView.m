@@ -19,7 +19,7 @@
 - (void)dealloc {
     [self stopObserveSession];
     [self stopObserveConnection];
-    [self cleanupPublisher];
+    [self stopPublishing];
 }
 
 #pragma mark - Private methods
@@ -29,6 +29,9 @@
     [self observeConnection];
     if (!_session) {
         [self connectToSession];
+    }
+    if(_session.sessionConnectionStatus == OTSessionConnectionStatusConnected && _publisher == nil) {
+        [self startPublishing];
     }
 }
 
@@ -65,7 +68,6 @@
 
 - (void)cleanupPublisher {
     [_publisher.view removeFromSuperview];
-    [self stopPublishing];
     _publisher.delegate = nil;
     _publisher = nil;
 }

@@ -65,7 +65,6 @@
 
 - (void)cleanupPublisher {
     [_publisher.view removeFromSuperview];
-    [self stopPublishing];
     _publisher.delegate = nil;
     _publisher = nil;
 }

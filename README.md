@@ -146,7 +146,7 @@ OpenTok.removeListener(OpenTok.events.ON_SIGNAL_RECEIVED);
 
 ## Components
 
-#### <PublisherView />
+#### Publisher
 Component used for publishing the video to the stream.
 
 Available props:
@@ -155,7 +155,7 @@ Available props:
 - `onPublishStop?: () => void` - Invoked when publishing stops. Optional.
 - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
 - `mute?`: Boolean - This props tells Publisher if should publish audio as well or not. Optional. Default false.
-- `camera?`: "front" | "back" | "CameraType" - preferred type of camera. Optional. Default "front".
+- `camera?`: "front" | "back" | "unspecified" - preferred type of camera. Optional. Default "front".
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 Available methods:
@@ -180,7 +180,7 @@ import { Publisher } from 'react-native-opentok'
 />
 ```
 
-#### <SubscriberView />
+#### Subscriber
 Component used for publishing the video to the stream. 
 
 Available props:

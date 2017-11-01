@@ -1,4 +1,5 @@
 /* @flow */
+import type { ViewProps } from 'ViewPropTypes';
 
 export type MessageEvent = {|
   sessionId: string,
@@ -18,28 +19,41 @@ export type OpenTokEvent =
   | 'onSessionStreamCreated'
   | 'onSessionStreamDestroyed';
 
-type OpenTokViewProps = {
+type OpenTokViewProps = {|
   sessionId: string,
   mute?: boolean,
-};
+  style?: $PropertyType<ViewProps, 'style'>,
+|};
 
-type Listeners = {
+type Listeners = {|
   listeners: {
     [listenerName: string]: RNOpenTokEventCallback,
   },
-};
+|};
 
-export type PublisherViewProps = OpenTokViewProps & {
+type CameraType = 'front' | 'back' | 'unspecified';
+
+export type PublisherViewProps = {|
+  ...OpenTokViewProps,
+  camera?: CameraType,
   onPublishStart?: () => void,
   onPublishStop?: () => void,
   onPublishError?: () => void,
-};
+|};
 
-export type SubscriberViewProps = OpenTokViewProps & {
+export type SubscriberViewProps = {|
+  ...OpenTokViewProps,
   onSubscribeStart?: () => void,
   onSubscribeStop?: () => void,
   onSubscribeError?: () => void,
+|};
+
+export type SubscriberViewPropsWithListeners = {
+  ...SubscriberViewProps,
+  ...Listeners,
 };
 
-export type SubscriberViewPropsWithListeners = SubscriberViewProps & Listeners;
-export type PublisherViewPropsWithListeners = PublisherViewProps & Listeners;
+export type PublisherViewPropsWithListeners = {
+  ...PublisherViewProps,
+  ...Listeners,
+};

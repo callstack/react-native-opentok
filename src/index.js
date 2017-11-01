@@ -62,7 +62,11 @@ export default {
     <SubscriberView listeners={listeners} {...props} />
   ),
 
-  PublisherView: (props: PublisherViewProps) => (
-    <PublisherView listeners={listeners} {...props} />
+  PublisherView: ({ camera, ...props }: PublisherViewProps) => (
+    <PublisherView
+      {...props}
+      camera={camera || 'unspecified'}
+      listeners={listeners}
+    />
   ),
 };

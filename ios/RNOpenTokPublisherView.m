@@ -53,7 +53,6 @@
 }
 
 - (NSInteger)getCameraPosition {
-    NSLog(@"ok %@ = %tu",_camera, [CameraTypeArray indexOfObject:_camera]);
     return [CameraTypeArray indexOfObject:_camera];
 }
 

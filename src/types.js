@@ -36,9 +36,9 @@ type Listeners = {|
   },
 |};
 
-type CameraType = 'front' | 'back' | 'unspecified';
+export type CameraType = 'front' | 'back' | 'unspecified';
 
-export type PublisherViewProps = {|
+export type PublisherProps = {|
   ...OpenTokViewProps,
   camera?: CameraType,
   onPublishStart?: () => void,
@@ -46,19 +46,23 @@ export type PublisherViewProps = {|
   onPublishError?: () => void,
 |};
 
-export type SubscriberViewProps = {|
+export type PublisherState = {
+  camera: CameraType,
+};
+
+export type SubscriberProps = {|
   ...OpenTokViewProps,
   onSubscribeStart?: () => void,
   onSubscribeStop?: () => void,
   onSubscribeError?: () => void,
 |};
 
-export type SubscriberViewPropsWithListeners = {
-  ...SubscriberViewProps,
+export type SubscriberViewProps = {
+  ...SubscriberProps,
   ...Listeners,
 };
 
-export type PublisherViewPropsWithListeners = {
-  ...PublisherViewProps,
+export type PublisherViewProps = {
+  ...PublisherProps,
   ...Listeners,
 };

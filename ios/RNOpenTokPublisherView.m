@@ -22,6 +22,16 @@
     [self stopPublishing];
 }
 
+- (void)didSetProps:(NSArray<NSString *> *)changedProps {
+    if (_publisher == nil) {
+        return;
+    }
+    
+    if ([changedProps containsObject:@"mute"]) {
+        _publisher.publishAudio = !_mute;
+    }
+}
+
 #pragma mark - Private methods
 
 - (void)mount {
@@ -37,6 +47,7 @@
 
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
+    _publisher.publishAudio = !_mute;
     
     OTError *error = nil;
     

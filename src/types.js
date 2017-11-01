@@ -20,6 +20,7 @@ export type OpenTokEvent =
 
 type OpenTokViewProps = {
   sessionId: string,
+  mute?: boolean,
 };
 
 type Listeners = {

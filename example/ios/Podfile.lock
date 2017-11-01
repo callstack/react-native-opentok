@@ -1,33 +1,33 @@
 PODS:
-  - OpenTok (2.11.4)
-  - React (0.49.3):
-    - React/Core (= 0.49.3)
-  - React/Core (0.49.3):
-    - yoga (= 0.49.3.React)
+  - OpenTok (2.12.0)
+  - React (0.48.2):
+    - React/Core (= 0.48.2)
+  - React/Core (0.48.2):
+    - Yoga (= 0.48.2.React)
   - RNOpenTok (0.0.1):
     - OpenTok
     - React
-  - yoga (0.49.3.React)
+  - Yoga (0.48.2.React)
 
 DEPENDENCIES:
   - React (from `../../node_modules/react-native`)
-  - RNOpenTok (from `../..`)
-  - yoga (from `../../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
+  - RNOpenTok (from `../../ios`)
+  - Yoga (from `../../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
 
 EXTERNAL SOURCES:
   React:
     :path: ../../node_modules/react-native
   RNOpenTok:
-    :path: ../..
-  yoga:
+    :path: ../../ios
+  Yoga:
     :path: ../../node_modules/react-native/ReactCommon/yoga/yoga.podspec
 
 SPEC CHECKSUMS:
-  OpenTok: 7ac36eed47f19a0190b2f083fc4339bb309badd7
-  React: 5751f5630c58f7ef31a00cf03044878295bceff0
-  RNOpenTok: 43660672d4f1e987b50fb894ce6f77a074f06b6f
-  yoga: 6e56575501ecea04196f9c9f08b90cf97cd5da24
+  OpenTok: fe7964ca1c1c80cd3b31cfbe63d918475322ba69
+  React: 9ed466c0074c63cb4912a6e0c509bc24870497b8
+  RNOpenTok: 65756214e683af423ed13f1678da0b83bd5c8870
+  Yoga: 15a7ea18cce3efdfd8d218bc8b94273bec0a4dda
 
-PODFILE CHECKSUM: 7ed14bd34c24a98d28c949dd65040148c4afc119
+PODFILE CHECKSUM: 1dba760189f1278bb11f74176f4120fe75d28ef3
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

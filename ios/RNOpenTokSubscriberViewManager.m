@@ -18,6 +18,8 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_VIEW_PROPERTY(sessionId, NSString)
 
+RCT_EXPORT_VIEW_PROPERTY(mute, BOOL)
+
 - (UIView *)view {
     return [RNOpenTokSubscriberView new];
 }

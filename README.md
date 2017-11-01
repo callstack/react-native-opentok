@@ -154,10 +154,26 @@ Available props:
 - `onPublishStart?: Function` - Invoked when publishing starts. Optional.
 - `onPublishStop?: () => void` - Invoked when publishing stops. Optional.
 - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
+- `mute?`: Boolean - This props tells Publisher if should publish audio as well or not. Optional. Default false.
+- `camera?`: "front" | "back" | "CameraType" - preferred type of camera. Optional. Default "front".
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
+
+Available methods:
+- `switchCamera()`: it switch the camera from "back" to "front" or otherwise
 
 ```js
 <OpenTok.PublisherView
+  style={{ height: 100, width: 200 }}
+  sessionId={sessionId} 
+  onPublishStart={() => { console.log('started')}} 
+/>
+```
+
+or 
+
+```js
+import { Publisher } from 'react-native-opentok'
+<Publisher
   style={{ height: 100, width: 200 }}
   sessionId={sessionId} 
   onPublishStart={() => { console.log('started')}} 
@@ -172,6 +188,7 @@ Available props:
 - `onSubscribeStart?: Function` - Invoked when stream starts. Optional.
 - `onSubscribeStop?: () => void` - Invoked when stream stops. Optional.
 - `onSubscribeError?: () => void` - Invoked when subscribing error occurs. Optional.
+- `mute?`: Boolean - This props tells Subscriber if should emit audio as well or not
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 ```js
@@ -179,6 +196,18 @@ Available props:
   style={{ height: 100, width: 200 }}
   sessionId={sessionId} 
   onSubscribeStop={() => { console.log('stopped')}} 
+/>
+```
+
+or 
+
+```js
+import { Subscriber } from 'react-native-opentok'
+
+<Subscriber
+  style={{ height: 100, width: 200 }}
+  sessionId={sessionId} 
+  onPublishStart={() => { console.log('started')}} 
 />
 ```
 

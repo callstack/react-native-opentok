@@ -25,9 +25,9 @@ export type OpenTokEvent =
   | 'onSessionStreamDestroyed';
 
 type OpenTokViewProps = {|
+  ...ViewProps,
   sessionId: string,
   mute?: boolean,
-  style?: $PropertyType<ViewProps, 'style'>,
 |};
 
 type Listeners = {|

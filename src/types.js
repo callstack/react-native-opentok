@@ -25,7 +25,11 @@ export type OpenTokEvent =
   | 'onSessionStreamDestroyed';
 
 type OpenTokViewProps = {|
-  ...ViewProps,
+  ...$Exact<ViewProps>,
+  /**
+   * Dirty fix; default definition "React$PropType$Primitive<any>" clashed with itself
+   */
+  accessibilityLabel?: any,
   sessionId: string,
   mute?: boolean,
 |};

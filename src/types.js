@@ -1,5 +1,10 @@
 /* @flow */
-import type { ViewProps } from 'ViewPropTypes';
+
+/**
+ * ViewPropTypes package is shipped together with React
+ */
+// eslint-disable-next-line
+import type { ViewProps } from "ViewPropTypes";
 
 export type MessageEvent = {|
   sessionId: string,

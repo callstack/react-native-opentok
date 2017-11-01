@@ -7,26 +7,13 @@ target 'example' do
   #node_modules_path = '../node_modules'
   node_modules_path = '../../node_modules'
 
-  pod 'Yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/Yoga.podspec"
-  pod 'React', path: "#{node_modules_path}/react-native", subspecs: [
-    'Core',
-    'RCTActionSheet',
-    'RCTAnimation',
-    'RCTGeolocation',
-    'RCTImage',
-    'RCTLinkingIOS',
-    'RCTNetwork',
-    'RCTSettings',
-    'RCTText',
-    'RCTVibration',
-    'RCTWebSocket',
-    'BatchedBridge'
-  ]
+  pod 'yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/yoga.podspec"
+  pod 'React', path: "#{node_modules_path}/react-native"
 
   # Changed for development case. In real life it should look like in line below.
-  # pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok"
+  # pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok/ios"
 
-  pod 'RNOpenTok', path: "../.."
+  pod 'RNOpenTok', path: "../../ios"
 end
 
 post_install do |installer|

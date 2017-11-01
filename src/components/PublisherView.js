@@ -4,19 +4,21 @@ import { requireNativeComponent } from 'react-native';
 
 import NativeEventEmitter from '../NativeEventEmitter';
 
-import type { PublisherViewProps } from '../types';
+import type { PublisherViewPropsWithListeners } from '../types';
 
-/* $FlowFixMe - We are disabling flow here, because refernece is needed at this point */
 const RNOpenTokPublisherView = requireNativeComponent(
   'RNOpenTokPublisherView',
+  /* $FlowFixMe - We are disabling flow here, because refernece is needed at this point */
   PublisherView
 );
 
 const publishListeners = ['onPublishStart', 'onPublishStop', 'onPublishError'];
 const NOOP = () => {};
 
-export default class PublisherView extends React.Component {
-  porps: PublisherViewProps;
+export default class PublisherView extends React.Component<
+  PublisherViewPropsWithListeners
+> {
+  props: PublisherViewPropsWithListeners;
 
   static defaultProps = {
     onPublishStart: NOOP,

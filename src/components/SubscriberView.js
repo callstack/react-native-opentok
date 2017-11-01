@@ -4,11 +4,11 @@ import { requireNativeComponent } from 'react-native';
 
 import NativeEventEmitter from '../NativeEventEmitter';
 
-import type { SubscriberViewProps } from '../types';
+import type { SubscriberViewPropsWithListeners } from '../types';
 
-/* $FlowFixMe - We are disabling flow here, because refernece is needed at this point */
 const RNOpenTokSubscriberView = requireNativeComponent(
   'RNOpenTokSubscriberView',
+  /* $FlowFixMe - We are disabling flow here, because refernece is needed at this point */
   SubscriberView
 );
 
@@ -19,14 +19,15 @@ const subscribeListeners = [
 ];
 const NOOP = () => {};
 
-export default class SubscriberView extends React.Component {
-  props: SubscriberViewProps;
+export default class SubscriberView extends React.Component<
+  SubscriberViewPropsWithListeners
+> {
+  props: SubscriberViewPropsWithListeners;
 
   static defaultProps = {
     onSubscribeStart: NOOP,
     onSubscribeStop: NOOP,
     onSubscribeError: NOOP,
-    sessionId: '',
   };
 
   componentWillMount() {

@@ -10,12 +10,14 @@ import type {
   RNOpenTokEventCallback,
   PublisherViewProps,
   SubscriberViewProps,
+  OpenTokEvent,
 } from './types';
 
 const listeners = {};
 
 export default {
   events: {
+    ON_SIGNAL_RECEIVED: 'onSignalReceived',
     ON_SESSION_CONNECTION_CREATED: 'onSessionConnectionCreated',
     ON_SESSION_CONNECTION_DESTROYED: 'onSessionConnectionDestroyed',
     ON_SESSION_DID_CONNECT: 'onSessionDidConnect',
@@ -30,29 +32,32 @@ export default {
     ON_SESSION_DID_RECONNECT: 'onSessionDidReconnect',
   },
 
-  connect: async (sessionId: string, token: string) => {
-    await NativeModules.RNOpenTok.connect(sessionId, token);
-  },
-
-  disconnect: (sessionId: string) => {
+  connect: (sessionId: string, token: string): Promise<boolean | Error> =>
+    NativeModules.RNOpenTok.connect(sessionId, token),
+  
+  disconnect: (sessionId: string): void => {
     NativeModules.RNOpenTok.disconnect(sessionId);
   },
 
-  disconnectAll: () => {
+  disconnectAll: (): void => {
     NativeModules.RNOpenTok.disconnectAll();
   },
 
-  sendSignal: async (sessionId: string, type: string, message: string) =>
+  sendSignal: (
+    sessionId: string,
+    type: string,
+    message: string
+  ): Promise<boolean | Error> =>
     NativeModules.RNOpenTok.sendSignal(sessionId, type, message),
 
-  on: (name: string, callback: RNOpenTokEventCallback) => {
+  on: (name: OpenTokEvent, callback: RNOpenTokEventCallback): void => {
     if (listeners[name]) {
       listeners[name].remove();
     }
     listeners[name] = NativeEventEmitter.addListener(name, callback);
   },
 
-  removeListener: (name: string) => {
+  removeListener: (name: OpenTokEvent): void => {
     if (listeners[name]) {
       listeners[name].remove();
       delete listeners[name];

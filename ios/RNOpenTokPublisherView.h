@@ -6,6 +6,9 @@
 
 @interface RNOpenTokPublisherView : RNOpenTokSessionObserver
 
+/**
+ * Camera Type; defined also in types.js
+ */
 #define CameraTypeNamesArray @"front", @"back", @"unspecified", nil
 
 /**

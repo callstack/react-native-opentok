@@ -6,6 +6,7 @@
 
 @implementation RNOpenTokPublisherView  {
     OTPublisher *_publisher;
+    NSArray* CameraTypeArray;
 }
 
 @synthesize sessionId = _sessionId;
@@ -14,6 +15,8 @@
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
     [self mount];
+    
+    CameraTypeArray = [[NSArray alloc] initWithObjects: CameraTypeNamesArray];
 }
 
 - (void)dealloc {
@@ -30,6 +33,10 @@
     if ([changedProps containsObject:@"mute"]) {
         _publisher.publishAudio = !_mute;
     }
+    
+    if ([changedProps containsObject:@"camera"]) {
+        _publisher.cameraPosition = [self getCameraPosition];
+    }
 }
 
 #pragma mark - Private methods
@@ -45,9 +52,15 @@
     }
 }
 
+- (NSInteger)getCameraPosition {
+    NSLog(@"ok %@ = %tu",_camera, [CameraTypeArray indexOfObject:_camera]);
+    return [CameraTypeArray indexOfObject:_camera];
+}
+
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
     _publisher.publishAudio = !_mute;
+    _publisher.cameraPosition = [self getCameraPosition];
     
     OTError *error = nil;
     

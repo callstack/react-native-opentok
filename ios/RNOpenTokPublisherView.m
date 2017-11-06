@@ -34,6 +34,10 @@
         _publisher.publishAudio = !_mute;
     }
     
+    if ([changedProps containsObject:@"video"]) {
+        _publisher.publishVideo = _video;
+    }
+    
     if ([changedProps containsObject:@"camera"]) {
         _publisher.cameraPosition = [self getCameraPosition];
     }
@@ -59,6 +63,7 @@
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
     _publisher.publishAudio = !_mute;
+    _publisher.publishVideo = _video;
     _publisher.cameraPosition = [self getCameraPosition];
     
     OTError *error = nil;

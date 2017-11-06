@@ -18,12 +18,20 @@ import type {
 const listeners = {};
 
 export class Subscriber extends React.Component<SubscriberProps> {
+  static defaultProps = {
+    video: true,
+  };
+
   render() {
     return <SubscriberView listeners={listeners} {...this.props} />;
   }
 }
 
 export class Publisher extends React.Component<PublisherProps> {
+  static defaultProps = {
+    video: true,
+  };
+
   ref: Ref<typeof PublisherView>;
 
   switchCamera = () => {

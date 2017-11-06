@@ -16,6 +16,11 @@
  */
 @property (nonatomic, assign) BOOL mute;
 
+/**
+ * Define props which tells the Publisher if should publish a video as well.
+ */
+@property (nonatomic, assign) BOOL video;
+
 @property (nonatomic, strong) NSString *camera;
 
 @end

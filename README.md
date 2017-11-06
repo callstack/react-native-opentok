@@ -154,8 +154,8 @@ Available props:
 - `onPublishStart?: Function` - Invoked when publishing starts. Optional.
 - `onPublishStop?: () => void` - Invoked when publishing stops. Optional.
 - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
-- `disableAudio?`: Boolean - This props tells Publisher if should publish audio as well or not. Optional. Default false.
-- `disableVideo?`: Boolean - This props tells Publisher if should publish video as well or not. Optional. Default false.
+- `mute`: Boolean - This props tells Publisher if should publish audio as well or not. Optional. Defaults to false.
+- `video`: Boolean - This props tells Publisher if should publish video as well or not. Optional. Defaults to true.
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 Available methods:

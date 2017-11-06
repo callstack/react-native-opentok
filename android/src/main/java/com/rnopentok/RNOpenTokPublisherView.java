@@ -49,7 +49,9 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     }
 
     public void cycleCamera() {
-        mPublisher.cycleCamera();
+        if (mPublisher != null) {
+            mPublisher.cycleCamera();
+        }
     }
 
     private void startPublishing() {

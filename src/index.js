@@ -2,7 +2,6 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
 import { NativeModules } from 'react-native';
-
 import type { Ref } from 'react';
 
 import NativeEventEmitter from './NativeEventEmitter';
@@ -26,6 +25,12 @@ export class Subscriber extends React.Component<SubscriberProps> {
 
 export class Publisher extends React.Component<PublisherProps> {
   ref: Ref<typeof PublisherView>;
+
+  switchCamera = () => {
+    if (this.ref && typeof this.ref !== 'string') {
+      this.ref.switchCamera();
+    }
+  };
 
   render() {
     return (

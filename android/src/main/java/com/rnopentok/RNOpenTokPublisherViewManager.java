@@ -26,7 +26,7 @@ public class RNOpenTokPublisherViewManager extends RNOpenTokViewManager<RNOpenTo
     }
 
     @ReactProp(name = "camera")
-    public void setChangeCamera(RNOpenTokPublisherView view, Integer camera) {
+    public void setCamera(RNOpenTokPublisherView view, Integer camera) {
         if (camera != 0) {
             view.cycleCamera();
         }

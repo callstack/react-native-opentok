@@ -162,16 +162,6 @@ Available methods:
 - `switchCamera()`: switches to the next camera. Goes back to first one when out of cameras.
 
 ```js
-<OpenTok.PublisherView
-  style={{ height: 100, width: 200 }}
-  sessionId={sessionId} 
-  onPublishStart={() => { console.log('started')}} 
-/>
-```
-
-or 
-
-```js
 import { Publisher } from 'react-native-opentok'
 <Publisher
   style={{ height: 100, width: 200 }}
@@ -188,18 +178,7 @@ Available props:
 - `onSubscribeStart?: Function` - Invoked when stream starts. Optional.
 - `onSubscribeStop?: () => void` - Invoked when stream stops. Optional.
 - `onSubscribeError?: () => void` - Invoked when subscribing error occurs. Optional.
-- `mute?`: Boolean - This props tells Subscriber if should emit audio as well or not
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
-
-```js
-<OpenTok.SubscriberView 
-  style={{ height: 100, width: 200 }}
-  sessionId={sessionId} 
-  onSubscribeStop={() => { console.log('stopped')}} 
-/>
-```
-
-or 
 
 ```js
 import { Subscriber } from 'react-native-opentok'

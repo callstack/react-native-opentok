@@ -1,9 +1,11 @@
 /* @flow */
 
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+import { AppRegistry, StyleSheet, Button, View } from 'react-native';
 
-import OpenTok from 'react-native-opentok'; // eslint-disable-line
+import OpenTok from "react-native-opentok"; // eslint-disable-line
+
+import type { Ref } from 'react';
 
 const sessionId = 'YOUR_SESSION_ID';
 const token = 'YOUR_TOKEN';
@@ -15,19 +17,34 @@ export default class App extends Component<{}> {
     OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => console.log(e));
   }
 
+  ref: Ref<typeof OpenTok.PublisherView>;
+
   render() {
     return (
       <View style={styles.container}>
-        <Text
+        <Button
           style={styles.welcome}
           onPress={async () => {
             const isSent = await OpenTok.sendSignal(sessionId, 'message', 'a');
             console.log(isSent);
           }}
-        >
-          Send signal
-        </Text>
-        <OpenTok.PublisherView sessionId={sessionId} />
+          title="Send signal"
+        />
+
+        <Button
+          style={styles.welcome}
+          onPress={() => {
+            if (typeof this.ref !== 'string') this.ref.switchCamera();
+          }}
+          title="Send signal"
+        />
+        <OpenTok.PublisherView
+          sessionId={sessionId}
+          ref={ref => {
+            /* $FlowFixMe */
+            this.ref = ref;
+          }}
+        />
       </View>
     );
   }

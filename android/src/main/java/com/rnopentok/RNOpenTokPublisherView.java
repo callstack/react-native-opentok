@@ -30,6 +30,18 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         RNOpenTokSessionManager.getSessionManager().removePublisherListener(mSessionId);
     }
 
+    public void setAudio(Boolean enabled) {
+        mPublisher.setPublishAudio(enabled);
+    }
+
+    public void setVideo(Boolean disabled) {
+        mPublisher.setPublishVideo(disabled);
+    }
+
+    public void cycleCamera() {
+        mPublisher.cycleCamera();
+    }
+
     private void startPublishing() {
         mPublisher = new Publisher(getContext());
         mPublisher.setPublisherListener(this);

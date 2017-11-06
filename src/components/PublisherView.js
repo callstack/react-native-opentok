@@ -15,23 +15,32 @@ const RNOpenTokPublisherView = requireNativeComponent(
 const publishListeners = ['onPublishStart', 'onPublishStop', 'onPublishError'];
 const NOOP = () => {};
 
-export default class PublisherView extends React.Component<PublisherViewProps> {
+export default class PublisherView extends React.Component<
+  PublisherViewProps,
+  { camera: number }
+> {
   static defaultProps = {
     onPublishStart: NOOP,
     onPublishStop: NOOP,
     onPublishError: NOOP,
     sessionId: '',
+    audioDisabled: false,
+    videoDisabled: false,
+  };
+
+  state = {
+    camera: 0,
   };
 
   componentWillMount() {
-    publishListeners.forEach(listener => this.addListener(listener));
+    publishListeners.forEach(listener => this._addListener(listener));
   }
 
   componentWillUnmount() {
-    publishListeners.forEach(listener => this.removeListener(listener));
+    publishListeners.forEach(listener => this._removeListener(listener));
   }
 
-  addListener = (name: string) => {
+  _addListener = (name: string) => {
     if (!this.props.listeners[name]) {
       this.props.listeners[name] = NativeEventEmitter.addListener(name, e =>
         this.props[name](e)
@@ -39,11 +48,15 @@ export default class PublisherView extends React.Component<PublisherViewProps> {
     }
   };
 
-  removeListener = (name: string) => {
+  _removeListener = (name: string) => {
     if (this.props.listeners[name]) {
       this.props.listeners[name].remove();
       delete this.props.listeners[name];
     }
+  };
+
+  switchCamera = () => {
+    this.setState(prevState => ({ camera: prevState.camera + 1 }));
   };
 
   render() {
@@ -55,6 +68,6 @@ export default class PublisherView extends React.Component<PublisherViewProps> {
       ...passProps
     } = this.props;
 
-    return <RNOpenTokPublisherView {...passProps} />;
+    return <RNOpenTokPublisherView camera={this.state.camera} {...passProps} />;
   }
 }

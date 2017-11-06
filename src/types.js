@@ -40,19 +40,14 @@ type Listeners = {|
   },
 |};
 
-export type CameraType = 'front' | 'back' | 'unspecified';
-
 export type PublisherProps = {|
   ...OpenTokViewProps,
-  camera?: CameraType,
+  audioDisabled?: boolean,
+  videoDisabled?: boolean,
   onPublishStart?: () => void,
   onPublishStop?: () => void,
   onPublishError?: () => void,
 |};
-
-export type PublisherState = {
-  camera: CameraType,
-};
 
 export type SubscriberProps = {|
   ...OpenTokViewProps,

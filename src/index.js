@@ -8,44 +8,12 @@ import PublisherView from './components/PublisherView';
 
 import type {
   RNOpenTokEventCallback,
-  PublisherProps,
-  PublisherState,
-  SubscriberProps,
   OpenTokEvent,
+  SubscriberProps,
+  PublisherProps,
 } from './types';
 
 const listeners = {};
-
-export function Subscriber(props: SubscriberProps) {
-  return <SubscriberView listeners={listeners} {...props} />;
-}
-
-export class Publisher extends React.Component<PublisherProps, PublisherState> {
-  state = {
-    camera: this.props.camera || 'front',
-  };
-
-  switchCamera() {
-    const { camera } = this.state;
-
-    if (camera === 'unspecified') {
-      throw Error(
-        "RNOpenTok: Can't switch camera when camera is 'unspecified'"
-      );
-    }
-
-    this.setState({
-      camera: camera === 'front' ? 'back' : 'front',
-    });
-  }
-
-  render() {
-    const { camera } = this.state;
-    return (
-      <PublisherView {...this.props} camera={camera} listeners={listeners} />
-    );
-  }
-}
 
 export default {
   events: {
@@ -58,6 +26,7 @@ export default {
     ON_SESSION_STREAM_CREATED: 'onSessionStreamCreated',
     ON_SESSION_STREAM_DESTROYED: 'onSessionStreamDestroyed',
   },
+
   connect: (sessionId: string, token: string): Promise<boolean | Error> =>
     NativeModules.RNOpenTok.connect(sessionId, token),
 
@@ -90,6 +59,10 @@ export default {
     }
   },
 
-  SubscriberView: Subscriber,
-  PublisherView: Publisher,
+  SubscriberView: (props: SubscriberProps) => (
+    <SubscriberView listeners={listeners} {...props} />
+  ),
+  PublisherView: (props: PublisherProps) => (
+    <PublisherView listeners={listeners} {...props} />
+  ),
 };

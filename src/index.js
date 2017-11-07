@@ -1,6 +1,8 @@
 /* @flow */
+/* eslint-disable react/no-multi-comp */
 import React from 'react';
 import { NativeModules } from 'react-native';
+import type { Ref } from 'react';
 
 import NativeEventEmitter from './NativeEventEmitter';
 import SubscriberView from './components/SubscriberView';
@@ -14,6 +16,43 @@ import type {
 } from './types';
 
 const listeners = {};
+
+export class Subscriber extends React.Component<SubscriberProps> {
+  static defaultProps = {
+    video: true,
+  };
+
+  render() {
+    return <SubscriberView listeners={listeners} {...this.props} />;
+  }
+}
+
+export class Publisher extends React.Component<PublisherProps> {
+  static defaultProps = {
+    video: true,
+  };
+
+  ref: Ref<typeof PublisherView>;
+
+  switchCamera = () => {
+    if (this.ref && typeof this.ref !== 'string') {
+      this.ref.switchCamera();
+    }
+  };
+
+  render() {
+    return (
+      <PublisherView
+        ref={ref => {
+          /* $FlowFixMe */
+          this.ref = ref;
+        }}
+        listeners={listeners}
+        {...this.props}
+      />
+    );
+  }
+}
 
 export default {
   events: {
@@ -58,11 +97,4 @@ export default {
       delete listeners[name];
     }
   },
-
-  SubscriberView: (props: SubscriberProps) => (
-    <SubscriberView listeners={listeners} {...props} />
-  ),
-  PublisherView: (props: PublisherProps) => (
-    <PublisherView listeners={listeners} {...props} />
-  ),
 };

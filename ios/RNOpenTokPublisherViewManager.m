@@ -22,6 +22,8 @@ RCT_EXPORT_VIEW_PROPERTY(camera, NSString)
 
 RCT_EXPORT_VIEW_PROPERTY(mute, BOOL)
 
+RCT_EXPORT_VIEW_PROPERTY(video, BOOL)
+
 - (UIView *)view {
     return [RNOpenTokPublisherView new];
 }

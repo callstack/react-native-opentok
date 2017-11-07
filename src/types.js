@@ -32,6 +32,7 @@ type OpenTokViewProps = {|
   accessibilityLabel?: any,
   sessionId: string,
   mute?: boolean,
+  video?: boolean,
 |};
 
 type Listeners = {|

@@ -30,6 +30,10 @@
     if ([changedProps containsObject:@"mute"]) {
         _subscriber.subscribeToAudio = !_mute;
     }
+    
+    if ([changedProps containsObject:@"video"]) {
+        _subscriber.subscribeToVideo = _video;
+    }
 }
 
 
@@ -48,6 +52,7 @@
     [self unsubscribe];
     _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
     _subscriber.subscribeToAudio = !_mute;
+    _subscriber.subscribeToVideo = _video;
     
     OTError *error = nil;
     [_session subscribe:_subscriber error:&error];

@@ -10,4 +10,9 @@
  */
 @property (nonatomic, assign) BOOL mute;
 
+/**
+ * Define props which tells the Subscriber if should emit a video as well.
+ */
+@property (nonatomic, assign) BOOL video;
+
 @end

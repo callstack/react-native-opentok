@@ -13,6 +13,8 @@ import com.opentok.android.PublisherKit;
 
 public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKit.PublisherListener {
     private Publisher mPublisher;
+    private Boolean mAudioEnabled;
+    private Boolean mVideoEnabled;
 
     public RNOpenTokPublisherView(ThemedReactContext context) {
         super(context);
@@ -31,20 +33,33 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     }
 
     public void setAudio(Boolean enabled) {
-        mPublisher.setPublishAudio(enabled);
+        if (mPublisher != null) {
+            mPublisher.setPublishAudio(enabled);
+        }
+
+        mAudioEnabled = enabled;
     }
 
-    public void setVideo(Boolean disabled) {
-        mPublisher.setPublishVideo(disabled);
+    public void setVideo(Boolean enabled) {
+        if (mPublisher != null) {
+            mPublisher.setPublishVideo(enabled);
+        }
+
+        mVideoEnabled = enabled;
     }
 
     public void cycleCamera() {
-        mPublisher.cycleCamera();
+        if (mPublisher != null) {
+            mPublisher.cycleCamera();
+        }
     }
 
     private void startPublishing() {
         mPublisher = new Publisher(getContext());
         mPublisher.setPublisherListener(this);
+
+        mPublisher.setPublishAudio(mAudioEnabled);
+        mPublisher.setPublishAudio(mVideoEnabled);
 
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
         session.publish(mPublisher);

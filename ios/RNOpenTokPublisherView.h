@@ -12,5 +12,10 @@
 @property (nonatomic, assign) BOOL audioDisabled;
 
 @property (nonatomic, assign) NSInteger camera;
+/**
+ * Define props which tells the Publisher if should publish a video as well.
+ */
+@property (nonatomic, assign) BOOL video;
+
 
 @end

@@ -7,15 +7,10 @@
 @interface RNOpenTokPublisherView : RNOpenTokSessionObserver
 
 /**
- * Camera Type; defined also in types.js
- */
-#define CameraTypeNamesArray @"front", @"back", @"unspecified", nil
-
-/**
  * Define props which tells the Publisher if should publish as audio as well.
  */
-@property (nonatomic, assign) BOOL mute;
+@property (nonatomic, assign) BOOL audioDisabled;
 
-@property (nonatomic, strong) NSString *camera;
+@property (nonatomic, assign) NSInteger camera;
 
 @end

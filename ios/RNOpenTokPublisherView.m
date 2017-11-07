@@ -15,8 +15,6 @@
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
     [self mount];
-    
-    CameraTypeArray = [[NSArray alloc] initWithObjects: CameraTypeNamesArray];
 }
 
 - (void)dealloc {
@@ -30,11 +28,11 @@
         return;
     }
     
-    if ([changedProps containsObject:@"mute"]) {
-        _publisher.publishAudio = !_mute;
+    if ([changedProps containsObject:@"audioDisabled"]) {
+        _publisher.publishAudio = !_audioDisabled;
     }
     
-    if ([changedProps containsObject:@"camera"]) {
+    if ([changedProps containsObject:@"camera"] && _camera > 0) {
         _publisher.cameraPosition = [self getCameraPosition];
     }
 }
@@ -53,14 +51,13 @@
 }
 
 - (NSInteger)getCameraPosition {
-    return [CameraTypeArray indexOfObject:_camera];
+    return _publisher.cameraPosition > 0 ? 0 : 1;
 }
 
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
-    _publisher.publishAudio = !_mute;
-    _publisher.cameraPosition = [self getCameraPosition];
-    
+    _publisher.publishAudio = !_audioDisabled;
+
     OTError *error = nil;
     
     [_session publish:_publisher error:&error];

@@ -29,7 +29,7 @@
     }
     
     if ([changedProps containsObject:@"audioDisabled"]) {
-        _publisher.publishAudio = !_audioDisabled;
+        _publisher.publishAudio = !_mute;
     }
     
     if ([changedProps containsObject:@"video"]) {
@@ -60,7 +60,7 @@
 
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
-    _publisher.publishAudio = !_audioDisabled;
+    _publisher.publishAudio = !_mute;
     _publisher.publishVideo = _video;
     OTError *error = nil;
     

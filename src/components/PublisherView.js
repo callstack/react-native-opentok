@@ -24,8 +24,8 @@ export default class PublisherView extends React.Component<
     onPublishStop: NOOP,
     onPublishError: NOOP,
     sessionId: '',
-    audioDisabled: false,
-    videoDisabled: false,
+    mute: false,
+    video: true,
   };
 
   state = {

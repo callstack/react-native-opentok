@@ -26,6 +26,8 @@ export default class SubscriberView extends React.Component<
     onSubscribeStart: NOOP,
     onSubscribeStop: NOOP,
     onSubscribeError: NOOP,
+    mute: false,
+    video: true,
   };
 
   componentWillMount() {

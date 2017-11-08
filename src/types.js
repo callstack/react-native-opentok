@@ -43,8 +43,6 @@ type Listeners = {|
 
 export type PublisherProps = {|
   ...OpenTokViewProps,
-  audioDisabled?: boolean,
-  videoDisabled?: boolean,
   onPublishStart?: () => void,
   onPublishStop?: () => void,
   onPublishError?: () => void,

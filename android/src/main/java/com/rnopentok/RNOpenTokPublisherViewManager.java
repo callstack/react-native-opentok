@@ -15,14 +15,14 @@ public class RNOpenTokPublisherViewManager extends RNOpenTokViewManager<RNOpenTo
         return new RNOpenTokPublisherView(reactContext);
     }
 
-    @ReactProp(name = "audioDisabled")
-    public void setAudioDisabled(RNOpenTokPublisherView view, Boolean audioDisabled) {
-        view.setAudio(!audioDisabled);
+    @ReactProp(name = "mute")
+    public void setMute(RNOpenTokPublisherView view, Boolean mute) {
+        view.setAudio(!mute);
     }
 
-    @ReactProp(name = "videoDisabled")
-    public void setVideoDisabled(RNOpenTokPublisherView view, Boolean videoDisabled) {
-        view.setVideo(!videoDisabled);
+    @ReactProp(name = "video")
+    public void setVideo(RNOpenTokPublisherView view, Boolean video) {
+        view.setVideo(video);
     }
 
     @ReactProp(name = "camera")

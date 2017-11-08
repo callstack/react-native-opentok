@@ -7,7 +7,7 @@ target 'example' do
   #node_modules_path = '../node_modules'
   node_modules_path = '../../node_modules'
 
-  pod 'Yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/yoga.podspec"
+  pod 'yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/yoga.podspec"
   pod 'React', path: "#{node_modules_path}/react-native"
 
   # Changed for development case. In real life it should look like in line below.

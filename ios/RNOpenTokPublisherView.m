@@ -6,7 +6,6 @@
 
 @implementation RNOpenTokPublisherView  {
     OTPublisher *_publisher;
-    NSArray* CameraTypeArray;
 }
 
 @synthesize sessionId = _sessionId;
@@ -28,7 +27,7 @@
         return;
     }
     
-    if ([changedProps containsObject:@"audioDisabled"]) {
+    if ([changedProps containsObject:@"mute"]) {
         _publisher.publishAudio = !_mute;
     }
     

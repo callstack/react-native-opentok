@@ -68,6 +68,6 @@ export default class PublisherView extends React.Component<
       ...passProps
     } = this.props;
 
-    return <RNOpenTokPublisherView camera={'front'} {...passProps} />;
+    return <RNOpenTokPublisherView camera={this.state.camera} {...passProps} />;
   }
 }

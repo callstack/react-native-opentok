@@ -4,7 +4,7 @@ import { requireNativeComponent } from 'react-native';
 
 import NativeEventEmitter from '../NativeEventEmitter';
 
-import type { PublisherViewPropsWithListeners } from '../types';
+import type { PublisherViewProps } from '../types';
 
 const RNOpenTokPublisherView = requireNativeComponent(
   'RNOpenTokPublisherView',
@@ -16,26 +16,31 @@ const publishListeners = ['onPublishStart', 'onPublishStop', 'onPublishError'];
 const NOOP = () => {};
 
 export default class PublisherView extends React.Component<
-  PublisherViewPropsWithListeners
+  PublisherViewProps,
+  { camera: number }
 > {
-  props: PublisherViewPropsWithListeners;
-
   static defaultProps = {
     onPublishStart: NOOP,
     onPublishStop: NOOP,
     onPublishError: NOOP,
     sessionId: '',
+    mute: false,
+    video: true,
+  };
+
+  state = {
+    camera: 0,
   };
 
   componentWillMount() {
-    publishListeners.forEach(listener => this.addListener(listener));
+    publishListeners.forEach(listener => this._addListener(listener));
   }
 
   componentWillUnmount() {
-    publishListeners.forEach(listener => this.removeListener(listener));
+    publishListeners.forEach(listener => this._removeListener(listener));
   }
 
-  addListener = (name: string) => {
+  _addListener = (name: string) => {
     if (!this.props.listeners[name]) {
       this.props.listeners[name] = NativeEventEmitter.addListener(name, e =>
         this.props[name](e)
@@ -43,11 +48,15 @@ export default class PublisherView extends React.Component<
     }
   };
 
-  removeListener = (name: string) => {
+  _removeListener = (name: string) => {
     if (this.props.listeners[name]) {
       this.props.listeners[name].remove();
       delete this.props.listeners[name];
     }
+  };
+
+  switchCamera = () => {
+    this.setState(prevState => ({ camera: prevState.camera + 1 }));
   };
 
   render() {
@@ -59,6 +68,6 @@ export default class PublisherView extends React.Component<
       ...passProps
     } = this.props;
 
-    return <RNOpenTokPublisherView {...passProps} />;
+    return <RNOpenTokPublisherView camera={this.state.camera} {...passProps} />;
   }
 }

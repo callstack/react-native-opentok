@@ -1,6 +1,8 @@
 /* @flow */
+/* eslint-disable react/no-multi-comp */
 import React from 'react';
 import { NativeModules } from 'react-native';
+import type { Ref } from 'react';
 
 import NativeEventEmitter from './NativeEventEmitter';
 import SubscriberView from './components/SubscriberView';
@@ -8,12 +10,49 @@ import PublisherView from './components/PublisherView';
 
 import type {
   RNOpenTokEventCallback,
-  PublisherViewProps,
-  SubscriberViewProps,
   OpenTokEvent,
+  SubscriberProps,
+  PublisherProps,
 } from './types';
 
 const listeners = {};
+
+export class Subscriber extends React.Component<SubscriberProps> {
+  static defaultProps = {
+    video: true,
+  };
+
+  render() {
+    return <SubscriberView listeners={listeners} {...this.props} />;
+  }
+}
+
+export class Publisher extends React.Component<PublisherProps> {
+  static defaultProps = {
+    video: true,
+  };
+
+  ref: Ref<typeof PublisherView>;
+
+  switchCamera = () => {
+    if (this.ref && typeof this.ref !== 'string') {
+      this.ref.switchCamera();
+    }
+  };
+
+  render() {
+    return (
+      <PublisherView
+        ref={ref => {
+          /* $FlowFixMe */
+          this.ref = ref;
+        }}
+        listeners={listeners}
+        {...this.props}
+      />
+    );
+  }
+}
 
 export default {
   events: {
@@ -26,6 +65,7 @@ export default {
     ON_SESSION_STREAM_CREATED: 'onSessionStreamCreated',
     ON_SESSION_STREAM_DESTROYED: 'onSessionStreamDestroyed',
   },
+
   connect: (sessionId: string, token: string): Promise<boolean | Error> =>
     NativeModules.RNOpenTok.connect(sessionId, token),
 
@@ -57,12 +97,4 @@ export default {
       delete listeners[name];
     }
   },
-
-  SubscriberView: (props: SubscriberViewProps) => (
-    <SubscriberView listeners={listeners} {...props} />
-  ),
-
-  PublisherView: (props: PublisherViewProps) => (
-    <PublisherView listeners={listeners} {...props} />
-  ),
 };

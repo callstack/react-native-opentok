@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "flow": "flow",
+    "flow:check": "flow check",
     "lint": "eslint src example",
     "jest": "jest src example",
     "start": "react-native start",

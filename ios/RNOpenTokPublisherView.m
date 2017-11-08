@@ -22,6 +22,24 @@
     [self stopPublishing];
 }
 
+- (void)didSetProps:(NSArray<NSString *> *)changedProps {
+    if (_publisher == nil) {
+        return;
+    }
+    
+    if ([changedProps containsObject:@"mute"]) {
+        _publisher.publishAudio = !_mute;
+    }
+    
+    if ([changedProps containsObject:@"video"]) {
+        _publisher.publishVideo = _video;
+    }
+    
+    if ([changedProps containsObject:@"camera"] && _camera > 0) {
+        _publisher.cameraPosition = [self getCameraPosition];
+    }
+}
+
 #pragma mark - Private methods
 
 - (void)mount {
@@ -35,9 +53,14 @@
     }
 }
 
+- (NSInteger)getCameraPosition {
+    return _publisher.cameraPosition > 0 ? 0 : 1;
+}
+
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
-    
+    _publisher.publishAudio = !_mute;
+    _publisher.publishVideo = _video;
     OTError *error = nil;
     
     [_session publish:_publisher error:&error];

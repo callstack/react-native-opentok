@@ -10,7 +10,7 @@
 -  `react-native` >=0.49.3
 
 Supported OpenTok SDK version:
-- `OpenTok SDK` 2.11.4
+- `OpenTok SDK` 2.11.+
 
 ## Table of contents
 - [Installation](#installation)
@@ -146,7 +146,7 @@ OpenTok.removeListener(OpenTok.events.ON_SIGNAL_RECEIVED);
 
 ## Components
 
-#### <PublisherView />
+#### Publisher
 Component used for publishing the video to the stream.
 
 Available props:
@@ -154,31 +154,41 @@ Available props:
 - `onPublishStart?: Function` - Invoked when publishing starts. Optional.
 - `onPublishStop?: () => void` - Invoked when publishing stops. Optional.
 - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
+- `mute?`: Boolean - This props tells Publisher if should publish audio as well or not. Optional. Defaults to false.
+- `video?`: Boolean - This props tells Publisher if should publish video as well or not. Optional. Defaults to true.
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
+Available methods:
+- `switchCamera()`: switches to the next camera. Goes back to first one when out of cameras.
+
 ```js
-<OpenTok.PublisherView
+import { Publisher } from 'react-native-opentok'
+<Publisher
   style={{ height: 100, width: 200 }}
   sessionId={sessionId} 
   onPublishStart={() => { console.log('started')}} 
 />
 ```
 
-#### <SubscriberView />
-Component used for publishing the video to the stream. 
+#### Subscriber
+Component used for subscribing to the stream. 
 
 Available props:
 - `sessionId: string` - ID of the session (you need to connect it before using this component).
 - `onSubscribeStart?: Function` - Invoked when stream starts. Optional.
 - `onSubscribeStop?: () => void` - Invoked when stream stops. Optional.
 - `onSubscribeError?: () => void` - Invoked when subscribing error occurs. Optional.
+- `mute?`: Boolean - This props tells Subscriber if should subscribe audio as well or not. Optional. Defaults to false.
+- `video?`: Boolean - This props tells Subscriber if should subscribe video as well or not. Optional. Defaults to true.
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 ```js
-<OpenTok.SubscriberView 
+import { Subscriber } from 'react-native-opentok'
+
+<Subscriber
   style={{ height: 100, width: 200 }}
   sessionId={sessionId} 
-  onSubscribeStop={() => { console.log('stopped')}} 
+  onSubscribeStart={() => { console.log('started')}} 
 />
 ```
 
@@ -195,8 +205,8 @@ Check out [example project](https://github.com/callstack/react-native-opentok/tr
 ### Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://callstack.com/static/assets/team/chudziak@2x.jpg" width="100px;"/><br /><sub>Michał Chudziak</sub>](https://twitter.com/michal_chudziak)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=mike866 "Code") | [<img src="https://callstack.com/static/assets/team/dratwa@2x.jpg" width="100px;"/><br /><sub>Piotr Drapich</sub>](https://twitter.com/dratwas)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=dratwas "Code") | [<img src="https://callstack.com/static/assets/team/mike@2x.jpg" width="100px;"/><br /><sub>Mike Grabowski</sub>](https://twitter.com/grabbou)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=grabbou "Code") |
-| :---: | :---: | :---: |
+| [<img src="https://callstack.com/static/assets/team/chudziak@2x.jpg" width="100px;"/><br /><sub>Michał Chudziak</sub>](https://twitter.com/michal_chudziak)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=mike866 "Code") | [<img src="https://callstack.com/static/assets/team/dratwa@2x.jpg" width="100px;"/><br /><sub>Piotr Drapich</sub>](https://twitter.com/dratwas)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=dratwas "Code") | [<img src="https://callstack.com/static/assets/team/mike@2x.jpg" width="100px;"/><br /><sub>Mike Grabowski</sub>](https://twitter.com/grabbou)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=jukben "Code") | [<img src="https://avatars1.githubusercontent.com/u/8135252?s=460&v=4" width="100px;"/><br /><sub>Jakub Beneš</sub>](https://twitter.com/jukben)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=jukben "Code") |
+| :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ### Credits

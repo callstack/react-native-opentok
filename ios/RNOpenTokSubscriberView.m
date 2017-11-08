@@ -22,6 +22,21 @@
     [self cleanupSubscriber];
 }
 
+- (void)didSetProps:(NSArray<NSString *> *)changedProps {
+    if (_subscriber == nil) {
+        return;
+    }
+    
+    if ([changedProps containsObject:@"mute"]) {
+        _subscriber.subscribeToAudio = !_mute;
+    }
+    
+    if ([changedProps containsObject:@"video"]) {
+        _subscriber.subscribeToVideo = _video;
+    }
+}
+
+
 #pragma mark - Private methods
 
 
@@ -36,6 +51,8 @@
 - (void)doSubscribe:(OTStream*)stream {
     [self unsubscribe];
     _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
+    _subscriber.subscribeToAudio = !_mute;
+    _subscriber.subscribeToVideo = _video;
     
     OTError *error = nil;
     [_session subscribe:_subscriber error:&error];

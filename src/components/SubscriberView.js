@@ -4,7 +4,7 @@ import { requireNativeComponent } from 'react-native';
 
 import NativeEventEmitter from '../NativeEventEmitter';
 
-import type { SubscriberViewPropsWithListeners } from '../types';
+import type { SubscriberViewProps } from '../types';
 
 const RNOpenTokSubscriberView = requireNativeComponent(
   'RNOpenTokSubscriberView',
@@ -20,14 +20,14 @@ const subscribeListeners = [
 const NOOP = () => {};
 
 export default class SubscriberView extends React.Component<
-  SubscriberViewPropsWithListeners
+  SubscriberViewProps
 > {
-  props: SubscriberViewPropsWithListeners;
-
   static defaultProps = {
     onSubscribeStart: NOOP,
     onSubscribeStop: NOOP,
     onSubscribeError: NOOP,
+    mute: false,
+    video: true,
   };
 
   componentWillMount() {

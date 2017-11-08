@@ -12,6 +12,8 @@ import com.opentok.android.SubscriberKit;
 
 public class RNOpenTokSubscriberView extends RNOpenTokView implements SubscriberKit.SubscriberListener {
     private Subscriber mSubscriber;
+    private Boolean mAudioEnabled;
+    private Boolean mVideoEnabled;
 
     public RNOpenTokSubscriberView(ThemedReactContext context) {
         super(context);
@@ -23,6 +25,22 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
         RNOpenTokSessionManager.getSessionManager().setSubscriberListener(mSessionId, this);
     }
 
+    public void setAudio(Boolean enabled) {
+        if (mSubscriber != null) {
+            mSubscriber.setSubscribeToAudio(enabled);
+        }
+
+        mAudioEnabled = enabled;
+    }
+
+    public void setVideo(Boolean enabled) {
+        if (mSubscriber != null) {
+            mSubscriber.setSubscribeToVideo(enabled);
+        }
+
+        mVideoEnabled = enabled;
+    }
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -32,6 +50,9 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
     private void startSubscribing(Stream stream) {
         mSubscriber = new Subscriber(getContext(), stream);
         mSubscriber.setSubscriberListener(this);
+        mSubscriber.setSubscribeToAudio(mAudioEnabled);
+        mSubscriber.setSubscribeToVideo(mVideoEnabled);
+
         mSubscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
                 BaseVideoRenderer.STYLE_VIDEO_FILL);
 

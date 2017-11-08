@@ -1,5 +1,11 @@
 /* @flow */
 
+/**
+ * ViewPropTypes package is shipped together with React
+ */
+// eslint-disable-next-line
+import type { ViewProps } from "ViewPropTypes";
+
 export type MessageEvent = {|
   sessionId: string,
   type: string,
@@ -18,27 +24,43 @@ export type OpenTokEvent =
   | 'onSessionStreamCreated'
   | 'onSessionStreamDestroyed';
 
-type OpenTokViewProps = {
+type OpenTokViewProps = {|
+  ...$Exact<ViewProps>,
+  /**
+   * Dirty fix; default definition "React$PropType$Primitive<any>" clashed with itself
+   */
+  accessibilityLabel?: any,
   sessionId: string,
-};
+  mute?: boolean,
+  video?: boolean,
+|};
 
-type Listeners = {
+type Listeners = {|
   listeners: {
     [listenerName: string]: RNOpenTokEventCallback,
   },
-};
+|};
 
-export type PublisherViewProps = OpenTokViewProps & {
+export type PublisherProps = {|
+  ...OpenTokViewProps,
   onPublishStart?: () => void,
   onPublishStop?: () => void,
   onPublishError?: () => void,
-};
+|};
 
-export type SubscriberViewProps = OpenTokViewProps & {
+export type SubscriberProps = {|
+  ...OpenTokViewProps,
   onSubscribeStart?: () => void,
   onSubscribeStop?: () => void,
   onSubscribeError?: () => void,
+|};
+
+export type SubscriberViewProps = {
+  ...SubscriberProps,
+  ...Listeners,
 };
 
-export type SubscriberViewPropsWithListeners = SubscriberViewProps & Listeners;
-export type PublisherViewPropsWithListeners = PublisherViewProps & Listeners;
+export type PublisherViewProps = {
+  ...PublisherProps,
+  ...Listeners,
+};

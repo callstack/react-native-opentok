@@ -178,6 +178,8 @@ Available props:
 - `onSubscribeStart?: Function` - Invoked when stream starts. Optional.
 - `onSubscribeStop?: () => void` - Invoked when stream stops. Optional.
 - `onSubscribeError?: () => void` - Invoked when subscribing error occurs. Optional.
+- `mute?`: Boolean - This props tells Subscriber if should subscribe audio as well or not. Optional. Defaults to false.
+- `video?`: Boolean - This props tells Subscriber if should subscribe video as well or not. Optional. Defaults to true.
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 ```js

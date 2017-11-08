@@ -171,7 +171,7 @@ import { Publisher } from 'react-native-opentok'
 ```
 
 #### Subscriber
-Component used for publishing the video to the stream. 
+Component used for subscribing to the stream. 
 
 Available props:
 - `sessionId: string` - ID of the session (you need to connect it before using this component).
@@ -186,7 +186,7 @@ import { Subscriber } from 'react-native-opentok'
 <Subscriber
   style={{ height: 100, width: 200 }}
   sessionId={sessionId} 
-  onPublishStart={() => { console.log('started')}} 
+  onSubscribeStart={() => { console.log('started')}} 
 />
 ```
 

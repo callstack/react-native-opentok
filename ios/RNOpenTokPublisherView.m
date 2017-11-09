@@ -54,14 +54,16 @@
 }
 
 - (NSInteger)getCameraPosition {
-    return _publisher.cameraPosition == AVCaptureDevicePositionBack ? AVCaptureDevicePositionFront : AVCaptureDevicePositionBack;
+    return _publisher.cameraPosition == AVCaptureDevicePositionBack
+        ? AVCaptureDevicePositionFront
+        : AVCaptureDevicePositionBack;
 }
 
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
     _publisher.publishAudio = !_mute;
     _publisher.publishVideo = _video;
-    _publisher.cameraPosition = AVCaptureDevicePositionBack;
+    _publisher.cameraPosition = AVCaptureDevicePositionFront;
     OTError *error = nil;
     
     [_session publish:_publisher error:&error];

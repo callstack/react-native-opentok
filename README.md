@@ -60,6 +60,10 @@ end
 ```xml
 <key>OPENTOK_API_KEY</key>
 <string>YOUR_API_KEY</string>
+<key>NSCameraUsageDescription</key>
+<string>${PRODUCT_NAME} Camera Usage</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>${PRODUCT_NAME} Microphone Usage</string>
 ```
 7. Run the project 🎉.
 

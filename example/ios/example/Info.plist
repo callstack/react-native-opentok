@@ -37,8 +37,6 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>OpenTok wants to use your camera, do you want to allow it?</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>OpenTok wants to use your microphone, do you want to allow it?</string>
 	<key>OPENTOK_API_KEY</key>

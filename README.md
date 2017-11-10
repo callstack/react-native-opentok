@@ -24,7 +24,7 @@ React native OpenTok SDK depends on native OpenTok SDK implementations. You need
 Add library using `yarn` 📦 (or `npm`):
 
 ```bash
-yarn add git+ssh://git@github.com:callstack/react-native-opentok.git
+yarn add react-native-opentok
 ```
 
 ### iOS

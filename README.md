@@ -1,4 +1,5 @@
 # react-native-opentok
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors)
 
 <a title="Join on Slack" href="https://slack.callstack.io/"><img src="https://slack.callstack.io/badge.svg" /></a>
 
@@ -10,7 +11,7 @@
 -  `react-native` >=0.49.3
 
 Supported OpenTok SDK version:
-- `OpenTok SDK` 2.11.+
+- `OpenTok SDK` 2.12.+
 
 ## Table of contents
 - [Installation](#installation)
@@ -209,10 +210,13 @@ Check out [example project](https://github.com/callstack/react-native-opentok/tr
 ### Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://callstack.com/static/assets/team/chudziak@2x.jpg" width="100px;"/><br /><sub>Michał Chudziak</sub>](https://twitter.com/michal_chudziak)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=mike866 "Code") | [<img src="https://callstack.com/static/assets/team/dratwa@2x.jpg" width="100px;"/><br /><sub>Piotr Drapich</sub>](https://twitter.com/dratwas)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=dratwas "Code") | [<img src="https://callstack.com/static/assets/team/mike@2x.jpg" width="100px;"/><br /><sub>Mike Grabowski</sub>](https://twitter.com/grabbou)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=jukben "Code") | [<img src="https://avatars1.githubusercontent.com/u/8135252?s=460&v=4" width="100px;"/><br /><sub>Jakub Beneš</sub>](https://twitter.com/jukben)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=jukben "Code") |
-| :---: | :---: | :---: | :---: |
+<!-- prettier-ignore -->
+| [<img src="https://avatars0.githubusercontent.com/u/7837457?v=4" width="100px;"/><br /><sub><b>Michał Chudziak</b></sub>](https://github.com/mike866)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=mike866 "Code") | [<img src="https://avatars2.githubusercontent.com/u/16336501?v=4" width="100px;"/><br /><sub><b>Drapich Piotr</b></sub>](https://github.com/dratwas)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=dratwas "Code") | [<img src="https://avatars2.githubusercontent.com/u/2464966?v=4" width="100px;"/><br /><sub><b>Mike Grabowski</b></sub>](https://github.com/grabbou)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=grabbou "Code") | [<img src="https://avatars3.githubusercontent.com/u/8135252?v=4" width="100px;"/><br /><sub><b>Jakub Beneš</b></sub>](https://jukben.cz)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=jukben "Code") | [<img src="https://avatars0.githubusercontent.com/u/7029942?v=4" width="100px;"/><br /><sub><b>Radek Czemerys</b></sub>](https://twitter.com/radko93)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=radko93 "Code") | [<img src="https://avatars1.githubusercontent.com/u/21041380?v=4" width="100px;"/><br /><sub><b>Jacob Caban-Tomski</b></sub>](https://github.com/jacobcabantomski-ct)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=jacobcabantomski-ct "Code") | [<img src="https://avatars2.githubusercontent.com/u/19997758?v=4" width="100px;"/><br /><sub><b>damiantw</b></sub>](https://github.com/damiantw)<br />[💻](https://github.com/callstack/react-native-opentok/commits?author=damiantw "Code") |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ### Credits
 
 Thanks to [TokBox](https://tokbox.com/) for native SDKs development.
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!

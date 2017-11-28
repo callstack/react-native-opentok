@@ -1,0 +1,74 @@
+{
+  "projectName": "react-native-opentok",
+  "projectOwner": "callstack",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "mike866",
+      "name": "Michał Chudziak",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/7837457?v=4",
+      "profile": "https://github.com/mike866",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dratwas",
+      "name": "Drapich Piotr",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/16336501?v=4",
+      "profile": "https://github.com/dratwas",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "grabbou",
+      "name": "Mike Grabowski",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2464966?v=4",
+      "profile": "https://github.com/grabbou",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jukben",
+      "name": "Jakub Beneš",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/8135252?v=4",
+      "profile": "https://jukben.cz",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "radko93",
+      "name": "Radek Czemerys",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/7029942?v=4",
+      "profile": "https://twitter.com/radko93",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jacobcabantomski-ct",
+      "name": "Jacob Caban-Tomski",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/21041380?v=4",
+      "profile": "https://github.com/jacobcabantomski-ct",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "damiantw",
+      "name": "damiantw",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/19997758?v=4",
+      "profile": "https://github.com/damiantw",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
+}

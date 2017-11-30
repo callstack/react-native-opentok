@@ -64,7 +64,6 @@ export default {
     ON_SESSION_DID_FAIL_WITH_ERROR: 'onSessionDidFailWithError',
     ON_SESSION_STREAM_CREATED: 'onSessionStreamCreated',
     ON_SESSION_STREAM_DESTROYED: 'onSessionStreamDestroyed',
-    ON_SIGNAL_RECEIVED: 'onSignalReceived',
     ON_ARCHIVE_STARTED_WITH_ID: 'onArchiveStartedWithId',
     ON_ARCHIVE_STOPPED_WITH_ID: 'onArchiveStoppedWithId',
     ON_SESSION_DID_BEGIN_RECONNECTING: 'onSessionDidBeginReconnecting',
@@ -73,7 +72,7 @@ export default {
 
   connect: (sessionId: string, token: string): Promise<boolean | Error> =>
     NativeModules.RNOpenTok.connect(sessionId, token),
-  
+
   disconnect: (sessionId: string): void => {
     NativeModules.RNOpenTok.disconnect(sessionId);
   },

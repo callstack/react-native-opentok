@@ -43,8 +43,18 @@ public class RNOpenTokSessionManager implements Session.SessionListener, Session
                 e.printStackTrace();
             }
             instance = new RNOpenTokSessionManager(context, apiKey);
+        } else if ( context != null && instance.getContext() != context) {
+            instance.setContext(context);
         }
         return instance;
+    }
+
+    public ReactApplicationContext getContext() {
+        return this.mContext;
+    }
+
+    public void setContext(ReactApplicationContext context) {
+        this.mContext = context;
     }
 
     static RNOpenTokSessionManager getSessionManager() {

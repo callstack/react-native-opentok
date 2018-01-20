@@ -27,6 +27,6 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-      <meta-data android:name="OPENTOK_API_KEY" android:value="YOUR_OPENTOK_API_KEY" />
+      <meta-data android:name="OPENTOK_API_KEY" android:value="45955992" />
     </application>
 </manifest>

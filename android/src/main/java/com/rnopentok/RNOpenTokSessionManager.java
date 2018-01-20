@@ -2,6 +2,7 @@ package com.rnopentok;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -43,8 +44,19 @@ public class RNOpenTokSessionManager implements Session.SessionListener, Session
                 e.printStackTrace();
             }
             instance = new RNOpenTokSessionManager(context, apiKey);
+        } else if ( context != null && instance.getContext() != context) {
+            instance.setContext(context);
         }
         return instance;
+    }
+
+    public ReactApplicationContext getContext() {
+        Log.d("blabla", String.valueOf(this.mContext));
+        return this.mContext;
+    }
+
+    public void setContext(ReactApplicationContext context) {
+        this.mContext = context;
     }
 
     static RNOpenTokSessionManager getSessionManager() {
@@ -52,6 +64,11 @@ public class RNOpenTokSessionManager implements Session.SessionListener, Session
     }
 
     public Session connectToSession(String sessionId, String token) {
+//        this.disconnectSession(sessionId);
+//        if (this.mSessions.get(sessionId) != null) {
+//            this.mSessions.get(sessionId).disconnect();
+//            this.mSessions.remove(sessionId);
+//        }
         Session session = new Session(this.mContext, this.mApiKey, sessionId);
         session.connect(token);
         this.mSessions.put(sessionId, session);

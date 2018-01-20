@@ -87,6 +87,7 @@ export default {
   on: (name: OpenTokEvent, callback: RNOpenTokEventCallback): void => {
     if (listeners[name]) {
       listeners[name].remove();
+      delete listeners[name];
     }
     listeners[name] = NativeEventEmitter.addListener(name, callback);
   },

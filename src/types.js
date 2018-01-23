@@ -46,6 +46,8 @@ export type PublisherProps = {|
   onPublishStart?: () => void,
   onPublishStop?: () => void,
   onPublishError?: () => void,
+  screenCapture?: boolean,
+  screenCaptureSettings?: { fps?: number, width?: number, height?: number },
 |};
 
 export type SubscriberProps = {|
@@ -53,8 +55,6 @@ export type SubscriberProps = {|
   onSubscribeStart?: () => void,
   onSubscribeStop?: () => void,
   onSubscribeError?: () => void,
-  screenCapture?: Boolean,
-  screenCaptureSettings?: { fps?: number, width?: number, height?: number },
 |};
 
 export type SubscriberViewProps = {

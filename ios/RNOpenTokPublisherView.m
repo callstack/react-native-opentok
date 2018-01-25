@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "RNOpenTokPublisherView.h"
+#import "RNOpenTokScreenSharingCapturer.h"
 
 @interface RNOpenTokPublisherView () <OTPublisherDelegate>
 @end
@@ -63,7 +64,15 @@
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
     _publisher.publishAudio = !_mute;
     _publisher.publishVideo = _video;
-    _publisher.cameraPosition = AVCaptureDevicePositionFront;
+//    _publisher.cameraPosition = AVCaptureDevicePositionFront;
+    
+    
+    UIView* rootView = [self.window.subviews  objectAtIndex:0];
+    
+    [_publisher setVideoType:OTPublisherKitVideoTypeScreen];
+    RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc] initWithView:rootView];
+    [_publisher setVideoCapture:capture];
+    
     OTError *error = nil;
     
     [_session publish:_publisher error:&error];

@@ -74,6 +74,7 @@ export default {
     ON_SESSION_DID_FAIL_WITH_ERROR: 'onSessionDidFailWithError',
     ON_SESSION_STREAM_CREATED: 'onSessionStreamCreated',
     ON_SESSION_STREAM_DESTROYED: 'onSessionStreamDestroyed',
+    ERROR_NO_SCREEN_CAPTURE_VIEW: 'errorNoScreenCaptureView',
   },
 
   connect: (sessionId: string, token: string): Promise<boolean | Error> =>

@@ -22,7 +22,8 @@ export type OpenTokEvent =
   | 'onSessionDidDisconnect'
   | 'onSessionDidFailWithError'
   | 'onSessionStreamCreated'
-  | 'onSessionStreamDestroyed';
+  | 'onSessionStreamDestroyed'
+  | 'errorNoScreenCaptureView';
 
 type OpenTokViewProps = {|
   ...$Exact<ViewProps>,

@@ -14,7 +14,8 @@ enum Events {
     ON_SESSION_DID_DISCONNECT("onSessionDidDisconnect"),
     ON_SESSION_DID_FAIL_WITH_ERROR("onSessionDidFailWithError"),
     ON_SESSION_STREAM_CREATED("onSessionStreamCreated"),
-    ON_SESSION_STREAM_DESTROYED("onSessionStreamDestroyed");
+    ON_SESSION_STREAM_DESTROYED("onSessionStreamDestroyed"),
+    ERROR_NO_SCREEN_CAPTURE_VIEW("errorNoScreenCaptureView");
 
     private final String mName;
 

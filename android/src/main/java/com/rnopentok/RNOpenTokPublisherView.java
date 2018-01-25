@@ -4,12 +4,14 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.util.ReactFindViewUtil;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKit.PublisherListener {
     private Publisher mPublisher;
@@ -75,10 +77,18 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
 
     private void startPublishing() {
         Publisher.Builder builder = new Publisher.Builder(getContext());
-        mPublisher = (mScreenCapture
-                ? builder.capturer(new RNOpenTokScreenSharingCapturer(this.getRootView(), mScreenCaptureSettings))
-                : builder
-        ).build();
+        if (mScreenCapture) {
+            View captureView = ReactFindViewUtil.findView(this.getRootView(), "RN_OPENTOK_SCREEN_CAPTURE_VIEW");
+            if (captureView == null) {
+                sendEvent(Events.ERROR_NO_SCREEN_CAPTURE_VIEW, null);
+                return;
+            }
+            mPublisher = builder.capturer(
+                    new RNOpenTokScreenSharingCapturer(captureView, mScreenCaptureSettings)
+            ).build();
+        } else {
+            mPublisher = builder.build();
+        }
 
         mPublisher.setPublisherListener(this);
         mPublisher.setPublishAudio(mAudioEnabled);

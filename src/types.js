@@ -46,6 +46,8 @@ export type PublisherProps = {|
   onPublishStart?: () => void,
   onPublishStop?: () => void,
   onPublishError?: () => void,
+  screenCapture?: boolean,
+  screenCaptureSettings?: { fps?: number, width?: number, height?: number },
 |};
 
 export type SubscriberProps = {|

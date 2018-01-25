@@ -2,17 +2,21 @@ package com.rnopentok;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
+import android.support.annotation.Nullable;
 
 public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKit.PublisherListener {
     private Publisher mPublisher;
     private Boolean mAudioEnabled;
     private Boolean mVideoEnabled;
+    private Boolean mScreenCapture;
+    private ReadableMap mScreenCaptureSettings;
 
     public RNOpenTokPublisherView(ThemedReactContext context) {
         super(context);
@@ -52,12 +56,38 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         }
     }
 
-    private void startPublishing() {
-        mPublisher = new Publisher(getContext());
-        mPublisher.setPublisherListener(this);
+    public void setScreenCapture(Boolean enabled) {
+        mScreenCapture = enabled;
 
+        // @TODO: recreate publisher on change
+//        if (mPublisher != null) {
+//            Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
+//            session.unpublish(mPublisher);
+//            RNOpenTokSessionManager.getSessionManager().removePublisherListener(mSessionId);
+//            cleanUpPublisher();
+//            startPublishing();
+//        }
+    }
+
+    public void setScreenCaptureSettings(@Nullable ReadableMap screenCaptureSettings) {
+        mScreenCaptureSettings = screenCaptureSettings;
+    }
+
+    private void startPublishing() {
+        Publisher.Builder builder = new Publisher.Builder(getContext());
+        mPublisher = (mScreenCapture
+                ? builder.capturer(new RNOpenTokScreenSharingCapturer(this.getRootView(), mScreenCaptureSettings))
+                : builder
+        ).build();
+
+        mPublisher.setPublisherListener(this);
         mPublisher.setPublishAudio(mAudioEnabled);
         mPublisher.setPublishVideo(mVideoEnabled);
+
+        if (mScreenCapture) {
+            mPublisher.setPublisherVideoType(PublisherKit.PublisherKitVideoType.PublisherKitVideoTypeScreen);
+            mPublisher.setAudioFallbackEnabled(false);
+        }
 
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
         session.publish(mPublisher);

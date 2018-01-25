@@ -1,7 +1,7 @@
 /* @flow */
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
-import { NativeModules } from 'react-native';
+import { NativeModules, View } from 'react-native';
 import type { Ref } from 'react';
 
 import NativeEventEmitter from './NativeEventEmitter';
@@ -50,6 +50,16 @@ export class Publisher extends React.Component<PublisherProps> {
         listeners={listeners}
         {...this.props}
       />
+    );
+  }
+}
+
+export class ScreenCapture extends React.Component<*> {
+  render() {
+    return (
+      <View style={this.props.style} nativeID="RN_OPENTOK_SCREEN_CAPTURE_VIEW">
+        {this.props.children}
+      </View>
     );
   }
 }

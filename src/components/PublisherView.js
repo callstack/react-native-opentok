@@ -26,6 +26,8 @@ export default class PublisherView extends React.Component<
     sessionId: '',
     mute: false,
     video: true,
+    screenCapture: false,
+    screenCaptureSettings: null,
   };
 
   state = {

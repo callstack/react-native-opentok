@@ -6,11 +6,18 @@
 @end
 
 @implementation RNOpenTokPublisherView  {
-    OTPublisher *_publisher;
+    OTPublisher* _publisher;
+    RCTUIManager* _uiManager;
 }
 
 @synthesize sessionId = _sessionId;
 @synthesize session = _session;
+
+- (instancetype)initWithUIManager:(RCTUIManager*)uiManager {
+    self = [super init];
+    _uiManager = uiManager;
+    return self;
+}
 
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
@@ -64,14 +71,24 @@
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
     _publisher.publishAudio = !_mute;
     _publisher.publishVideo = _video;
-//    _publisher.cameraPosition = AVCaptureDevicePositionFront;
     
-    
-    UIView* rootView = [self.window.subviews  objectAtIndex:0];
-    
-    [_publisher setVideoType:OTPublisherKitVideoTypeScreen];
-    RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc] initWithView:rootView];
-    [_publisher setVideoCapture:capture];
+    if (_screenCapture) {
+        int rootTag = 1;
+//        if(_screenCaptureSettings && _screenCaptureSettings[@"rootTag"]) {
+//            rootTag = _screenCaptureSettings[@"rootTag"];
+//        }
+        UIView* screenCaptureView = [_uiManager viewForNativeID:@"RN_OPENTOK_SCREEN_CAPTURE_VIEW"
+                                                    withRootTag:[NSNumber numberWithInt:rootTag]];
+        
+        RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc]
+                                                   initWithView:screenCaptureView];
+        
+        [_publisher setVideoType:OTPublisherKitVideoTypeScreen];
+        [_publisher setVideoCapture:capture];
+    } else {
+        _publisher.cameraPosition = AVCaptureDevicePositionFront;
+    }
+   
     
     OTError *error = nil;
     

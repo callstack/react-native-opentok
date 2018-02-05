@@ -85,11 +85,18 @@
         UIView* screenCaptureView = [_uiManager viewForNativeID:@"RN_OPENTOK_SCREEN_CAPTURE_VIEW"
                                                     withRootTag:rootView.reactTag];
         
+        if (screenCaptureView) {
         RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc]
                                                    initWithView:screenCaptureView];
         
         [_publisher setVideoType:OTPublisherKitVideoTypeScreen];
         [_publisher setVideoCapture:capture];
+    } else {
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"errorNoScreenCaptureView"
+             object:nil];
+            return;
+        }
     } else {
         _publisher.cameraPosition = AVCaptureDevicePositionFront;
     }

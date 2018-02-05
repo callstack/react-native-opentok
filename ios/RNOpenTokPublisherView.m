@@ -54,6 +54,11 @@
     if ([changedProps containsObject:@"camera"] && _camera > 0) {
         _publisher.cameraPosition = [self getCameraPosition];
     }
+    
+    if ([changedProps containsObject:@"screenCapture"]) {
+        [self stopPublishing];
+        [self startPublishing];
+    }
 }
 
 #pragma mark - Private methods
@@ -86,12 +91,13 @@
                                                     withRootTag:rootView.reactTag];
         
         if (screenCaptureView) {
-        RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc]
-                                                   initWithView:screenCaptureView];
-        
-        [_publisher setVideoType:OTPublisherKitVideoTypeScreen];
-        [_publisher setVideoCapture:capture];
-    } else {
+            RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc]
+                                                       initWithView:screenCaptureView];
+            
+            [_publisher setVideoType:OTPublisherKitVideoTypeScreen];
+            [_publisher setAudioFallbackEnabled:NO];
+            [_publisher setVideoCapture:capture];
+        } else {
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"errorNoScreenCaptureView"
              object:nil];

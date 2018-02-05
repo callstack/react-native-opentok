@@ -2,6 +2,14 @@
 #import "RNOpenTokPublisherView.h"
 #import "RNOpenTokScreenSharingCapturer.h"
 
+#if __has_include(<React/RCTUtils.h>)
+#import <React/RCTUtils.h>
+#elif __has_include("RCTUtils.h")
+#import "RCTUtils.h"
+#else
+#import "React/RCTUtils.h"
+#endif
+
 @interface RNOpenTokPublisherView () <OTPublisherDelegate>
 @end
 
@@ -73,12 +81,9 @@
     _publisher.publishVideo = _video;
     
     if (_screenCapture) {
-        int rootTag = 1;
-//        if(_screenCaptureSettings && _screenCaptureSettings[@"rootTag"]) {
-//            rootTag = _screenCaptureSettings[@"rootTag"];
-//        }
+        UIView* rootView = RCTPresentedViewController().view;
         UIView* screenCaptureView = [_uiManager viewForNativeID:@"RN_OPENTOK_SCREEN_CAPTURE_VIEW"
-                                                    withRootTag:[NSNumber numberWithInt:rootTag]];
+                                                    withRootTag:rootView.reactTag];
         
         RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc]
                                                    initWithView:screenCaptureView];

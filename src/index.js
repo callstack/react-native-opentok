@@ -56,9 +56,10 @@ export class Publisher extends React.Component<PublisherProps> {
 
 export class ScreenCapture extends React.Component<*> {
   render() {
+    const { children, nativeID, ...rest } = this.props;
     return (
-      <View style={this.props.style} nativeID="RN_OPENTOK_SCREEN_CAPTURE_VIEW">
-        {this.props.children}
+      <View {...rest} nativeID="RN_OPENTOK_SCREEN_CAPTURE_VIEW">
+        {children}
       </View>
     );
   }

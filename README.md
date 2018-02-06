@@ -161,6 +161,9 @@ Available props:
 - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
 - `mute?`: Boolean - This props tells Publisher if should publish audio as well or not. Optional. Defaults to false.
 - `video?`: Boolean - This props tells Publisher if should publish video as well or not. Optional. Defaults to true.
+- `screenCapture?: boolean` - Stream screen if `true` instead of camera.
+- `screenCaptureSettings?: { fps?: number }` - Screen sharing settings
+  - `fps?: number` - Specify frames per second for a stream (default: `15`)
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 Available methods:
@@ -195,6 +198,23 @@ import { Subscriber } from 'react-native-opentok'
   sessionId={sessionId} 
   onSubscribeStart={() => { console.log('started')}} 
 />
+```
+
+#### ScreenCapture
+Component used for capturing a stream of it's children for screen sharing.
+
+Everything inside this component will be streamed as long as `<Publisher>` has `screenCapture` prop set to `true`.
+
+Available props:
+- every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props) except `nativeID`.
+
+```js
+import { Publisher, ScreenCapture } from 'react-native-opentok';
+
+<ScreenCapture>
+  {/* some children */}
+</ScreenCapture>
+<Publisher screenCapture>
 ```
 
 ## Usage

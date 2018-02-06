@@ -32,7 +32,7 @@
     self = [super init];
     if (self) {
         _view = view;
-        _minFrameDuration = CMTimeMake(1, 5);
+        _minFrameDuration = CMTimeMake(1, 15);
         if ([settings objectForKey:@"fps"]) {
             NSNumber* fps = [settings objectForKey:@"fps"];
             _minFrameDuration = CMTimeMake(1, fps);

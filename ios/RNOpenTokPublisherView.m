@@ -16,6 +16,7 @@
 @implementation RNOpenTokPublisherView  {
     OTPublisher* _publisher;
     RCTUIManager* _uiManager;
+    NSDictionary* _screenCaptureSettings;
 }
 
 @synthesize sessionId = _sessionId;
@@ -92,7 +93,8 @@
         
         if (screenCaptureView) {
             RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc]
-                                                       initWithView:screenCaptureView];
+                                                       initWithView:screenCaptureView
+                                                       withSettings:_screenCaptureSettings];
             
             [_publisher setVideoType:OTPublisherKitVideoTypeScreen];
             [_publisher setAudioFallbackEnabled:NO];

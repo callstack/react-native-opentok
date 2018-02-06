@@ -14,7 +14,8 @@
 
 @property(readonly) UIView* view;
 
-- (instancetype)initWithView:(UIView*)view;
+- (instancetype)initWithView:(UIView*)view
+                withSettings:(NSDictionary*)settings;
 
 + (void)dimensionsForInputSize:(CGSize)input
                  containerSize:(CGSize*)destContainerSize

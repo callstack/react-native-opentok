@@ -50,7 +50,6 @@ export type PublisherProps = {|
   screenCapture?: boolean,
   screenCaptureSettings?: {
     fps?: number,
-    rootTag?: number,
   },
 |};
 

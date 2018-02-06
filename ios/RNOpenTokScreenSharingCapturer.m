@@ -27,11 +27,16 @@
 #pragma mark - Class Lifecycle
 
 - (instancetype)initWithView:(UIView*)view
+                withSettings:(NSDictionary *)settings
 {
     self = [super init];
     if (self) {
         _view = view;
         _minFrameDuration = CMTimeMake(1, 5);
+        if ([settings objectForKey:@"fps"]) {
+            NSNumber* fps = [settings objectForKey:@"fps"];
+            _minFrameDuration = CMTimeMake(1, fps);
+        }
         _queue = dispatch_queue_create("RN_OPENTOK_SCREEN_CAPTURE", NULL);
         
         OTVideoFormat* format = [[OTVideoFormat alloc] init];

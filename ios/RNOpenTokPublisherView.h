@@ -31,7 +31,7 @@
 /**
  * Define settings for screen capture.
  */
-@property (nonatomic, assign) NSDictionary* screenCaptureSettings;
+@property (nonatomic) NSDictionary* screenCaptureSettings;
 
 - (instancetype)initWithUIManager:(RCTUIManager*)uiManager;
 

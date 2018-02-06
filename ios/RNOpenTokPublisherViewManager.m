@@ -26,7 +26,7 @@ RCT_EXPORT_VIEW_PROPERTY(video, BOOL)
 
 RCT_EXPORT_VIEW_PROPERTY(screenCapture, BOOL)
 
-RCT_EXPORT_VIEW_PROPERTY(screenCaptureSettings, NSDictionary*)
+RCT_EXPORT_VIEW_PROPERTY(screenCaptureSettings, NSDictionary)
 
 - (UIView *)view {
     return [[RNOpenTokPublisherView alloc] initWithUIManager:_bridge.uiManager];

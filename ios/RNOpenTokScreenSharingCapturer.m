@@ -1,11 +1,3 @@
-//
-//  RNOpenTokScreenSharingCapturer.m
-//  Pods
-//
-//  Created by Paweł Trysła on 24/01/2018.
-//
-//
-
 #include <mach/mach.h>
 #include <mach/mach_time.h>
 #import "RNOpenTokScreenSharingCapturer.h"
@@ -100,9 +92,7 @@
  * Create event handler to create a screenshot and use it a next frame.
  */
 - (void)initCapture
-{
-    //__unsafe_unretained RNOpenTokScreenSharingCapturer* _self = self;
-    
+{   
     _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _queue);
     dispatch_source_set_timer(_timer, dispatch_walltime(NULL, 0), 100ull * NSEC_PER_MSEC, 100ull * NSEC_PER_MSEC);
     dispatch_source_set_event_handler(_timer, ^{

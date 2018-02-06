@@ -35,7 +35,7 @@ export default class PublisherView extends React.Component<
     camera: 0,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     publishListeners.forEach(listener => this._addListener(listener));
     RNOpenTok.on(RNOpenTok.events.ERROR_NO_SCREEN_CAPTURE_VIEW, () => {
       throw new Error(

@@ -9,6 +9,8 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.opentok.android.Connection;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Session;
+import com.opentok.android.BaseVideoRenderer;
+import com.opentok.android.Subscriber;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.opentok.android.Stream;
@@ -21,28 +23,19 @@ public class RNOpenTokSessionManager implements Session.SessionListener, Session
     private ReactApplicationContext mContext;
     private String mApiKey;
     private HashMap<String, Session> mSessions;
-    private HashMap<String, RNOpenTokSubscriberView> mSubscribers;
+    private HashMap<String, Subscriber> mSubscribers;
     private HashMap<String, RNOpenTokPublisherView> mPublishers;
 
-    private RNOpenTokSessionManager(ReactApplicationContext context, String apiKey) {
+    private RNOpenTokSessionManager(ReactApplicationContext context) {
         this.mSessions = new HashMap<>();
-        this.mSubscribers = new HashMap<String, RNOpenTokSubscriberView>();
+        this.mSubscribers = new HashMap<String, Subscriber>();
         this.mPublishers = new HashMap<String, RNOpenTokPublisherView>();
-        this.mApiKey = apiKey;
         this.mContext = context;
     }
 
     static RNOpenTokSessionManager initSessionManager(ReactApplicationContext context) {
         if (instance == null) {
-            String apiKey = "";
-            ApplicationInfo ai = null;
-            try {
-                ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-                apiKey = ai.metaData.get("OPENTOK_API_KEY").toString();
-            } catch (PackageManager.NameNotFoundException | NullPointerException e) {
-                e.printStackTrace();
-            }
-            instance = new RNOpenTokSessionManager(context, apiKey);
+            instance = new RNOpenTokSessionManager(context);
         }
         return instance;
     }
@@ -51,12 +44,18 @@ public class RNOpenTokSessionManager implements Session.SessionListener, Session
         return RNOpenTokSessionManager.initSessionManager(null);
     }
 
-    public Session connectToSession(String sessionId, String token) {
-        Session session = new Session(this.mContext, this.mApiKey, sessionId);
-        session.connect(token);
-        this.mSessions.put(sessionId, session);
+    public Subscriber getSubscriber(String streamId) {
+        return this.mSubscribers.get(streamId);
+    }
 
-        return session;
+    public Session connectToSession(String sessionId, String apiKey, String token) {
+        this.mApiKey = apiKey;
+        Session mSession = new Session.Builder(this.mContext, this.mApiKey, sessionId).build();
+        mSession.setSessionListener(this);
+        mSession.connect(token);
+        this.mSessions.put(sessionId, mSession);
+
+        return mSession;
     }
 
     public Session getSession(String sessionId) {
@@ -77,10 +76,6 @@ public class RNOpenTokSessionManager implements Session.SessionListener, Session
             session.disconnect();
         }
         this.mSessions.clear();
-    }
-
-    public void setSubscriberListener (String sessionId, RNOpenTokSubscriberView subscriber) {
-        this.mSubscribers.put(sessionId, subscriber);
     }
 
     public void removeSubscriberListener (String sessionId) {
@@ -121,10 +116,13 @@ public class RNOpenTokSessionManager implements Session.SessionListener, Session
 
     @Override
     public void onStreamReceived(Session session, Stream stream) {
-        RNOpenTokSubscriberView subscriberView = this.mSubscribers.get(session.getSessionId());
-        if( subscriberView != null) {
-            subscriberView.onStreamReceived(session, stream);
-        }
+        Subscriber mSubscriber = new Subscriber.Builder(this.mContext, stream).build();
+        mSubscriber.setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, BaseVideoRenderer.STYLE_VIDEO_FILL);
+        Session mSession = this.mSessions.get(session.getSessionId());
+        mSession.subscribe(mSubscriber);
+
+        mSubscribers.put(stream.getStreamId(), mSubscriber);
+
         WritableMap payload = Arguments.createMap();
         payload.putString("sessionId", session.getSessionId());
         payload.putString("streamId", stream.getStreamId());
@@ -136,10 +134,7 @@ public class RNOpenTokSessionManager implements Session.SessionListener, Session
 
     @Override
     public void onStreamDropped(Session session, Stream stream) {
-        RNOpenTokSubscriberView subscriberView = this.mSubscribers.get(session.getSessionId());
-        if( subscriberView != null) {
-            subscriberView.onStreamDropped(session, stream);
-        }
+        Subscriber mSubscriber = this.mSubscribers.remove(stream.getStreamId());
         WritableMap payload = Arguments.createMap();
         payload.putString("sessionId", session.getSessionId());
         payload.putString("streamId", stream.getStreamId());

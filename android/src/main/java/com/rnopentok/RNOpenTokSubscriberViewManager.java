@@ -23,4 +23,9 @@ public class RNOpenTokSubscriberViewManager extends RNOpenTokViewManager<RNOpenT
     public void setVideo(RNOpenTokSubscriberView view, Boolean video) {
         view.setVideo(video);
     }
+
+    @ReactProp(name = "streamId")
+    public void setStreamId(RNOpenTokSubscriberView view, String streamId) {
+        view.setStreamId(streamId);
+    }
 }

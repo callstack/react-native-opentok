@@ -13,6 +13,7 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     private Publisher mPublisher;
     private Boolean mAudioEnabled;
     private Boolean mVideoEnabled;
+    private String mRole;
 
     public RNOpenTokPublisherView(ThemedReactContext context) {
         super(context);
@@ -52,12 +53,13 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         }
     }
 
-    private void startPublishing() {
-        mPublisher = new Publisher(getContext());
-        mPublisher.setPublisherListener(this);
+    public void setRole(String role) {
+        mRole = role;
+    }
 
-        mPublisher.setPublishAudio(mAudioEnabled);
-        mPublisher.setPublishVideo(mVideoEnabled);
+    private void startPublishing() {
+        mPublisher = new Publisher.Builder(this).name(mRole).audioTrack(mAudioEnabled).videoTrack(mVideoEnabled).build();
+        mPublisher.setPublisherListener(this);
 
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
         session.publish(mPublisher);

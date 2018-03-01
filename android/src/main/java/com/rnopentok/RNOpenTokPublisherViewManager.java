@@ -31,5 +31,10 @@ public class RNOpenTokPublisherViewManager extends RNOpenTokViewManager<RNOpenTo
             view.cycleCamera();
         }
     }
+
+    @ReactProp(name = "role")
+    public void setRole(RNOpenTokPublisherView view, String role) {
+        view.setRole(role);
+    }
 }
 

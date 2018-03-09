@@ -1,7 +1,7 @@
 /* @flow */
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
-import { NativeModules } from 'react-native';
+import { NativeModules, View } from 'react-native';
 import type { Ref } from 'react';
 
 import NativeEventEmitter from './NativeEventEmitter';
@@ -54,6 +54,17 @@ export class Publisher extends React.Component<PublisherProps> {
   }
 }
 
+export class ScreenCapture extends React.Component<*> {
+  render() {
+    const { children, nativeID, ...rest } = this.props;
+    return (
+      <View {...rest} nativeID="RN_OPENTOK_SCREEN_CAPTURE_VIEW">
+        {children}
+      </View>
+    );
+  }
+}
+
 export default {
   events: {
     ON_SIGNAL_RECEIVED: 'onSignalReceived',
@@ -64,6 +75,7 @@ export default {
     ON_SESSION_DID_FAIL_WITH_ERROR: 'onSessionDidFailWithError',
     ON_SESSION_STREAM_CREATED: 'onSessionStreamCreated',
     ON_SESSION_STREAM_DESTROYED: 'onSessionStreamDestroyed',
+    ERROR_NO_SCREEN_CAPTURE_VIEW: 'errorNoScreenCaptureView',
     ON_ARCHIVE_STARTED_WITH_ID: 'onArchiveStartedWithId',
     ON_ARCHIVE_STOPPED_WITH_ID: 'onArchiveStoppedWithId',
     ON_SESSION_DID_BEGIN_RECONNECTING: 'onSessionDidBeginReconnecting',

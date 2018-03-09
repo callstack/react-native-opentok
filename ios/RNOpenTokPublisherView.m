@@ -1,15 +1,32 @@
 #import <Foundation/Foundation.h>
 #import "RNOpenTokPublisherView.h"
+#import "RNOpenTokScreenSharingCapturer.h"
+
+#if __has_include(<React/RCTUtils.h>)
+#import <React/RCTUtils.h>
+#elif __has_include("RCTUtils.h")
+#import "RCTUtils.h"
+#else
+#import "React/RCTUtils.h"
+#endif
 
 @interface RNOpenTokPublisherView () <OTPublisherDelegate>
 @end
 
 @implementation RNOpenTokPublisherView  {
-    OTPublisher *_publisher;
+    OTPublisher* _publisher;
+    RCTUIManager* _uiManager;
+    NSDictionary* _screenCaptureSettings;
 }
 
 @synthesize sessionId = _sessionId;
 @synthesize session = _session;
+
+- (instancetype)initWithUIManager:(RCTUIManager*)uiManager {
+    self = [super init];
+    _uiManager = uiManager;
+    return self;
+}
 
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
@@ -38,6 +55,11 @@
     if ([changedProps containsObject:@"camera"] && _camera > 0) {
         _publisher.cameraPosition = [self getCameraPosition];
     }
+    
+    if ([changedProps containsObject:@"screenCapture"]) {
+        [self stopPublishing];
+        [self startPublishing];
+    }
 }
 
 #pragma mark - Private methods
@@ -63,7 +85,31 @@
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
     _publisher.publishAudio = !_mute;
     _publisher.publishVideo = _video;
-    _publisher.cameraPosition = AVCaptureDevicePositionFront;
+    
+    if (_screenCapture) {
+        UIView* rootView = RCTPresentedViewController().view;
+        UIView* screenCaptureView = [_uiManager viewForNativeID:@"RN_OPENTOK_SCREEN_CAPTURE_VIEW"
+                                                    withRootTag:rootView.reactTag];
+        
+        if (screenCaptureView) {
+            RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc]
+                                                       initWithView:screenCaptureView
+                                                       withSettings:_screenCaptureSettings];
+            
+            [_publisher setVideoType:OTPublisherKitVideoTypeScreen];
+            [_publisher setAudioFallbackEnabled:NO];
+            [_publisher setVideoCapture:capture];
+        } else {
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"errorNoScreenCaptureView"
+             object:nil];
+            return;
+        }
+    } else {
+        _publisher.cameraPosition = AVCaptureDevicePositionFront;
+    }
+   
+    
     OTError *error = nil;
     
     [_session publish:_publisher error:&error];

@@ -19,6 +19,7 @@ RCT_EXPORT_MODULE();
              @"onPublishStart",
              @"onPublishStop",
              @"onPublishError",
+             @"errorNoScreenCaptureView",
              @"onArchiveStartedWithId",
              @"onArchiveStoppedWithId",
              @"onSessionDidBeginReconnecting",

@@ -19,7 +19,11 @@ RCT_EXPORT_MODULE();
              @"onPublishStart",
              @"onPublishStop",
              @"onPublishError",
-             @"errorNoScreenCaptureView"];
+             @"errorNoScreenCaptureView",
+             @"onArchiveStartedWithId",
+             @"onArchiveStoppedWithId",
+             @"onSessionDidBeginReconnecting",
+             @"onSessionDidReconnect"];
 }
 
 - (void)startObserving {

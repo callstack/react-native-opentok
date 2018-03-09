@@ -76,6 +76,10 @@ export default {
     ON_SESSION_STREAM_CREATED: 'onSessionStreamCreated',
     ON_SESSION_STREAM_DESTROYED: 'onSessionStreamDestroyed',
     ERROR_NO_SCREEN_CAPTURE_VIEW: 'errorNoScreenCaptureView',
+    ON_ARCHIVE_STARTED_WITH_ID: 'onArchiveStartedWithId',
+    ON_ARCHIVE_STOPPED_WITH_ID: 'onArchiveStoppedWithId',
+    ON_SESSION_DID_BEGIN_RECONNECTING: 'onSessionDidBeginReconnecting',
+    ON_SESSION_DID_RECONNECT: 'onSessionDidReconnect',
   },
 
   connect: (sessionId: string, token: string): Promise<boolean | Error> =>

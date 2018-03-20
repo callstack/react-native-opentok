@@ -10,6 +10,14 @@
 #import "React/RCTUtils.h"
 #endif
 
+#if __has_include(<React/UIView+React.h>)
+#import "React/UIView+React.h"
+#elif __has_include("UIView+React.h")
+#import <React/UIView+React.h>
+#else
+#import "React/UIView+React.h"
+#endif
+
 @interface RNOpenTokPublisherView () <OTPublisherDelegate>
 @end
 
@@ -21,6 +29,16 @@
 
 @synthesize sessionId = _sessionId;
 @synthesize session = _session;
+
+- (void)reactSetFrame:(CGRect)frame {
+    [super reactSetFrame: frame];
+
+    if (_publisher == nil) {
+        return;
+    }
+
+    [_publisher.view setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+}
 
 - (instancetype)initWithUIManager:(RCTUIManager*)uiManager {
     self = [super init];

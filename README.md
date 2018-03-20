@@ -90,6 +90,12 @@ allprojects {
 
 ## API Reference
 
+#### setApiKey(): void
+Override Api key.
+```js
+OpenTok.setApiKey();
+```
+
 #### connect(sessionId: string, token: string): Promise<boolean | Error>
 Connects to choosen session.
 ```js

@@ -82,6 +82,10 @@ export default {
     ON_SESSION_DID_RECONNECT: 'onSessionDidReconnect',
   },
 
+  setApiKey: (apiKey: string): void => {
+    NativeModules.RNOpenTok.setApiKey(apiKey);
+  },
+
   connect: (sessionId: string, token: string): Promise<boolean | Error> =>
     NativeModules.RNOpenTok.connect(sessionId, token),
 

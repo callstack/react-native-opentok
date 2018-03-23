@@ -90,10 +90,10 @@ allprojects {
 
 ## API Reference
 
-#### setApiKey(): void
+#### setApiKey(apiKey: string): void
 Override Api key.
 ```js
-OpenTok.setApiKey();
+OpenTok.setApiKey('YOUR_API_KEY');
 ```
 
 #### connect(sessionId: string, token: string): Promise<boolean | Error>

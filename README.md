@@ -9,7 +9,7 @@
 -  `react-native` >=0.49.3
 
 Supported OpenTok SDK version:
-- `OpenTok SDK` 2.12.+
+- `OpenTok SDK` 2.13.+
 
 ## Table of contents
 - [Installation](#installation)

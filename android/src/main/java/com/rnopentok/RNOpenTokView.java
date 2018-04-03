@@ -5,19 +5,37 @@ import android.widget.FrameLayout;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.opentok.android.BaseVideoRenderer;
+import com.opentok.android.VideoRenderFactory;
 
 public class RNOpenTokView extends FrameLayout {
     protected String mSessionId;
     private static ThemedReactContext reactContext = null;
+    private BaseVideoRenderer renderer;
 
     public RNOpenTokView(ThemedReactContext context) {
         super(context);
 
         reactContext = context;
+
+        renderer = VideoRenderFactory.constructRenderer(getContext());
     }
 
     public void setSessionId(String sessionId) {
         mSessionId = sessionId;
+    }
+
+    protected BaseVideoRenderer getVideoRenderer() {
+        return renderer;
+    }
+
+    protected void attachVideoView() {
+        addView(renderer.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        requestLayout();
+    }
+
+    protected void detachVideoView() {
+        removeView(renderer.getView());
     }
 
     protected void sendEvent(Events event, WritableMap payload) {

@@ -3,7 +3,6 @@ package com.rnopentok;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
-import com.opentok.android.BaseVideoRenderer;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Session;
 import com.opentok.android.Stream;
@@ -48,27 +47,22 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
     }
 
     private void startSubscribing(Stream stream) {
-        mSubscriber = new Subscriber(getContext(), stream);
+        Subscriber.Builder builder = new Subscriber.Builder(getContext(), stream);
+        builder.renderer(getVideoRenderer());
+
+        mSubscriber = builder.build();
         mSubscriber.setSubscriberListener(this);
         mSubscriber.setSubscribeToAudio(mAudioEnabled);
         mSubscriber.setSubscribeToVideo(mVideoEnabled);
 
-        mSubscriber.getRenderer().setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE,
-                BaseVideoRenderer.STYLE_VIDEO_FILL);
-
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
         session.subscribe(mSubscriber);
 
-        attachSubscriberView();
-    }
-
-    private void attachSubscriberView() {
-        addView(mSubscriber.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        requestLayout();
+        attachVideoView();
     }
 
     private void cleanUpSubscriber() {
-        removeView(mSubscriber.getView());
+        detachVideoView();
         mSubscriber = null;
     }
 
@@ -98,5 +92,4 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
 
         sendEvent(Events.EVENT_SUBSCRIBE_ERROR, payload);
     }
-
 }

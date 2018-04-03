@@ -15,4 +15,9 @@
  */
 @property (nonatomic, assign) BOOL video;
 
+/**
+ * Define whether the video should scale to fill the frame or fit into it.
+ */
+@property (nonatomic, assign) NSString *videoScale;
+
 @end

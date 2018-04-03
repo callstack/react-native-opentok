@@ -44,13 +44,17 @@
     if (_subscriber == nil) {
         return;
     }
-    
+
     if ([changedProps containsObject:@"mute"]) {
         _subscriber.subscribeToAudio = !_mute;
     }
-    
+
     if ([changedProps containsObject:@"video"]) {
         _subscriber.subscribeToVideo = _video;
+    }
+
+    if ([changedProps containsObject:@"videoScale"]) {
+        [self updateVideoScale];
     }
 }
 
@@ -71,24 +75,35 @@
     _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
     _subscriber.subscribeToAudio = !_mute;
     _subscriber.subscribeToVideo = _video;
-    
+    [self updateVideoScale];
+
     OTError *error = nil;
     [_session subscribe:_subscriber error:&error];
-    
+
     if (error) {
         [self subscriber:_subscriber didFailWithError:error];
         return;
     }
-    
+
     [self attachSubscriberView];
 }
 
 - (void)unsubscribe {
     OTError *error = nil;
     [_session unsubscribe:_subscriber error:&error];
-    
+
     if (error) {
         NSLog(@"%@", error);
+    }
+}
+
+- (void)updateVideoScale {
+    if ([_videoScale isEqualToString:@"fit"]) {
+        _subscriber.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
+    } else if ([_videoScale isEqualToString:@"fill"]) {
+        _subscriber.viewScaleBehavior = OTVideoViewScaleBehaviorFill;
+    } else {
+        NSLog(@"Invalid videoScale value: %@", _videoScale);
     }
 }
 

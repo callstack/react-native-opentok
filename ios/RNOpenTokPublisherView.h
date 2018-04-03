@@ -20,14 +20,22 @@
 @property (nonatomic, assign) BOOL mute;
 
 @property (nonatomic, assign) NSInteger camera;
+
 /**
  * Define props which tells the Publisher if should publish a video as well.
  */
 @property (nonatomic, assign) BOOL video;
+
+/**
+ * Define whether the video should scale to fill the frame or fit into it.
+ */
+@property (nonatomic, assign) NSString *videoScale;
+
 /**
  * Define whether to capture screen or camera.
  */
 @property (nonatomic, assign) BOOL screenCapture;
+
 /**
  * Define settings for screen capture.
  */

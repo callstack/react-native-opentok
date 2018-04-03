@@ -22,6 +22,8 @@ RCT_EXPORT_VIEW_PROPERTY(mute, BOOL)
 
 RCT_EXPORT_VIEW_PROPERTY(video, BOOL)
 
+RCT_EXPORT_VIEW_PROPERTY(videoScale, NSString)
+
 - (UIView *)view {
     return [RNOpenTokSubscriberView new];
 }

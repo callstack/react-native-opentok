@@ -9,4 +9,9 @@ abstract class RNOpenTokViewManager<T extends RNOpenTokView> extends SimpleViewM
     public void setSessionId(T view, String sessionId) {
         view.setSessionId(sessionId);
     }
+
+    @ReactProp(name = "videoScale")
+    public void setVideoScale(T view, String videoScale) {
+        view.setVideoScale(RNOpenTokView.VideoScale.valueOf(videoScale.toUpperCase()));
+    }
 }

@@ -42,6 +42,11 @@ public class RNOpenTokView extends FrameLayout {
     public void setZOrderMediaOverlay(boolean value) {
         if (renderer.getView() instanceof SurfaceView) {
             ((SurfaceView)renderer.getView()).setZOrderMediaOverlay(value);
+            int index = indexOfChild(renderer.getView());
+            if (index != -1) {
+                removeViewAt(index);
+                attachVideoView();
+            }
         }
     }
 

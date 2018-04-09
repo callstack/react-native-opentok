@@ -21,6 +21,7 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     private Boolean mAudioEnabled;
     private Boolean mVideoEnabled;
     private Boolean mScreenCapture;
+    private CameraDirection mCameraDirection;
     private ReadableMap mScreenCaptureSettings;
 
     public enum CameraDirection {
@@ -67,8 +68,15 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
     }
 
     public void setCameraDirection(CameraDirection cameraDirection) {
-        if (mPublisher != null && mPublisher.getCapturer() instanceof BaseVideoCapturer.CaptureSwitch) {
-            ((BaseVideoCapturer.CaptureSwitch)mPublisher.getCapturer()).swapCamera(getCameraIndex(cameraDirection));
+        mCameraDirection = cameraDirection;
+        if (mPublisher != null) {
+            updateCameraDirection();
+        }
+    }
+
+    private void updateCameraDirection() {
+        if (mPublisher.getCapturer() instanceof BaseVideoCapturer.CaptureSwitch) {
+            ((BaseVideoCapturer.CaptureSwitch)mPublisher.getCapturer()).swapCamera(getCameraIndex(mCameraDirection));
         }
     }
 
@@ -131,6 +139,10 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         if (mScreenCapture) {
             mPublisher.setPublisherVideoType(PublisherKit.PublisherKitVideoType.PublisherKitVideoTypeScreen);
             mPublisher.setAudioFallbackEnabled(false);
+        }
+
+        if (mCameraDirection != null) {
+            updateCameraDirection();
         }
 
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);

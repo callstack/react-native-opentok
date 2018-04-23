@@ -130,8 +130,6 @@
             dispatch_source_cancel(_timer);
         }
     });
-    
-    return 0;
 }
 
 - (BOOL)isCaptureStarted

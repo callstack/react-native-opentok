@@ -68,8 +68,11 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
     }
 
     private void cleanUpSubscriber() {
-        removeView(mSubscriber.getView());
-        mSubscriber = null;
+        if ( mSubscriber != null ) {
+            removeView(mSubscriber.getView());     
+            mSubscriber.destroy();
+            mSubscriber = null;
+        }
     }
 
     public void onStreamReceived(Session session, Stream stream) {
@@ -89,14 +92,18 @@ public class RNOpenTokSubscriberView extends RNOpenTokView implements Subscriber
     public void onConnected(SubscriberKit subscriberKit) {}
 
     @Override
-    public void onDisconnected(SubscriberKit subscriberKit) {}
+    public void onDisconnected(SubscriberKit subscriberKit) {
+        cleanUpSubscriber();
+    }
 
     @Override
     public void onError(SubscriberKit subscriberKit, OpentokError opentokError) {
         WritableMap payload = Arguments.createMap();
         payload.putString("connectionId", opentokError.toString());
-
+        
         sendEvent(Events.EVENT_SUBSCRIBE_ERROR, payload);
+        
+        cleanUpSubscriber();
     }
 
 }

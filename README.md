@@ -88,6 +88,12 @@ allprojects {
 
 ## API Reference
 
+#### setApiKey(apiKey: string): void
+Override Api key.
+```js
+OpenTok.setApiKey('YOUR_API_KEY');
+```
+
 #### connect(sessionId: string, token: string): Promise<boolean | Error>
 Connects to choosen session.
 ```js

@@ -133,7 +133,7 @@ const connectToSession = async () => {
 }
 ```
 
-#### events 
+#### events
 Constants for events thrown in app. Available values:
 - *ON_SIGNAL_RECEIVED*
 - *ON_SESSION_CONNECTION_CREATED*
@@ -173,25 +173,26 @@ Available props:
 - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
 - `mute?`: Boolean - This props tells Publisher if should publish audio as well or not. Optional. Defaults to false.
 - `video?`: Boolean - This props tells Publisher if should publish video as well or not. Optional. Defaults to true.
+- `cameraDirection?: string` - Whether the camera should face `front` (towards screen) or `back` (away from screen).
 - `screenCapture?: boolean` - Stream screen if `true` instead of camera.
 - `screenCaptureSettings?: { fps?: number }` - Screen sharing settings
   - `fps?: number` - Specify frames per second for a stream (default: `15`)
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 Available methods:
-- `switchCamera()`: switches to the next camera. Goes back to first one when out of cameras.
+- `switchCamera()`: switches to the next camera. Goes back to first one when out of cameras. Calling this will overwrite `cameraDirection`.
 
 ```js
 import { Publisher } from 'react-native-opentok'
 <Publisher
   style={{ height: 100, width: 200 }}
-  sessionId={sessionId} 
-  onPublishStart={() => { console.log('started')}} 
+  sessionId={sessionId}
+  onPublishStart={() => { console.log('started')}}
 />
 ```
 
 #### Subscriber
-Component used for subscribing to the stream. 
+Component used for subscribing to the stream.
 
 Available props:
 - `sessionId: string` - ID of the session (you need to connect it before using this component).
@@ -207,8 +208,8 @@ import { Subscriber } from 'react-native-opentok'
 
 <Subscriber
   style={{ height: 100, width: 200 }}
-  sessionId={sessionId} 
-  onSubscribeStart={() => { console.log('started')}} 
+  sessionId={sessionId}
+  onSubscribeStart={() => { console.log('started')}}
 />
 ```
 

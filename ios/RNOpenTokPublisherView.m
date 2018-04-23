@@ -61,19 +61,23 @@
     if (_publisher == nil) {
         return;
     }
-    
+
     if ([changedProps containsObject:@"mute"]) {
         _publisher.publishAudio = !_mute;
     }
-    
+
     if ([changedProps containsObject:@"video"]) {
         _publisher.publishVideo = _video;
     }
-    
+
     if ([changedProps containsObject:@"camera"] && _camera > 0) {
-        _publisher.cameraPosition = [self getCameraPosition];
+        [self updateCameraToNext];
     }
-    
+
+    if ([changedProps containsObject:@"cameraDirection"]) {
+        [self updateCameraToDirection];
+    }
+
     if ([changedProps containsObject:@"screenCapture"]) {
         [self stopPublishing];
         [self startPublishing];
@@ -93,27 +97,37 @@
     }
 }
 
-- (NSInteger)getCameraPosition {
-    return _publisher.cameraPosition == AVCaptureDevicePositionBack
+- (void)updateCameraToNext {
+    _publisher.cameraPosition = _publisher.cameraPosition == AVCaptureDevicePositionBack
         ? AVCaptureDevicePositionFront
         : AVCaptureDevicePositionBack;
+}
+
+- (void)updateCameraToDirection {
+    if ([_cameraDirection isEqualToString:@"front"]) {
+        _publisher.cameraPosition = AVCaptureDevicePositionFront;
+    } else if ([_cameraDirection isEqualToString:@"back"]) {
+        _publisher.cameraPosition = AVCaptureDevicePositionBack;
+    } else {
+        NSLog(@"Invalid cameraDirection value: %@", _cameraDirection);
+    }
 }
 
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
     _publisher.publishAudio = !_mute;
     _publisher.publishVideo = _video;
-    
+
     if (_screenCapture) {
         UIView* rootView = RCTPresentedViewController().view;
         UIView* screenCaptureView = [_uiManager viewForNativeID:@"RN_OPENTOK_SCREEN_CAPTURE_VIEW"
                                                     withRootTag:rootView.reactTag];
-        
+
         if (screenCaptureView) {
             RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc]
                                                        initWithView:screenCaptureView
                                                        withSettings:_screenCaptureSettings];
-            
+
             [_publisher setVideoType:OTPublisherKitVideoTypeScreen];
             [_publisher setAudioFallbackEnabled:NO];
             [_publisher setVideoCapture:capture];
@@ -126,25 +140,25 @@
     } else {
         _publisher.cameraPosition = AVCaptureDevicePositionFront;
     }
-   
-    
+
+
     OTError *error = nil;
-    
+
     [_session publish:_publisher error:&error];
-    
+
     if (error) {
         [self publisher:_publisher didFailWithError:error];
         return;
     }
-    
+
     [self attachPublisherView];
 }
 
 - (void)stopPublishing {
     OTError *error = nil;
-    
+
     [_session unpublish:_publisher error:&error];
-    
+
     if (error) {
         NSLog(@"%@", error);
     }

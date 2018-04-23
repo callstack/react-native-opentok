@@ -74,6 +74,9 @@ end
 allprojects {
     repositories {
         ...
+        // -------------------------------------------------
+        // Add this below the existing maven property above
+        // -------------------------------------------------
         maven {
             url "http://tokbox.bintray.com/maven"
         }

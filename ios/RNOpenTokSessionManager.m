@@ -23,6 +23,10 @@
     return [self initSessionManager];
 }
 
+- (void)setApiKey:(NSString*)apiKey {
+    _apiKey = apiKey;
+}
+
 - (id)connectToSession:(NSString*)sessionId withToken:(NSString*)token {
     OTSession *session = [[OTSession alloc] initWithApiKey:_apiKey sessionId:sessionId delegate:nil];
     NSError *error;

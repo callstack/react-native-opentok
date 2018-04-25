@@ -75,7 +75,11 @@
     }
 
     if ([changedProps containsObject:@"camera"] && _camera > 0) {
-        _publisher.cameraPosition = [self getCameraPosition];
+        [self updateCameraToNext];
+    }
+
+    if ([changedProps containsObject:@"cameraDirection"]) {
+        [self updateCameraToDirection];
     }
 
     if ([changedProps containsObject:@"screenCapture"]) {
@@ -97,16 +101,27 @@
     }
 }
 
-- (NSInteger)getCameraPosition {
-    return _publisher.cameraPosition == AVCaptureDevicePositionBack
+- (void)updateCameraToNext {
+    _publisher.cameraPosition = _publisher.cameraPosition == AVCaptureDevicePositionBack
         ? AVCaptureDevicePositionFront
         : AVCaptureDevicePositionBack;
+}
+
+- (void)updateCameraToDirection {
+    if ([_cameraDirection isEqualToString:@"front"]) {
+        _publisher.cameraPosition = AVCaptureDevicePositionFront;
+    } else if ([_cameraDirection isEqualToString:@"back"]) {
+        _publisher.cameraPosition = AVCaptureDevicePositionBack;
+    } else {
+        NSLog(@"Invalid cameraDirection value: %@", _cameraDirection);
+    }
 }
 
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
     _publisher.publishAudio = !_mute;
     _publisher.publishVideo = _video;
+
     [self updateVideoScale];
 
     if (_screenCapture) {

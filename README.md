@@ -173,6 +173,7 @@ Available props:
 - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
 - `mute?`: Boolean - This props tells Publisher if should publish audio as well or not. Optional. Defaults to false.
 - `video?`: Boolean - This props tells Publisher if should publish video as well or not. Optional. Defaults to true.
+- `zOrderMediaOverlay?: boolean` - On android, calls SurfaceView.setZOrderMediaOverlay. Optional. Defaults to true.
 - `cameraDirection?: string` - Whether the camera should face `front` (towards screen) or `back` (away from screen).
 - `screenCapture?: boolean` - Stream screen if `true` instead of camera.
 - `screenCaptureSettings?: { fps?: number }` - Screen sharing settings
@@ -201,6 +202,7 @@ Available props:
 - `onSubscribeError?: () => void` - Invoked when subscribing error occurs. Optional.
 - `mute?`: Boolean - This props tells Subscriber if should subscribe audio as well or not. Optional. Defaults to false.
 - `video?`: Boolean - This props tells Subscriber if should subscribe video as well or not. Optional. Defaults to true.
+- `zOrderMediaOverlay?: boolean` - On android, calls SurfaceView.setZOrderMediaOverlay. Optional. Defaults to true.
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 ```js

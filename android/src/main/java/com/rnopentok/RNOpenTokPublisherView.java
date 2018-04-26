@@ -119,19 +119,18 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
 
     private void startPublishing() {
         Publisher.Builder builder = new Publisher.Builder(getContext());
+        builder.renderer(getVideoRenderer());
+
         if (mScreenCapture) {
             View captureView = ReactFindViewUtil.findView(this.getRootView(), "RN_OPENTOK_SCREEN_CAPTURE_VIEW");
             if (captureView == null) {
                 sendEvent(Events.ERROR_NO_SCREEN_CAPTURE_VIEW, null);
                 return;
             }
-            mPublisher = builder.capturer(
-                    new RNOpenTokScreenSharingCapturer(captureView, mScreenCaptureSettings)
-            ).build();
-        } else {
-            mPublisher = builder.build();
+            builder.capturer(new RNOpenTokScreenSharingCapturer(captureView, mScreenCaptureSettings));
         }
 
+        mPublisher = builder.build();
         mPublisher.setPublisherListener(this);
         mPublisher.setPublishAudio(mAudioEnabled);
         mPublisher.setPublishVideo(mVideoEnabled);
@@ -148,17 +147,11 @@ public class RNOpenTokPublisherView extends RNOpenTokView implements PublisherKi
         Session session = RNOpenTokSessionManager.getSessionManager().getSession(mSessionId);
         session.publish(mPublisher);
 
-        attachPublisherView();
-    }
-
-    private void attachPublisherView() {
-        addView(mPublisher.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        requestLayout();
+        attachVideoView();
     }
 
     private void cleanUpPublisher() {
-        removeView(mPublisher.getView());
-        mPublisher.destroy();
+        detachVideoView();
         mPublisher = null;
     }
 

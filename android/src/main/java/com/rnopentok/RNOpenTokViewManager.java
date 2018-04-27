@@ -14,4 +14,9 @@ abstract class RNOpenTokViewManager<T extends RNOpenTokView> extends SimpleViewM
     public void setVideoScale(T view, String videoScale) {
         view.setVideoScale(RNOpenTokView.VideoScale.valueOf(videoScale.toUpperCase()));
     }
+
+    @ReactProp(name = "zOrderMediaOverlay")
+    public void setZOrderMediaOverlay(T view, boolean value) {
+        view.setZOrderMediaOverlay(value);
+    }
 }

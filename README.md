@@ -174,6 +174,7 @@ Available props:
 - `mute?: boolean` - This props tells Publisher if should publish audio as well or not. Optional. Defaults to false.
 - `video?: boolean` - This props tells Publisher if should publish video as well or not. Optional. Defaults to true.
 - `videoScale?: string` - Whether the video should scale to `fill` the frame or `fit` into the frame.
+- `zOrderMediaOverlay?: boolean` - On android, calls SurfaceView.setZOrderMediaOverlay. Optional. Defaults to true.
 - `cameraDirection?: string` - Whether the camera should face `front` (towards screen) or `back` (away from screen).
 - `screenCapture?: boolean` - Stream screen if `true` instead of camera.
 - `screenCaptureSettings?: { fps?: number }` - Screen sharing settings.
@@ -203,6 +204,7 @@ Available props:
 - `mute?: boolean` - This props tells Subscriber if should subscribe audio as well or not. Optional. Defaults to false.
 - `video?: boolean` - This props tells Subscriber if should subscribe video as well or not. Optional. Defaults to true.
 - `videoScale?: string` - Whether the video should scale to `fill` the frame or `fit` into the frame.
+- `zOrderMediaOverlay?: boolean` - On android, calls SurfaceView.setZOrderMediaOverlay. Optional. Defaults to true.
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 ```js

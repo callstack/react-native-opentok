@@ -1,5 +1,6 @@
 package com.rnopentok;
 
+import android.view.SurfaceView;
 import android.widget.FrameLayout;
 
 import com.facebook.react.bridge.WritableMap;
@@ -53,6 +54,17 @@ public class RNOpenTokView extends FrameLayout {
         }
 
         renderer.setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, value);
+    }
+
+    public void setZOrderMediaOverlay(boolean value) {
+        if (renderer.getView() instanceof SurfaceView) {
+            ((SurfaceView)renderer.getView()).setZOrderMediaOverlay(value);
+            int index = indexOfChild(renderer.getView());
+            if (index != -1) {
+                removeViewAt(index);
+                attachVideoView();
+            }
+        }
     }
 
     protected void sendEvent(Events event, WritableMap payload) {

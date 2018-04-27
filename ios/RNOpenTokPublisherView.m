@@ -70,6 +70,10 @@
         _publisher.publishVideo = _video;
     }
 
+    if ([changedProps containsObject:@"videoScale"]) {
+        [self updateVideoScale];
+    }
+
     if ([changedProps containsObject:@"camera"] && _camera > 0) {
         [self updateCameraToNext];
     }
@@ -118,6 +122,8 @@
     _publisher.publishAudio = !_mute;
     _publisher.publishVideo = _video;
 
+    [self updateVideoScale];
+
     if (_screenCapture) {
         UIView* rootView = RCTPresentedViewController().view;
         UIView* screenCaptureView = [_uiManager viewForNativeID:@"RN_OPENTOK_SCREEN_CAPTURE_VIEW"
@@ -163,6 +169,16 @@
         NSLog(@"%@", error);
     }
     [self cleanupPublisher];
+}
+
+- (void)updateVideoScale {
+    if ([_videoScale isEqualToString:@"fit"]) {
+        _publisher.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
+    } else if ([_videoScale isEqualToString:@"fill"]) {
+        _publisher.viewScaleBehavior = OTVideoViewScaleBehaviorFill;
+    } else {
+        NSLog(@"Invalid videoScale value: %@", _videoScale);
+    }
 }
 
 - (void)attachPublisherView {

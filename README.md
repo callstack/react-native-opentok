@@ -171,13 +171,14 @@ Available props:
 - `onPublishStart?: Function` - Invoked when publishing starts. Optional.
 - `onPublishStop?: () => void` - Invoked when publishing stops. Optional.
 - `onPublishError?: () => void` - Invoked when publish error occurs. Optional.
-- `mute?`: Boolean - This props tells Publisher if should publish audio as well or not. Optional. Defaults to false.
-- `video?`: Boolean - This props tells Publisher if should publish video as well or not. Optional. Defaults to true.
+- `mute?: boolean` - This props tells Publisher if should publish audio as well or not. Optional. Defaults to false.
+- `video?: boolean` - This props tells Publisher if should publish video as well or not. Optional. Defaults to true.
+- `videoScale?: string` - Whether the video should scale to `fill` the frame or `fit` into the frame.
 - `zOrderMediaOverlay?: boolean` - On android, calls SurfaceView.setZOrderMediaOverlay. Optional. Defaults to true.
 - `cameraDirection?: string` - Whether the camera should face `front` (towards screen) or `back` (away from screen).
 - `screenCapture?: boolean` - Stream screen if `true` instead of camera.
-- `screenCaptureSettings?: { fps?: number }` - Screen sharing settings
-  - `fps?: number` - Specify frames per second for a stream (default: `15`)
+- `screenCaptureSettings?: { fps?: number }` - Screen sharing settings.
+  - `fps?: number` - Specify frames per second for a stream (default: `15`).
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 
 Available methods:
@@ -200,8 +201,9 @@ Available props:
 - `onSubscribeStart?: Function` - Invoked when stream starts. Optional.
 - `onSubscribeStop?: () => void` - Invoked when stream stops. Optional.
 - `onSubscribeError?: () => void` - Invoked when subscribing error occurs. Optional.
-- `mute?`: Boolean - This props tells Subscriber if should subscribe audio as well or not. Optional. Defaults to false.
-- `video?`: Boolean - This props tells Subscriber if should subscribe video as well or not. Optional. Defaults to true.
+- `mute?: boolean` - This props tells Subscriber if should subscribe audio as well or not. Optional. Defaults to false.
+- `video?: boolean` - This props tells Subscriber if should subscribe video as well or not. Optional. Defaults to true.
+- `videoScale?: string` - Whether the video should scale to `fill` the frame or `fit` into the frame.
 - `zOrderMediaOverlay?: boolean` - On android, calls SurfaceView.setZOrderMediaOverlay. Optional. Defaults to true.
 - every [View property](https://facebook.github.io/react-native/docs/viewproptypes.html#props).
 

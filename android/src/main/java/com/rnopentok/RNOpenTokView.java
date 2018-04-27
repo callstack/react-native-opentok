@@ -14,6 +14,11 @@ public class RNOpenTokView extends FrameLayout {
     private static ThemedReactContext reactContext = null;
     private BaseVideoRenderer renderer;
 
+    public enum VideoScale {
+        FILL,
+        FIT,
+    };
+
     public RNOpenTokView(ThemedReactContext context) {
         super(context);
 
@@ -37,6 +42,18 @@ public class RNOpenTokView extends FrameLayout {
 
     protected void detachVideoView() {
         removeView(renderer.getView());
+    }
+
+    public void setVideoScale(VideoScale scaleType) {
+        String value;
+
+        switch (scaleType) {
+            case FILL:  value = BaseVideoRenderer.STYLE_VIDEO_FILL; break;
+            case FIT:   value = BaseVideoRenderer.STYLE_VIDEO_FIT;  break;
+            default: throw new IllegalArgumentException("Invalid VideoScale value");
+        }
+
+        renderer.setStyle(BaseVideoRenderer.STYLE_VIDEO_SCALE, value);
     }
 
     public void setZOrderMediaOverlay(boolean value) {

@@ -22,7 +22,8 @@ export type OpenTokEvent =
   | 'onSessionDidDisconnect'
   | 'onSessionDidFailWithError'
   | 'onSessionStreamCreated'
-  | 'onSessionStreamDestroyed';
+  | 'onSessionStreamDestroyed'
+  | 'errorNoScreenCaptureView';
 
 type OpenTokViewProps = {|
   ...$Exact<ViewProps>,
@@ -46,6 +47,10 @@ export type PublisherProps = {|
   onPublishStart?: () => void,
   onPublishStop?: () => void,
   onPublishError?: () => void,
+  screenCapture?: boolean,
+  screenCaptureSettings?: {
+    fps?: number,
+  },
 |};
 
 export type SubscriberProps = {|

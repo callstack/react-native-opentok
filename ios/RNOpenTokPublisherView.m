@@ -1,15 +1,50 @@
 #import <Foundation/Foundation.h>
 #import "RNOpenTokPublisherView.h"
+#import "RNOpenTokScreenSharingCapturer.h"
+
+#if __has_include(<React/RCTUtils.h>)
+#import <React/RCTUtils.h>
+#elif __has_include("RCTUtils.h")
+#import "RCTUtils.h"
+#else
+#import "React/RCTUtils.h"
+#endif
+
+#if __has_include(<React/UIView+React.h>)
+#import "React/UIView+React.h"
+#elif __has_include("UIView+React.h")
+#import <React/UIView+React.h>
+#else
+#import "React/UIView+React.h"
+#endif
 
 @interface RNOpenTokPublisherView () <OTPublisherDelegate>
 @end
 
 @implementation RNOpenTokPublisherView  {
-    OTPublisher *_publisher;
+    OTPublisher* _publisher;
+    RCTUIManager* _uiManager;
+    NSDictionary* _screenCaptureSettings;
 }
 
 @synthesize sessionId = _sessionId;
 @synthesize session = _session;
+
+- (void)reactSetFrame:(CGRect)frame {
+    [super reactSetFrame: frame];
+
+    if (_publisher == nil) {
+        return;
+    }
+
+    [_publisher.view setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+}
+
+- (instancetype)initWithUIManager:(RCTUIManager*)uiManager {
+    self = [super init];
+    _uiManager = uiManager;
+    return self;
+}
 
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
@@ -26,17 +61,30 @@
     if (_publisher == nil) {
         return;
     }
-    
+
     if ([changedProps containsObject:@"mute"]) {
         _publisher.publishAudio = !_mute;
     }
-    
+
     if ([changedProps containsObject:@"video"]) {
         _publisher.publishVideo = _video;
     }
-    
+
+    if ([changedProps containsObject:@"videoScale"]) {
+        [self updateVideoScale];
+    }
+
     if ([changedProps containsObject:@"camera"] && _camera > 0) {
-        _publisher.cameraPosition = [self getCameraPosition];
+        [self updateCameraToNext];
+    }
+
+    if ([changedProps containsObject:@"cameraDirection"]) {
+        [self updateCameraToDirection];
+    }
+
+    if ([changedProps containsObject:@"screenCapture"]) {
+        [self stopPublishing];
+        [self startPublishing];
     }
 }
 
@@ -53,38 +101,84 @@
     }
 }
 
-- (NSInteger)getCameraPosition {
-    return _publisher.cameraPosition == AVCaptureDevicePositionBack
+- (void)updateCameraToNext {
+    _publisher.cameraPosition = _publisher.cameraPosition == AVCaptureDevicePositionBack
         ? AVCaptureDevicePositionFront
         : AVCaptureDevicePositionBack;
+}
+
+- (void)updateCameraToDirection {
+    if ([_cameraDirection isEqualToString:@"front"]) {
+        _publisher.cameraPosition = AVCaptureDevicePositionFront;
+    } else if ([_cameraDirection isEqualToString:@"back"]) {
+        _publisher.cameraPosition = AVCaptureDevicePositionBack;
+    } else {
+        NSLog(@"Invalid cameraDirection value: %@", _cameraDirection);
+    }
 }
 
 - (void)startPublishing {
     _publisher = [[OTPublisher alloc] initWithDelegate:self];
     _publisher.publishAudio = !_mute;
     _publisher.publishVideo = _video;
-    _publisher.cameraPosition = AVCaptureDevicePositionFront;
+
+    [self updateVideoScale];
+
+    if (_screenCapture) {
+        UIView* rootView = RCTPresentedViewController().view;
+        UIView* screenCaptureView = [_uiManager viewForNativeID:@"RN_OPENTOK_SCREEN_CAPTURE_VIEW"
+                                                    withRootTag:rootView.reactTag];
+
+        if (screenCaptureView) {
+            RNOpenTokScreenSharingCapturer* capture = [[RNOpenTokScreenSharingCapturer alloc]
+                                                       initWithView:screenCaptureView
+                                                       withSettings:_screenCaptureSettings];
+
+            [_publisher setVideoType:OTPublisherKitVideoTypeScreen];
+            [_publisher setAudioFallbackEnabled:NO];
+            [_publisher setVideoCapture:capture];
+        } else {
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"errorNoScreenCaptureView"
+             object:nil];
+            return;
+        }
+    } else {
+        _publisher.cameraPosition = AVCaptureDevicePositionFront;
+    }
+
+
     OTError *error = nil;
-    
+
     [_session publish:_publisher error:&error];
-    
+
     if (error) {
         [self publisher:_publisher didFailWithError:error];
         return;
     }
-    
+
     [self attachPublisherView];
 }
 
 - (void)stopPublishing {
     OTError *error = nil;
-    
+
     [_session unpublish:_publisher error:&error];
-    
+
     if (error) {
         NSLog(@"%@", error);
     }
     [self cleanupPublisher];
+}
+
+- (void)updateVideoScale {
+    if ([_videoScale isEqualToString:@"fit"]) {
+        _publisher.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
+    } else if ([_videoScale isEqualToString:@"fill"]) {
+        _publisher.viewScaleBehavior = OTVideoViewScaleBehaviorFill;
+    } else {
+        NSLog(@"Invalid videoScale value: %@", _videoScale);
+    }
 }
 
 - (void)attachPublisherView {

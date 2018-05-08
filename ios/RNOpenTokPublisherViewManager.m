@@ -20,12 +20,20 @@ RCT_EXPORT_VIEW_PROPERTY(sessionId, NSString)
 
 RCT_EXPORT_VIEW_PROPERTY(camera, NSInteger)
 
+RCT_EXPORT_VIEW_PROPERTY(cameraDirection, NSString)
+
 RCT_EXPORT_VIEW_PROPERTY(mute, BOOL)
 
 RCT_EXPORT_VIEW_PROPERTY(video, BOOL)
 
+RCT_EXPORT_VIEW_PROPERTY(videoScale, NSString)
+
+RCT_EXPORT_VIEW_PROPERTY(screenCapture, BOOL)
+
+RCT_EXPORT_VIEW_PROPERTY(screenCaptureSettings, NSDictionary)
+
 - (UIView *)view {
-    return [RNOpenTokPublisherView new];
+    return [[RNOpenTokPublisherView alloc] initWithUIManager:_bridge.uiManager];
 }
 
 @end

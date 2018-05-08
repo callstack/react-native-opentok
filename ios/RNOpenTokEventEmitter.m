@@ -18,7 +18,12 @@ RCT_EXPORT_MODULE();
              @"onSubscribeError",
              @"onPublishStart",
              @"onPublishStop",
-             @"onPublishError"];
+             @"onPublishError",
+             @"errorNoScreenCaptureView",
+             @"onArchiveStartedWithId",
+             @"onArchiveStoppedWithId",
+             @"onSessionDidBeginReconnecting",
+             @"onSessionDidReconnect"];
 }
 
 - (void)startObserving {

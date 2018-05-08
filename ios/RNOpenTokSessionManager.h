@@ -7,6 +7,7 @@
 
 + (id)sessionManager;
 
+- (void)setApiKey:(NSString*)apiKey;
 - (id)connectToSession:(NSString*)sessionId withToken:(NSString*)token;
 - (id)getSession:(NSString*)sessionId;
 - (void)disconnectSession:(NSString*)sessionId;

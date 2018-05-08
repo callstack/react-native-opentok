@@ -3,6 +3,7 @@ import React from 'react';
 import { requireNativeComponent } from 'react-native';
 
 import NativeEventEmitter from '../NativeEventEmitter';
+import RNOpenTok from '../';
 
 import type { PublisherViewProps } from '../types';
 
@@ -26,6 +27,8 @@ export default class PublisherView extends React.Component<
     sessionId: '',
     mute: false,
     video: true,
+    screenCapture: false,
+    screenCaptureSettings: {},
   };
 
   state = {
@@ -34,10 +37,16 @@ export default class PublisherView extends React.Component<
 
   componentWillMount() {
     publishListeners.forEach(listener => this._addListener(listener));
+    RNOpenTok.on(RNOpenTok.events.ERROR_NO_SCREEN_CAPTURE_VIEW, () => {
+      throw new Error(
+        'Could not find screen capture view. Make sure you are using <ScreenCapture> component.'
+      );
+    });
   }
 
   componentWillUnmount() {
     publishListeners.forEach(listener => this._removeListener(listener));
+    RNOpenTok.removeListener(RNOpenTok.events.ERROR_NO_SCREEN_CAPTURE_VIEW);
   }
 
   _addListener = (name: string) => {

@@ -1,7 +1,10 @@
 package com.rnopentok;
 
+import android.support.annotation.Nullable;
+
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.bridge.ReadableMap;
 
 
 public class RNOpenTokPublisherViewManager extends RNOpenTokViewManager<RNOpenTokPublisherView> {
@@ -30,6 +33,21 @@ public class RNOpenTokPublisherViewManager extends RNOpenTokViewManager<RNOpenTo
         if (camera != 0) {
             view.cycleCamera();
         }
+    }
+
+    @ReactProp(name = "cameraDirection")
+    public void setCameraDirection(RNOpenTokPublisherView view, String cameraDirection) {
+        view.setCameraDirection(RNOpenTokPublisherView.CameraDirection.valueOf(cameraDirection.toUpperCase()));
+    }
+
+    @ReactProp(name = "screenCapture")
+    public void setScreenCapture(RNOpenTokPublisherView view, Boolean screenCapture) {
+        view.setScreenCapture(screenCapture);
+    }
+
+    @ReactProp(name = "screenCaptureSettings")
+    public void setScreenCaptureSettings(RNOpenTokPublisherView view, @Nullable ReadableMap screenCaptureSettings) {
+        view.setScreenCaptureSettings(screenCaptureSettings);
     }
 }
 

@@ -16,7 +16,7 @@ import com.opentok.android.Stream;
 import java.util.HashMap;
 
 
-public class RNOpenTokSessionManager implements Session.SessionListener, Session.SignalListener{
+public class RNOpenTokSessionManager implements Session.SessionListener, Session.SignalListener, Session.ReconnectionListener, Session.ArchiveListener{
     private static RNOpenTokSessionManager instance = null;
     private ReactApplicationContext mContext;
     private String mApiKey;
@@ -49,6 +49,10 @@ public class RNOpenTokSessionManager implements Session.SessionListener, Session
 
     static RNOpenTokSessionManager getSessionManager() {
         return RNOpenTokSessionManager.initSessionManager(null);
+    }
+
+    public void setApiKey(String apiKey) {
+        this.mApiKey = apiKey;
     }
 
     public Session connectToSession(String sessionId, String token) {
@@ -170,5 +174,44 @@ public class RNOpenTokSessionManager implements Session.SessionListener, Session
         mContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(Events.EVENT_ON_SIGNAL_RECEIVED.toString(), payload);
+    }
+
+    @Override
+    public void onReconnected(Session session) {
+        WritableMap payload = Arguments.createMap();
+        payload.putString("sessionId", session.getSessionId());
+        mContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(Events.ON_SESSION_DID_BEGIN_RECONNECTING.toString(), payload);
+    }
+
+    @Override
+    public void onReconnecting(Session session) {
+        WritableMap payload = Arguments.createMap();
+        payload.putString("sessionId", session.getSessionId());
+        mContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(Events.ON_SESSION_DID_RECONNECTING.toString(), payload);
+    }
+
+    @Override
+    public void onArchiveStarted(Session session, String id, String name) {
+        WritableMap payload = Arguments.createMap();
+        payload.putString("sessionId", session.getSessionId());
+        payload.putString("id", id);
+        payload.putString("name", name);
+        mContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(Events.ON_ARCHIVE_STARTED_WITH_ID.toString(), payload);
+    }
+
+    @Override
+    public void onArchiveStopped(Session session, String id) {
+        WritableMap payload = Arguments.createMap();
+        payload.putString("sessionId", session.getSessionId());
+        payload.putString("id", id);
+        mContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(Events.ON_ARCHIVE_STOPPED_WITH_ID.toString(), payload);
     }
 }

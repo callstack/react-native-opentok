@@ -8,6 +8,10 @@
 
 RCT_EXPORT_MODULE();
 
+RCT_EXPORT_METHOD(setApiKey:(NSString *)apiKey) {
+    [[RNOpenTokSessionManager sessionManager] setApiKey:apiKey];
+}
+
 RCT_EXPORT_METHOD(connect:(NSString *)sessionId withToken:(NSString *)token resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     OTSession* session = [[RNOpenTokSessionManager sessionManager] connectToSession:sessionId withToken:token];
     session.delegate = self;
@@ -80,11 +84,11 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
      userInfo:@{@"sessionId": session.sessionId, @"error": [error description]}];
 }
 
-- (void)session:(OTSession*)session receivedSignalType:(NSString*)type fromConnection:(OTConnection*)connection withString:(NSString*)message {
+- (void)session:(nonnull OTSession *)session receivedSignalType:(NSString *_Nullable)type fromConnection:(OTConnection *_Nullable)connection withString:(NSString *_Nullable)string {
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onSignalReceived"
      object:nil
-     userInfo:@{@"sessionId":session.sessionId, @"type":type, @"data": message, @"connectionId": connection.connectionId}];
+     userInfo:@{@"sessionId":session.sessionId, @"type": type != nil ? type : @"", @"data": string != nil ? string : @"", @"connectionId": connection != nil ? connection.connectionId : @""}];
 }
 
 - (void)session:(OTSession *)session connectionCreated:(OTConnection *)connection {
@@ -99,6 +103,34 @@ RCT_EXPORT_METHOD(sendSignal:(NSString *)sessionId type:(NSString *)type data:(N
      postNotificationName:@"onSessionConnectionDestroyed"
      object:nil
      userInfo:@{@"sessionId":session.sessionId, @"connectionId": connection.connectionId}];
+}
+
+- (void)session:(nonnull OTSession *)session archiveStoppedWithId:(nonnull NSString *)archiveId {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onArchiveStoppedWithId"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId, @"archiveId": archiveId}];
+}
+
+- (void)session:(nonnull OTSession *)session archiveStartedWithId:(nonnull NSString *)archiveId name:(NSString *_Nullable)name {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onArchiveStartedWithId"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId, @"archiveId": archiveId, @"name": name != nil ? name : @""}];
+}
+
+- (void)sessionDidBeginReconnecting:(nonnull OTSession *)session {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionDidBeginReconnecting"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId}];
+}
+
+- (void)sessionDidReconnect:(nonnull OTSession *)session {
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onSessionDidReconnect"
+     object:nil
+     userInfo:@{@"sessionId":session.sessionId}];
 }
 
 @end

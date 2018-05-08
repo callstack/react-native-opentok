@@ -1,6 +1,14 @@
 #import <Foundation/Foundation.h>
 #import "RNOpenTokSubscriberView.h"
 
+#if __has_include(<React/UIView+React.h>)
+#import "React/UIView+React.h"
+#elif __has_include("UIView+React.h")
+#import <React/UIView+React.h>
+#else
+#import "React/UIView+React.h"
+#endif
+
 @interface RNOpenTokSubscriberView () <OTSubscriberDelegate>
 @end
 
@@ -10,6 +18,16 @@
 
 @synthesize sessionId = _sessionId;
 @synthesize session = _session;
+
+- (void)reactSetFrame:(CGRect)frame {
+    [super reactSetFrame: frame];
+
+    if (_subscriber == nil) {
+        return;
+    }
+
+    [_subscriber.view setFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+}
 
 - (void)didMoveToWindow {
     [super didMoveToSuperview];
@@ -26,13 +44,17 @@
     if (_subscriber == nil) {
         return;
     }
-    
+
     if ([changedProps containsObject:@"mute"]) {
         _subscriber.subscribeToAudio = !_mute;
     }
-    
+
     if ([changedProps containsObject:@"video"]) {
         _subscriber.subscribeToVideo = _video;
+    }
+
+    if ([changedProps containsObject:@"videoScale"]) {
+        [self updateVideoScale];
     }
 }
 
@@ -53,24 +75,35 @@
     _subscriber = [[OTSubscriber alloc] initWithStream:stream delegate:self];
     _subscriber.subscribeToAudio = !_mute;
     _subscriber.subscribeToVideo = _video;
-    
+    [self updateVideoScale];
+
     OTError *error = nil;
     [_session subscribe:_subscriber error:&error];
-    
+
     if (error) {
         [self subscriber:_subscriber didFailWithError:error];
         return;
     }
-    
+
     [self attachSubscriberView];
 }
 
 - (void)unsubscribe {
     OTError *error = nil;
     [_session unsubscribe:_subscriber error:&error];
-    
+
     if (error) {
         NSLog(@"%@", error);
+    }
+}
+
+- (void)updateVideoScale {
+    if ([_videoScale isEqualToString:@"fit"]) {
+        _subscriber.viewScaleBehavior = OTVideoViewScaleBehaviorFit;
+    } else if ([_videoScale isEqualToString:@"fill"]) {
+        _subscriber.viewScaleBehavior = OTVideoViewScaleBehaviorFill;
+    } else {
+        NSLog(@"Invalid videoScale value: %@", _videoScale);
     }
 }
 

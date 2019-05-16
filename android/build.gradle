@@ -31,6 +31,6 @@ repositories {
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
-    compile 'com.opentok.android:opentok-android-sdk:2.15.+'
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'com.opentok.android:opentok-android-sdk:2.15.+'
 }

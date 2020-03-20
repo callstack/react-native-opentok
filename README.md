@@ -1,4 +1,5 @@
-**NOTE:** This repository is not maintained anymore, feel free to fork it and modify for your own convinience.
+**NOTE:** This repository is not maintained anymore, feel free to fork it and modify for your own convinience. If you are interested in maintaining this reposiotry, please reach out to us on Discord:
+[![Chat](https://img.shields.io/discord/426714625279524876.svg?style=flat-square&colorB=758ED3)](https://discord.gg/zwR2Cdh)
 
 # react-native-opentok
 

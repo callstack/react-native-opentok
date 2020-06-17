@@ -50,7 +50,7 @@ public class RNOpenTokScreenSharingCapturer extends BaseVideoCapturer {
                     canvas = new Canvas(bmp);
                     frame = new int[width * height];
                 }
-                canvas.save(Canvas.MATRIX_SAVE_FLAG);
+                canvas.save();
                 canvas.translate(-mView.getScrollX(), -mView.getScrollY());
                 mView.draw(canvas);
                 bmp.getPixels(frame, 0, width, 0, 0, width, height);
